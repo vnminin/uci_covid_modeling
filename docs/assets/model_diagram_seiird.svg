@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2.7b -->
+<!-- CreationDate: 2020-06-03 22:46:32 -->
+<!-- Magnification: 1 -->
+<svg	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="955pt" height="320pt"
+	viewBox="598 2248 15904 5331">
+<g fill="none">
+<!-- Text -->
+<text xml:space="preserve" x="15300" y="7050" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">R</text>
+<!-- Text -->
+<text xml:space="preserve" x="12210" y="5291" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="420" text-anchor="start">p</text>
+<!-- Text -->
+<text xml:space="preserve" x="8400" y="5070" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">I</text>
+<!-- Text -->
+<text xml:space="preserve" x="8610" y="5291" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="420" text-anchor="start">e</text>
+<!-- Circle -->
+<circle cx="1500" cy="4800" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Circle -->
+<circle cx="5100" cy="4800" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Circle -->
+<circle cx="8661" cy="4800" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Circle -->
+<circle cx="12218" cy="4800" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Circle -->
+<circle cx="15600" cy="3150" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Circle -->
+<circle cx="15542" cy="6677" r="849"
+	stroke="#000000" stroke-width="90px"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp0">
+	<path clip-rule="evenodd" d="M 598,2248 H 16502 V 7579 H 598 z
+		M 11023,4650 11023,4950 11381,4841 11381,4760z"/>
+</clipPath>
+</defs>
+<polyline points=" 9540,4800 11340,4800" clip-path="url(#cp0)"
+	stroke="#000000" stroke-width="75px"/>
+<!-- Forward arrow to point 11340,4800 -->
+<polygon points=" 11023,4950 11323,4800 11023,4650 11023,4950"
+	stroke="#000000" stroke-width="15px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp1">
+	<path clip-rule="evenodd" d="M 598,2248 H 16502 V 7579 H 598 z
+		M 3907,4650 3907,4950 4265,4841 4265,4760z"/>
+</clipPath>
+</defs>
+<polyline points=" 2400,4800 4224,4800" clip-path="url(#cp1)"
+	stroke="#000000" stroke-width="75px"/>
+<!-- Forward arrow to point 4224,4800 -->
+<polygon points=" 3907,4950 4207,4800 3907,4650 3907,4950"
+	stroke="#000000" stroke-width="15px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp2">
+	<path clip-rule="evenodd" d="M 598,2248 H 16502 V 7579 H 598 z
+		M 7447,4650 7447,4950 7805,4841 7805,4760z"/>
+</clipPath>
+</defs>
+<polyline points=" 6000,4800 7764,4800" clip-path="url(#cp2)"
+	stroke="#000000" stroke-width="75px"/>
+<!-- Forward arrow to point 7764,4800 -->
+<polygon points=" 7447,4950 7747,4800 7447,4650 7447,4950"
+	stroke="#000000" stroke-width="15px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp3">
+	<path clip-rule="evenodd" d="M 598,2248 H 16502 V 7579 H 598 z
+		M 14351,3342 14511,3596 14756,3313 14713,3244z"/>
+</clipPath>
+</defs>
+<polyline points=" 12930,4410 14700,3300" clip-path="url(#cp3)"
+	stroke="#000000" stroke-width="75px"/>
+<!-- Forward arrow to point 14700,3300 -->
+<polygon points=" 14511,3596 14685,3309 14351,3342 14511,3596"
+	stroke="#000000" stroke-width="15px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp4">
+	<path clip-rule="evenodd" d="M 598,2248 H 16502 V 7579 H 598 z
+		M 14532,6292 14355,6534 14709,6657 14757,6591z"/>
+</clipPath>
+</defs>
+<polyline points=" 12943,5319 14700,6600" clip-path="url(#cp4)"
+	stroke="#000000" stroke-width="75px"/>
+<!-- Forward arrow to point 14700,6600 -->
+<polygon points=" 14355,6534 14686,6590 14532,6292 14355,6534"
+	stroke="#000000" stroke-width="15px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Text -->
+<text xml:space="preserve" x="1260" y="5100" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">S</text>
+<!-- Text -->
+<text xml:space="preserve" x="4860" y="5100" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">E</text>
+<!-- Text -->
+<text xml:space="preserve" x="15300" y="3450" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">D</text>
+<!-- Text -->
+<text xml:space="preserve" x="12000" y="5070" fill="#000000" font-family="Helvetica" font-style="normal" font-weight="bold" font-size="552" text-anchor="start">I</text>
+</g>
+</svg>

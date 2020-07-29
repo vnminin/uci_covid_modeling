@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Orange County, CA COVID-19 Situation Report</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">uci_covid_modeling</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Orange County, CA COVID-19 Situation Report</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-07-29
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>uci_covid_modeling/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200727code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200727)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200727code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200727)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreed3a51f7a80f550abf5c446993ffebd7d046943e1targetblankd3a51f7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/d3a51f7a80f550abf5c446993ffebd7d046943e1" target="_blank">d3a51f7</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreed3a51f7a80f550abf5c446993ffebd7d046943e1targetblankd3a51f7a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/d3a51f7a80f550abf5c446993ffebd7d046943e1" target="_blank">d3a51f7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  code/SEIeIpRD/model_diagram_seiird.pdf
+    Untracked:  code/SEIeIpRD/model_diagram_seiird.svg
+    Untracked:  code/SEIeIpRD/oc/
+    Untracked:  data/oc_data.csv
+
+Unstaged changes:
+    Modified:   analysis/about.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   uci_covid_modeling.Rproj
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/792b89a040cb12e299933c3f0c8be170cf80f98d/analysis/index.Rmd" target="_blank">792b89a</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-07-27
+</td>
+<td>
+Start workflowr project.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day.</p>
+<div id="executive-summary" class="section level2">
+<h2>Executive summary</h2>
+<ul>
+<li>95% Bayesian credible interval for the basic reproductive number <span class="math inline">\(R_0\)</span> is (0.82, 1.3).</li>
+<li>95% Bayesian credible interval for the total number of infections that had occurred between June 11, 2020 and July 16, 2020 is (29,000, 180,000). The number of reported cases in this period was 24,000.</li>
+<li>95% Bayesian credible interval for the infection-to-fatality ratio (IFR), defined as a fraction of deaths among the total number of infections, is (0.0019, 0.011).</li>
+</ul>
+<p><strong>Since we rely on a mechanistic model, it is important to acknowledge limitations of this model. We will try to be transparent about our assumptions in the hope to receive feedback about their realism. So if something does not look right to you, please get in touch with us to help us improve our model.</strong></p>
+</div>
+</div>
+<div id="model-inputs" class="section level1">
+<h1>Model inputs</h1>
+<p>Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.</p>
+<p><img src="figure/index.Rmd/model%20inputs-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="model-structure" class="section level1">
+<h1>Model structure</h1>
+<p>We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, <span class="math inline">\(\text{I}_\text{e}\)</span> = individuals at early stages of infection, <span class="math inline">\(\text{I}_\text{p}\)</span> = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.</p>
+<p><img src="assets/model_diagram_seiird.svg" /></p>
+<p><img src="assets/model_diagram_seiird.svg" width="4in" style="display: block; margin: auto;" /></p>
+<p>Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters:</p>
+<ul>
+<li>Basic reproductive number (<span class="math inline">\(R_0\)</span>)</li>
+<li>mean duration of the latent period</li>
+<li>mean duration of the early infection period</li>
+<li>mean duration of the progressed infection period</li>
+<li>probability of transitioning from progressed infection to death, rather than to recovery (i.e., IFR)</li>
+</ul>
+<p>We fit this model to data by assuming that case counts are noisy realizations of the actual number of individuals progressing from <span class="math inline">\(\text{I}_\text{e}\)</span> compartment to <span class="math inline">\(\text{I}_\text{p}\)</span> compartment. Similarly we assume that observed deaths are noisy realizations of the actual number of individuals progressing from <span class="math inline">\(\text{I}_\text{p}\)</span> compartment to <span class="math inline">\(\text{D}\)</span> compartment. <em>A priori</em>, we assume that death counts are significantly less noisy than case counts. We use a Bayesian estimation framework, which means that all estimated quantities receive credible intervals (e.g., 80% or 95% credible intervals). Width of these credible intervals encode the amount of uncertainty that we have in the estimated quantities.</p>
+</div>
+<div id="latent-cumulative-deaths-cumulative-incidence-and-prevalence" class="section level1">
+<h1>Latent cumulative deaths, cumulative incidence, and prevalence</h1>
+<p>We report estimated trajectories of latent cumulative deaths, incidence (i.e., total infections and deaths that have occurred by some prespecified time point), and prevalence . These trajectories represent our estimation of accumulation of unobserved/hidden number of infections and deaths in the Orange County population. We also project these three trajectories 4 weeks into the future.</p>
+<div id="the-main-takeaways-are" class="section level3">
+<h3>The main takeaways are:</h3>
+<ul>
+<li>Cases underestimate the total number of infections by a factor that ranges with 95% probability between 1.2 and 7.6. This means that we estimate that the total number of infections between June 11, 2020 and July 16, 2020 is between 29,000 and 180,000. The number of reported cases in this period was 24,000.</li>
+<li>95% Bayesian credible interval of death underreporting factor is (0.49, 0.97).</li>
+</ul>
+<p><img src="figure/index.Rmd/Latent%20vs%20observed%20incidence-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="prior-and-posterior-distributions-of-model-parameters" class="section level1">
+<h1>Prior and posterior distributions of model parameters</h1>
+<p>Next we report prior and posterior distributions of key model parameters. Prior distributions represent our beliefs about these parameters before seeing/analyzing data. Posterior distributions encode our updated beliefs after seeing/analyzing data.</p>
+<div id="the-main-takeaways-are-1" class="section level3">
+<h3>The main takeaways are:</h3>
+<ul>
+<li>95% Bayesian credible interval for the basic reproductive number <span class="math inline">\(R_0\)</span> is (0.82, 1.3). The posterior probability that <span class="math inline">\(R_0\)</span> is above 1.0 is 72%. <!-- Moreover, our prior is set up in such a way that prior probability of  --> <!-- $R_0 < 1$ is  63%. To account for this, we can compute what is called a Bayes factor: the probability of observing the data in hand under the assumption that $R_0 < 1$ divided by the probability of observing the data in hand under the assumption that $R_0 >= 1$.  --> <!-- In our case the Bayes factor is equal to 0, which means that the cases and deaths data are 0 time more likely under the assumption that $R_0 < 1$. This provides positive, but not yet strong evidence in favor of $R_0 < 1$. Bayes factor above 20 would be considered strong evidence [@kass1995bayes]. --> <!-- - 0.19% - 1.1% of all infections result in death. --> <!-- - The data are not informative about mean duration periods spent in E, $\text{I}_e$, and $\text{I}_p$ compartments, so our prior and posterior distributions are very similar.  --> <!-- As a result, it is important to specify these priors carefully. --></li>
+</ul>
+<p><img src="figure/index.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- For transparency and trend detection it is interesting to track how our estimation of $R_0$ is changing over time.  -->
+<!-- Below we plot the prior credible interval and posterior credible intervals that we reported so far.  -->
+<!-- We see that the current report slightly revises our estimated $R_0$ up relative to our previous report. -->
+<p><img src="figure/index.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-4-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="reported-deaths-and-positive-test-rate-forecast" class="section level1">
+<h1>Reported deaths and positive test rate forecast</h1>
+<p>We report predictive distribution of observed deaths and positive test rate during the observation interval (blue shaded area with black dots in the plot below). In addition, we show a four week ahead forecast for both quantities. Our forecast assumes that interventions (physical distancing orders, mask recommendations, etc.) stay at the status quo, and that there are 2100 tests in each three day interval in the future. We plan to archive our forecasts and retrospectively measure their predictive ability/skill.</p>
+<p><img src="figure/index.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="modeling-limitations" class="section level1">
+<h1>Modeling limitations</h1>
+<ul>
+<li>Some model parameters are not well identified, so we rely on scientifically sound prior information (please check our assumptions and help us improve our priors!). We will include sensitivity to prior analyses as an appendix in future reports.</li>
+<li>The model assumes a well mixed population with no geographic or age structure.</li>
+<li>Basic reproductive number (<span class="math inline">\(R_0\)</span>) is constant. However, implementation of physical distancing and school closures should gradually reduce it. Similarly, relaxing current physical distancing measures will start increasing <span class="math inline">\(R_0\)</span>.</li>
+</ul>
+</div>
+<div id="planned-model-extensions" class="section level1">
+<h1>Planned model extensions</h1>
+<ul>
+<li>We plan to add H = hospitalized and ICU compartments to the model. This extension will allow us to inform the model with hospitalization and occupied ICU beds time series, in addition to already used test, case, and death counts. Equally importantly, we will be able to forecast hospital and ICU occupancy.</li>
+<li>We will allow <span class="math inline">\(R_0\)</span> to vary with time and will attempt to estimate its changes non-parameterically.</li>
+<li>We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don’t have enough data to estimate additional parameters that will need to be added to the model.</li>
+</ul>
+<!-- # Effective reproductive number estimation using EpiEstim -->
+<!-- Since we haven't incorporated time-varying $R_0$ into our model yet, we use a different method to estimate time-varying dynamics. -->
+<!-- This method is similar in spirit to our compartmental modeling approach, but it avoids modeling details of the disease progression [@cori2013new]. -->
+<!-- As a result, it can only estimate changes in the effective reproductive number $R_{\text{eff}}$. -->
+<!-- Since in our observed time frame the number of susceptible individuals is dropping by a fraction of percent, $R_0$ and $R_{\text{eff}}$ are approximately equal to each other. -->
+<!-- Therefore, changes in $R_{\text{eff}}$ can also be interpreted as changes in $R_0$. -->
+<!-- However, the method implemented in R package EpiEstim [@epiestim2019] does not account for the fact that the total number of COVID-18 PCR tests is not constant across time even approximately. -->
+<!-- To protect against this model misspecification, we first computed daily positivity ratios and then sampled daily number of cases from binomial distributions, where we set "success" probabilities to positivity ratios and the number of trials to 1,000. -->
+<!-- Daily positivity ratios and new "test normalized" case counts are shown below. -->
+<!-- ```{r normalized test counts, fig.height=2} -->
+<!-- ochca_data = read_santize_ochca_covid() -->
+<!-- ochca_data_march15 = ochca_data %>% slice(-1:-43) -->
+<!-- ochca_data_march15 = ochca_data_march15 %>% mutate(positivity = new_cases/new_tests) -->
+<!-- ochca_data_march15 = ochca_data_march15 %>% add_column(normalized_cases = rbinom(as.integer(count(ochca_data_march15)), 1000, ochca_data_march15$positivity)) -->
+<!-- ochca_data_march15 %>% select(posted_date, positivity, normalized_cases) %>% -->
+<!--   gather(key = "variable", value = "value", -posted_date) %>% ggplot(aes(posted_date, value)) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   facet_wrap(. ~ variable, scales = "free_y", strip.position = "left", labeller = as_labeller(c(normalized_cases = "Normalized Cases", positivity = "Positivity Ratio") )) + ylab(NULL) + -->
+<!--   xlab("Date") + -->
+<!--   theme(strip.background = element_blank(), -->
+<!--            strip.placement = "outside") -->
+<!-- ``` -->
+<!-- ```{r run EpiEstim, warning=FALSE, fig.height=2} -->
+<!-- library(EpiEstim) -->
+<!-- config <- make_config(list(mean_si = 4.7, std_mean_si = 0.5, -->
+<!--                            min_mean_si = 3, max_mean_si = 6.4, -->
+<!--                            std_si = 2.9, std_std_si = 0.5, -->
+<!--                            min_std_si = 1.5, max_std_si = 4.3)) -->
+<!-- ochca_data_march15_epi_estim = select(ochca_data_march15, dates = posted_date, I=normalized_cases) -->
+<!-- ochca_results_start_march15 <- estimate_R(ochca_data_march15_epi_estim, -->
+<!--                                 method="uncertain_si", -->
+<!--                                 config = config) -->
+<!-- plot(ochca_results_start_march15, what="R") -->
+<!-- ``` -->
+<!-- The daily data are very noisy, so we do not think that recent increase in $R_{\text{eff}}$, estimated by EpiEstim, should be taken too seriously.  -->
+<!-- However, this increase is consistent with increase of our estimated $R_0$ over the whole time period.  -->
+<!-- # References -->
+<!-- <div id="refs"></div> -->
+</div>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="sensitivity-to-prior-for-r_0" class="section level2">
+<h2>Sensitivity to Prior for <span class="math inline">\(R_0\)</span></h2>
+<p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. The priors are listed in the titles of the figures. Although the prior distribution of <span class="math inline">\(R_0\)</span> does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior.</p>
+<p><img src="figure/index.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18362)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.0.1 scales_1.1.1    tidybayes_2.1.1 forcats_0.5.0  
+ [5] stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4     readr_1.3.1    
+ [9] tidyr_1.1.0     tibble_3.0.3    ggplot2_3.3.2   tidyverse_1.3.0
+[13] here_0.1        lubridate_1.7.9 workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] matrixStats_0.56.0   fs_1.4.2             RColorBrewer_1.1-2  
+ [4] httr_1.4.1           rprojroot_1.3-2      rstan_2.21.1        
+ [7] tools_4.0.2          backports_1.1.8      utf8_1.1.4          
+[10] R6_2.4.1             DBI_1.1.0            colorspace_1.4-1    
+[13] ggdist_2.2.0         withr_2.2.0          gridExtra_2.3       
+[16] tidyselect_1.1.0     prettyunits_1.1.1    processx_3.4.3      
+[19] curl_4.3             compiler_4.0.2       git2r_0.27.1        
+[22] cli_2.0.2            rvest_0.3.5          arrayhelpers_1.1-0  
+[25] xml2_1.3.2           labeling_0.3         callr_3.4.3         
+[28] digest_0.6.25        StanHeaders_2.21.0-5 rmarkdown_2.3       
+[31] pkgconfig_2.0.3      htmltools_0.5.0      dbplyr_1.4.4        
+[34] rlang_0.4.7          readxl_1.3.1         rstudioapi_0.11     
+[37] farver_2.0.3         generics_0.0.2       svUnit_1.0.3        
+[40] jsonlite_1.7.0       distributional_0.1.0 inline_0.3.15       
+[43] magrittr_1.5         loo_2.3.1            Rcpp_1.0.5          
+[46] munsell_0.5.0        fansi_0.4.1          lifecycle_0.2.0     
+[49] stringi_1.4.6        whisker_0.4          yaml_2.2.1          
+[52] pkgbuild_1.1.0       plyr_1.8.6           grid_4.0.2          
+[55] blob_1.2.1           parallel_4.0.2       promises_1.1.1      
+[58] crayon_1.3.4         lattice_0.20-41      haven_2.3.1         
+[61] hms_0.5.3            knitr_1.29           ps_1.3.3            
+[64] pillar_1.4.6         codetools_0.2-16     stats4_4.0.2        
+[67] reprex_0.3.0         glue_1.4.1           evaluate_0.14       
+[70] V8_3.2.0             RcppParallel_5.0.2   modelr_0.1.8        
+[73] vctrs_0.3.2          httpuv_1.5.4         cellranger_1.1.0    
+[76] gtable_0.3.0         assertthat_0.2.1     ckanr_0.4.0         
+[79] xfun_0.15            broom_0.7.0          coda_0.19-3         
+[82] later_1.1.0.1        ellipsis_0.3.1      </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -7,4 +7,11 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+### Authors
+Damon Bayer, Isaac Goldstein, and Vladimir N. Minin
+
+Department of Statistics, University of California, Irvine
+
+Jon Fintzi, Keith Lumbard, and Emily Ricotta
+
+National Institute of Allergy and Infectious Diseases

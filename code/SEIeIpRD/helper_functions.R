@@ -1,8 +1,11 @@
 # Lump Counts -------------------------------------------------------------
-## ochca_covid: sanitized ochca data from `read_santize_ochca_covid`
-## time_interval_in_days: time interval to lump in days
-## first day: "yyyy-mm-dd" string - filter out days before this one
-## last day: "yyyy-mm-dd" string - filter out days after this one
+## purpose: condense daily count data into time interval count data (i.e. new cases in 3 day period)
+## param: ochca_covid: sanitized daily case test and death data`
+## param: time_interval_in_days: time interval to lump in days
+## param: first day: "yyyy-mm-dd" string - filter out days before this one
+## param: last day: "yyyy-mm-dd" string - filter out days after this one
+## output: dataframe of new cases/tests/deaths in specified intervals
+
 lump_ochca_covid <- function(ochca_covid, time_interval_in_days, first_day = "0000-01-01", last_day = "9999-12-31") {
   ochca_covid %>%
     filter(posted_date >= lubridate::ymd(first_day),
@@ -19,6 +22,20 @@ lump_ochca_covid <- function(ochca_covid, time_interval_in_days, first_day = "00
 }
 
 # Create Model Objects ----------------------------------------------------
+## purpose: create list to input into rstan for mcmc
+## param: ochca_covid: sanitized daily case test and death data`
+## param: time_interval_in_days: time interval to lump in days
+## param: first day: "yyyy-mm-dd" string - filter out days before this one
+## param: last day: "yyyy-mm-dd" string - filter out days after this one
+## param: n_curves: number of model features being tracked by the rstan program
+## param: epi_curve_names: names of model features being tracked by the rstan program
+## param: priors_only: Set to True to sample from the prior distributions only (no posterior generated)
+## param: forecast_in_days: specifies number of days to forecase ahead (how many deaths 14 days from now)
+## param: future_tests_per_day: assumed number of tests in the future, required to predict new cases
+## param: popsize: susceptible population size
+## param: log_R0_normal et al.: specify the parameters for prior distributions for model parameters
+## output: list suitable for rstan, as well as labels and data used to make report graphics
+
 create_model_objects <- function(ochca_covid = read_rds("data/oc/ochca_covid.rds"),
                                  first_day = "0000-01-01",
                                  last_day = "9999-12-31",

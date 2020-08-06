@@ -9,7 +9,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, fig.align = "center", fig.height=3, fig.width=7, message=F)
+knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 library(lubridate)
 library(here)
@@ -53,8 +53,8 @@ oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_n
 # start_date <- as.Date("2020-05-23")
 # end_date <- as.Date("2020-06-28")
 
-start_date <- as.Date("2020-06-10")
-end_date <- as.Date("2020-07-16")
+start_date <- as.Date("2020-06-20")
+end_date <- as.Date("2020-07-25")
 
 # Setup Model Objects -----------------------------------------------------
 oc_post_old_wide <- oc_post_old %>%
@@ -84,6 +84,24 @@ mom_beta <- function(x) {
     beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
 }
 
+#adjusted method of moments estimator for sensitivity analyses (mean twice as large)
+mom_beta3 <- function(x) {
+  x_bar <- 2*mean(x)
+  v_bar <- var(x)
+  
+  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
+    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
+}
+
+#adjusted method of moments estiamtor for sensitivity analyses (mean 1/2 as large)
+mom_beta4 <- function(x) {
+  x_bar <- .5*mean(x)
+  v_bar <- var(x)
+  
+  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
+    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
+}
+
 frac_carrs_prior <- mom_beta(for_estimating$frac_carrs)
 frac_carrs_infec_prior <- mom_beta(for_estimating$frac_carrs_infec)
 frac_infec_early_prior <- mom_beta(for_estimating$frac_infec_early)
@@ -106,10 +124,12 @@ model_objects <- create_model_objects(ochca_covid = oc_data,
                                       frac_carrs_infec_beta = frac_carrs_infec_prior,
                                       frac_infec_early_beta = frac_infec_early_prior)
 
+#create a model objects for smapling from the prior distributions, used in figure creation
 model_objects_priors_only <- model_objects
 model_objects_priors_only$priors_only <- T
 model_objects_priors_only$forecast_in_days <- 0
 
+#create new model objects for the 4 sensitivity analyses shown in the report
 model_objects_sensitivity1 <- model_objects
 model_objects_sensitivity1_priors_only <- model_objects_priors_only
 
@@ -122,6 +142,18 @@ model_objects_sensitivity2_priors_only <- model_objects_priors_only
 model_objects_sensitivity2$log_R0_normal <- c(log(.53), .78)
 model_objects_sensitivity2_priors_only$log_R0_normal <- c(log(.53), .78)
 
+model_objects_sensitivity3 <- model_objects
+model_objects_sensitivity3_priors_only <- model_objects_priors_only
+
+model_objects_sensitivity3$frac_carrs_beta <- mom_beta3(for_estimating$frac_carrs)
+model_objects_sensitivity3_priors_only$frac_carrs_beta <- mom_beta3(for_estimating$frac_carrs)
+
+model_objects_sensitivity4 <- model_objects
+model_objects_sensitivity4_priors_only <- model_objects_priors_only
+
+model_objects_sensitivity4$frac_carrs_beta <- mom_beta4(for_estimating$frac_carrs)
+model_objects_sensitivity4_priors_only$frac_carrs_beta <- mom_beta4(for_estimating$frac_carrs)
+
 
 # Setup Results Folder ----------------------------------------------------
 folder_name <- str_c(model_objects$actual_first_day, model_objects$actual_last_day, sep = "_")
@@ -131,6 +163,8 @@ dir_create(folder_loc)
 write_rds(model_objects, file.path(folder_loc, "model_objects.rds"))
 write_rds(model_objects_sensitivity1, file.path(folder_loc, "model_objects_sensitivity1.rds"))
 write_rds(model_objects_sensitivity2, file.path(folder_loc, "model_objects_sensitivity2.rds"))
+write_rds(model_objects_sensitivity3, file.path(folder_loc, "model_objects_sensitivity3.rds"))
+write_rds(model_objects_sensitivity4, file.path(folder_loc, "model_objects_sensitivity4.rds"))
 
 # Sample Posterior --------------------------------------------------------
 oc_post <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
@@ -195,6 +229,63 @@ oc_prior_sensitivity2 <- stan(file = here("code", model_name, str_c(model_name, 
                               control = control_list)
 
 write_rds(oc_prior_sensitivity2, file.path(folder_loc, "oc_prior_sensitivity2.rds"))
+# Sample Posterior Sensitivity 3 ------------------------------------------
+frac_carrs_prior3 <- mom_beta3(for_estimating$frac_carrs)
+
+init_func3 <- function() list(frac_carrs = frac_carrs_prior3[1] / sum(frac_carrs_prior3),
+                             frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
+                             frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
+
+oc_post_sensitivity3 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+                             data = model_objects_sensitivity3,
+                             init = init_func3,
+                             seed = 0,
+                             chains = 4,
+                             control = control_list)
+
+write_rds(oc_post_sensitivity3, file.path(folder_loc, "oc_post_sensitivity3.rds"))
+
+
+# Sample Prior Sensitivity 3 ----------------------------------------------
+
+oc_prior_sensitivity3 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+                              data = model_objects_sensitivity3_priors_only,
+                              init = init_func3,
+                              seed = 0,
+                              chains = 4,
+                              control = control_list)
+
+write_rds(oc_prior_sensitivity3, file.path(folder_loc, "oc_prior_sensitivity3.rds"))
+
+# Sample Posterior Sensitivity 4 ------------------------------------------
+frac_carrs_prior4 <- mom_beta4(for_estimating$frac_carrs)
+
+init_func4 <- function() list(frac_carrs = frac_carrs_prior4[1] / sum(frac_carrs_prior4),
+                              frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
+                              frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
+
+oc_post_sensitivity4 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+                             data = model_objects_sensitivity4,
+                             init = init_func4,
+                             seed = 0,
+                             chains = 4,
+                             control = control_list)
+
+write_rds(oc_post_sensitivity4, file.path(folder_loc, "oc_post_sensitivity4.rds"))
+
+
+# Sample Prior Sensitivity 4 ----------------------------------------------
+
+oc_prior_sensitivity4 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+                              data = model_objects_sensitivity4_priors_only,
+                              init = init_func4,
+                              seed = 0,
+                              chains = 4,
+                              control = control_list)
+
+write_rds(oc_prior_sensitivity4, file.path(folder_loc, "oc_prior_sensitivity4.rds"))
+
+
 
 
 }
@@ -222,6 +313,8 @@ lumped_ochca_covid <- model_objects$lumped_ochca_covid
 time_interval_in_days <- model_objects$time_interval_in_days
 
 oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
+
+theme_set(theme_bw(base_size =22)) 
 ```
 
 # Introduction
@@ -278,7 +371,8 @@ lumped_ochca_covid %>%
   facet_wrap(. ~ name, scales = "free_y") +
   xlab("Date") +
   ylab("Count") +
-  ggtitle("Orange County, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid$end_date[2] - lumped_ochca_covid$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d")
+  ggtitle("Orange County, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid$end_date[2] - lumped_ochca_covid$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d", )+
+  theme(strip.text = element_text(size = 20))
 ```
 
 # Model structure
@@ -637,11 +731,21 @@ Although the prior distribution of $R_0$ does have some effect on its posterior 
 #folder_loc <- "Models/simple_mod_for_simulation/2020-03-15_2020-04-28"
 oc_post_sensitivity1<- read_rds(file.path(folder_loc, "oc_post_sensitivity1.rds"))
 oc_prior_sensitivity1 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity1.rds"))
+
 oc_post_sensitivity2<- read_rds(file.path(folder_loc, "oc_post_sensitivity2.rds"))
 oc_prior_sensitivity2 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity2.rds"))
 
+oc_post_sensitivity3 <- read_rds(file.path(folder_loc, "oc_post_sensitivity3.rds"))
+oc_prior_sensitivity3 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity3.rds"))
+
+oc_post_sensitivity4<- read_rds(file.path(folder_loc, "oc_post_sensitivity4.rds"))
+oc_prior_sensitivity4 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity4.rds"))
+
+
 prepped_cumulative_inc_s1 <- prep_cumulative_inc(model_objects, oc_post_sensitivity1)
 prepped_cumulative_inc_s2 <- prep_cumulative_inc(model_objects, oc_post_sensitivity2)
+prepped_cumulative_inc_s3 <- prep_cumulative_inc(model_objects, oc_post_sensitivity3)
+prepped_cumulative_inc_s4 <- prep_cumulative_inc(model_objects, oc_post_sensitivity4)
 ```
 
 ```{r, echo=FALSE}
@@ -773,4 +877,103 @@ oc_prior_sensitivity2 %>%
 unitless_vars <- quos(mild2sev_frac, sev2death_frac)
 ```
 
+## Sensitivity to prior for fraction not susceptible
+We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are not susceptible initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of $R_0$. 
+
+<!-- sensitivity 3 -->
+
+```{r, echo=FALSE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s3$posterior %>%
+  group_by(t, name, usage) %>%
+  median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s3$observed,
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y") +
+  ggtitle("Latent & observed cumulative events: Mean Not Susceptible Twice as Large",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=9), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+```{r, warnings=FALSE}
+## If you want to plot R0 by istelf with custom lims, use this:
+oc_prior_sensitivity3 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity3 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, 6))+
+  ggtitle("Priors: Mean Not Susceptible Twice as Large")
+# and substitute
+unitless_vars <- quos(mild2sev_frac, sev2death_frac)
+
+#unitless_vars <- quos(R0, mild2sev_frac, sev2death_frac)
+```
+
+<!-- sensitivity 4 -->
+
+```{r, echo=FALSE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s4$posterior %>%
+  group_by(t, name, usage) %>%
+  median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s4$observed,
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y") +
+  ggtitle("Latent & observed cumulative events: Mean Not Susceptible Half as Large",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=9), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+```{r, warnings=FALSE}
+## If you want to plot R0 by istelf with custom lims, use this:
+oc_prior_sensitivity4 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity4 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, 6))+
+  ggtitle("Priors: Mean Not Susceptible Half as Large")
+# and substitute
+unitless_vars <- quos(mild2sev_frac, sev2death_frac)
+
+#unitless_vars <- quos(R0, mild2sev_frac, sev2death_frac)
+```
 

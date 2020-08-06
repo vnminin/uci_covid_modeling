@@ -1,14 +1,14 @@
 # uci_covid_modeling
 
-This github contains code for generating situation reports on the dynamics and future trends of COVID-19 in Orange County, CA. The manuscript associated with this work is [here][], and the current Orange County situation report is [available here](https://vnminin.github.io/uci_covid_modeling/). 
+This github contains code for generating situation reports on the dynamics and future trends of COVID-19 in Orange County, CA. The manuscript associated with this work is [here](), and the current Orange County situation report is [available here](https://vnminin.github.io/uci_covid_modeling/). 
 
 
 ## Methodology
 Our analysis relies on a mechanistic six compartment model of the COVID-19 epidemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the model are available in the manuscript linked above. 
 
-We use rStan to conduct Bayesian inference. Here is our [model code][]. 
+We use rStan to conduct Bayesian inference. Here is our [model code](https://github.com/vnminin/uci_covid_modeling/tree/master/code/SEIeIpRD). 
 
-To replicate our analysis, use the [website code][]. 
+To replicate our analysis, use the [website code](https://github.com/vnminin/uci_covid_modeling/blob/master/analysis/index.Rmd). 
 
 To conduct your own analysis of COVID-19 trends using our model you will need the following data:
 
@@ -49,9 +49,4 @@ oc_post <- stan(file = here("code", SEIeIpRD, str_c(SEIeIpRD, ".stan")),
 
 
 ```
-This posterior can then be used for further analysis. Code for our specific analyses are available in the [website code][]. 
-
-[here]: 
-[available here] : https://vnminin.github.io/uci_covid_modeling/
-[model code]: https://github.com/vnminin/uci_covid_modeling/tree/master/code/SEIeIpRD
-[website code]: https://github.com/vnminin/uci_covid_modeling/blob/master/analysis/index.Rmd
+This posterior can then be used for further analysis. Code for our specific analyses are available in the [website code](https://github.com/vnminin/uci_covid_modeling/blob/master/analysis/index.Rmd). 

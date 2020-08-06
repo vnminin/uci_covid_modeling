@@ -1,6 +1,6 @@
 # uci_covid_modeling
 
-This github contains code for generating situation reports on the dynamics and future trends of COVID-19 in Orange County, CA. The manuscript associated with this work is [here][], and the current Orange County situation report is [available here][]. 
+This github contains code for generating situation reports on the dynamics and future trends of COVID-19 in Orange County, CA. The manuscript associated with this work is [here][], and the current Orange County situation report is [available here](https://vnminin.github.io/uci_covid_modeling/). 
 
 
 ## Methodology

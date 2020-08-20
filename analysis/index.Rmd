@@ -29,7 +29,7 @@ source(here("code", model_name, "plot_functions.R"))
 
 theme_set(theme_bw(base_size =12))
 
-#if you want to run the analysis, change to TRUE, otherwise will display most recent results
+#if you want to run the analysis, change to TRUE. Otherwise the site will display the most recent results
 run_analysis <- FALSE
 
 if (run_analysis==TRUE){
@@ -44,6 +44,7 @@ oc_data <- read.csv(here("data", "oc_data.csv"))
 #old_folder_name = "2020-04-14_2020-05-19"
 old_folder_name = "2020-05-24_2020-06-28"
 
+#read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
@@ -57,6 +58,9 @@ start_date <- as.Date("2020-06-20")
 end_date <- as.Date("2020-07-25")
 
 # Setup Model Objects -----------------------------------------------------
+
+#acquire posterior samples for fraction infected, fraction infectious, fraction early infectious 
+#one day before current analysis start date
 oc_post_old_wide <- oc_post_old %>%
   spread_draws(epi_curves[i]) %>%
   ungroup() %>%
@@ -76,6 +80,9 @@ for_estimating <- oc_post_old_wide %>%
             frac_carrs_infec = (IE + IP) / (E + IE + IP),
             frac_infec_early = IE /(IE + IP))
 
+#purpose: provide method of moments estimators for parameters of a beta distribution
+#param: x: draws from a beta distribution
+#output: method of moment estimates for alpha and beta of a beta distribution
 mom_beta <- function(x) {
   x_bar <- mean(x)
   v_bar <- var(x)
@@ -114,6 +121,7 @@ control_list <- list(adapt_delta = 0.99,
                      max_treedepth = 20)
 # control_list <- list()
 
+#create model objects to input into stan, see helper_functions.R for details
 model_objects <- create_model_objects(ochca_covid = oc_data,
                                       first_day = start_date,
                                       last_day = end_date,
@@ -301,9 +309,6 @@ folder_name <- tibble(dirs = list.dirs(here("code", model_name, loc_name), recur
   unite(col = dir, sep = "_") %>%
   pull(dir)
 
-# folder_name <- "2020-05-24_2020-06-28"
-
-# folder_name <- "your custom choice"
 folder_loc <- here("code", model_name, loc_name, folder_name)
 
 oc_post <- read_rds(file.path(folder_loc, "oc_post.rds"))
@@ -662,58 +667,6 @@ death_pos
 * We will allow $R_0$ to vary with time and will attempt to estimate its changes non-parameterically.
 * We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model.
 
-<!-- # Effective reproductive number estimation using EpiEstim -->
-
-<!-- Since we haven't incorporated time-varying $R_0$ into our model yet, we use a different method to estimate time-varying dynamics. -->
-<!-- This method is similar in spirit to our compartmental modeling approach, but it avoids modeling details of the disease progression [@cori2013new]. -->
-<!-- As a result, it can only estimate changes in the effective reproductive number $R_{\text{eff}}$. -->
-<!-- Since in our observed time frame the number of susceptible individuals is dropping by a fraction of percent, $R_0$ and $R_{\text{eff}}$ are approximately equal to each other. -->
-<!-- Therefore, changes in $R_{\text{eff}}$ can also be interpreted as changes in $R_0$. -->
-
-<!-- However, the method implemented in R package EpiEstim [@epiestim2019] does not account for the fact that the total number of COVID-18 PCR tests is not constant across time even approximately. -->
-<!-- To protect against this model misspecification, we first computed daily positivity ratios and then sampled daily number of cases from binomial distributions, where we set "success" probabilities to positivity ratios and the number of trials to 1,000. -->
-<!-- Daily positivity ratios and new "test normalized" case counts are shown below. -->
-
-<!-- ```{r normalized test counts, fig.height=2} -->
-<!-- ochca_data = read_santize_ochca_covid() -->
-
-<!-- ochca_data_march15 = ochca_data %>% slice(-1:-43) -->
-<!-- ochca_data_march15 = ochca_data_march15 %>% mutate(positivity = new_cases/new_tests) -->
-<!-- ochca_data_march15 = ochca_data_march15 %>% add_column(normalized_cases = rbinom(as.integer(count(ochca_data_march15)), 1000, ochca_data_march15$positivity)) -->
-
-<!-- ochca_data_march15 %>% select(posted_date, positivity, normalized_cases) %>% -->
-<!--   gather(key = "variable", value = "value", -posted_date) %>% ggplot(aes(posted_date, value)) + -->
-<!--   geom_line() + -->
-<!--   geom_point() + -->
-<!--   facet_wrap(. ~ variable, scales = "free_y", strip.position = "left", labeller = as_labeller(c(normalized_cases = "Normalized Cases", positivity = "Positivity Ratio") )) + ylab(NULL) + -->
-<!--   xlab("Date") + -->
-<!--   theme(strip.background = element_blank(), -->
-<!--            strip.placement = "outside") -->
-<!-- ``` -->
-
-<!-- ```{r run EpiEstim, warning=FALSE, fig.height=2} -->
-<!-- library(EpiEstim) -->
-
-<!-- config <- make_config(list(mean_si = 4.7, std_mean_si = 0.5, -->
-<!--                            min_mean_si = 3, max_mean_si = 6.4, -->
-<!--                            std_si = 2.9, std_std_si = 0.5, -->
-<!--                            min_std_si = 1.5, max_std_si = 4.3)) -->
-
-<!-- ochca_data_march15_epi_estim = select(ochca_data_march15, dates = posted_date, I=normalized_cases) -->
-
-
-<!-- ochca_results_start_march15 <- estimate_R(ochca_data_march15_epi_estim, -->
-<!--                                 method="uncertain_si", -->
-<!--                                 config = config) -->
-<!-- plot(ochca_results_start_march15, what="R") -->
-<!-- ``` -->
-
-<!-- The daily data are very noisy, so we do not think that recent increase in $R_{\text{eff}}$, estimated by EpiEstim, should be taken too seriously.  -->
-<!-- However, this increase is consistent with increase of our estimated $R_0$ over the whole time period.  -->
-
-<!-- # References -->
-
-<!-- <div id="refs"></div> -->
 
 # Appendix
 

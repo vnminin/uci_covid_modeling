@@ -6,7 +6,7 @@ This github contains code for generating situation reports on the dynamics and f
 ## Methodology
 Our analysis relies on a mechanistic six compartment model of the COVID-19 pandemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the model are available in the manuscript linked above. 
 
-We use the [Stan](https://mc-stan.org/) platform for our Bayesian inference. You can download [rStan] (https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started) to use Stan inside of R. See the [model code](https://github.com/vnminin/uci_covid_modeling/tree/master/code/SEIeIpRD) for modeling and inference details. 
+We use the [Stan](https://mc-stan.org/) platform for our Bayesian inference. You can download [rStan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started) to use Stan inside of R. See the [model code](https://github.com/vnminin/uci_covid_modeling/tree/master/code/SEIeIpRD) for modeling and inference details. 
 
 To replicate our analysis, use the [website code](https://github.com/vnminin/uci_covid_modeling/blob/master/analysis/index.Rmd). 
 

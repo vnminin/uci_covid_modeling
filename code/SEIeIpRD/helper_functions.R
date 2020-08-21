@@ -1,10 +1,11 @@
 # Lump Counts -------------------------------------------------------------
-## purpose: condense daily count data into time interval count data (i.e. new cases in 3 day period)
-## param: ochca_covid: sanitized daily case test and death data`
-## param: time_interval_in_days: time interval to lump in days
-## param: first day: "yyyy-mm-dd" string - filter out days before this one
-## param: last day: "yyyy-mm-dd" string - filter out days after this one
-## output: dataframe of new cases/tests/deaths in specified intervals
+#' Condense daily count data into time interval count data (i.e. new cases in 3 day period)
+#'
+#' @param ochca_covid sanitized daily case test and death data`
+#' @param time_interval_in_days time interval to lump in days
+#' @param first_day "yyyy-mm-dd" string - filter out days before first_day
+#' @param last_day "yyyy-mm-dd" string - filter out days after last_day
+#' @return Dataframe of new cases/tests/deaths in specified intervals
 
 lump_ochca_covid <- function(ochca_covid, time_interval_in_days, first_day = "0000-01-01", last_day = "9999-12-31") {
   ochca_covid %>%
@@ -22,19 +23,31 @@ lump_ochca_covid <- function(ochca_covid, time_interval_in_days, first_day = "00
 }
 
 # Create Model Objects ----------------------------------------------------
-## purpose: create list to input into rstan for mcmc
-## param: ochca_covid: sanitized daily case test and death data`
-## param: time_interval_in_days: time interval to lump in days
-## param: first day: "yyyy-mm-dd" string - filter out days before this one
-## param: last day: "yyyy-mm-dd" string - filter out days after this one
-## param: n_curves: number of model features being tracked by the rstan program
-## param: epi_curve_names: names of model features being tracked by the rstan program
-## param: priors_only: Set to True to sample from the prior distributions only (no posterior generated)
-## param: forecast_in_days: specifies number of days to forecase ahead (how many deaths 14 days from now)
-## param: future_tests_per_day: assumed number of tests in the future, required to predict new cases
-## param: popsize: susceptible population size
-## param: log_R0_normal et al.: specify the parameters for prior distributions for model parameters
-## output: list suitable for rstan, as well as labels and data used to make report graphics
+#' @purpose create list to input into rstan for mcmc
+#' @param ochca_covid sanitized daily case test and death data`
+#' @param time_interval_in_days time interval to lump in days
+#' @param first_day "yyyy-mm-dd" string - filter out days before this one
+#' @param last_day "yyyy-mm-dd" string - filter out days after this one
+#' @param n_curves number of model features being tracked by the rstan program
+#' @param epi_curve_names names of model features being tracked by the rstan program
+#' @param priors_only Set to True to sample from the prior distributions only (no posterior generated)
+#' @param forecast_in_days specifies number of days to forecase ahead (how many deaths 14 days from now)
+#' @param future_tests_per_day assumed number of tests in the future, required to predict new cases
+#' @param popsize susceptible population size
+#' @param log_R0_normal mean and standard deviation for normal prior distribution for log R0
+#' @param latent_dur_lognormal mu and sigma for the log normal prior distribution for mean latent duration
+#' @param early_dur_lognormal mu and sigma for the log normal prior distribution for mean early infectious duration
+#' @param prog_dur_lognormal mu and sigma for the log normal prior distribution for mean progressed infectious duration
+#' @param IFR_beta alpha and beta for the beta prior distribution for the infection fatality ratio
+#' @param frac_carrs_beta alpha and beta for the beta prior distribution for proportion initially infected, 1 minus initially susceptible
+#' @param frac_carrs_infec_beta alpha and beta for the beta prior distribution for proportion of initially infected who are infectious
+#' @param frac_infec_early_beta alpha and beta for the beta prior distribution for proportion of infectious who are early infectious
+#' @param alpha_incid_0_normal mean and standard deviation for truncated normal prior distribution for alpha0 which helps describe reporting rate for case counts
+#' @param alpha_incid_1_beta alpha and beta for beta prior distribution for alpha1 which helps describe reporting rate for case counts
+#' @param sqrt_kappa_inv_incid_exponential lambda for exponential prior distribution for inverse of square root of kappa, which controls overdispersion for case counts
+#' @param rho_death_beta alpha and beta for beta prior distribution for death reporting rate
+#' @param sqrt_phi_inv_death_exponential lambda for exponential prior distribution for inverse of square root of phi which controls overdispersion for death counts
+#' @return list suitable for rstan, as well as labels and data used to make report graphics
 
 create_model_objects <- function(ochca_covid = read_rds("data/oc/ochca_covid.rds"),
                                  first_day = "0000-01-01",

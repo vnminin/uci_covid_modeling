@@ -323,7 +323,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 theme_set(theme_bw(base_size =22)) 
 ```
 
-# Introduction
+# Orange County, CA COVID-19 Situation Report Start Date - End Date
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
 
 ```{r executive summary, warning=FALSE}

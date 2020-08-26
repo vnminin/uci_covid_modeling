@@ -7,6 +7,9 @@ editor_options:
   chunk_output_type: console
 ---
 
+##About
+This website provides reports on the dynamics and future trends of COVID-19 in Orange County, CA. Please visit the [github](https://github.com/vnminin/uci_covid_modeling) for details on the code, and read the [manuscript](a link) associated with this endeavor for further methodological details.
+
 ### Authors
 Damon Bayer, Isaac Goldstein, and Vladimir N. Minin
 

@@ -45,7 +45,7 @@ theme_set(theme_bw(base_size =22))
 ```
 
 
-# Introduction
+# Orange County, CA COVID-19 Situation Report Jun 20 - Jul 25
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
 
 ```{r executive summary, warning=FALSE}
@@ -108,9 +108,6 @@ We assume that all individuals in Orange County, CA can be split into 6 compartm
 
 ![](assets/model_diagram_seiird.svg)
 
-```{r Model Structure, out.width = "4in"}
-knitr::include_graphics("assets/model_diagram_seiird.svg", error=FALSE)
-```
 
 Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters: 
 

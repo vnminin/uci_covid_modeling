@@ -1,17 +1,27 @@
 name: "uci_covid_modeling"
 output_dir: ../docs
 navbar:
-  title: "uci_covid_modeling"
+  title: "Covid-19 Situation Report by Minin Lab"
   left:
-  - text: Home
+  - text: Latest Report
     href: index.html
+  - text: Archived Reports
+    menu:
+      - text: "Jun 20 - Jul 25"
+        href: jun20_jul25.html
   - text: About
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/vnminin/uci_covid_modeling
 output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
-    theme: cosmo
+    theme: flatly
     highlight: textmate
+    css: style.css
+

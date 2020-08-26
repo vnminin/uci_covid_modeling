@@ -1,0 +1,32 @@
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+	color: #FFF;
+	background-color: #0064A4;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+	color: #FFF;
+	background-color: #0064A4;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+	background-color: #0064A4;
+}
+
+.navbar {
+	background-color: #1B3D6D;
+}
+
+a,
+a:hover {
+	color: #6AA2B8;
+}
+
+.btn-workflowr {
+  display: none;
+  visibility: hidden;
+}
+
+.title {
+	display: none;
+}
+

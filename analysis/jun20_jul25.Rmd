@@ -171,12 +171,6 @@ Posterior distributions encode our updated beliefs after seeing/analyzing data.
 ### The main takeaways are:
 
 - 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`. 
-<!-- Moreover, our prior is set up in such a way that prior probability of  -->
-<!-- $R_0 < 1$ is  `r mean(spread_draws(oc_prior, log_R0)$log_R0 < 0) %>% scales::percent()`. To account for this, we can compute what is called a Bayes factor: the probability of observing the data in hand under the assumption that $R_0 < 1$ divided by the probability of observing the data in hand under the assumption that $R_0 >= 1$.  -->
-<!-- In our case the Bayes factor is equal to `r round(mean(spread_draws(oc_post, log_R0)$log_R0 < 0)/(1-mean(spread_draws(oc_post, log_R0)$log_R0 < 0))/(mean(spread_draws(oc_prior, log_R0)$log_R0 < 0)/(1-mean(spread_draws(oc_prior, log_R0)$log_R0 < 0))))`, which means that the cases and deaths data are `r round(mean(spread_draws(oc_post, log_R0)$log_R0 < 0)/(1-mean(spread_draws(oc_post, log_R0)$log_R0 < 0))/(mean(spread_draws(oc_prior, log_R0)$log_R0 < 0)/(1-mean(spread_draws(oc_prior, log_R0)$log_R0 < 0))))` time more likely under the assumption that $R_0 < 1$. This provides positive, but not yet strong evidence in favor of $R_0 < 1$. Bayes factor above 20 would be considered strong evidence [@kass1995bayes]. -->
-<!-- - `r 100*IFR_bci[".lower"]`% - `r 100*IFR_bci[".upper"]`% of all infections result in death. -->
-<!-- - The data are not informative about mean duration periods spent in E, $\text{I}_e$, and $\text{I}_p$ compartments, so our prior and posterior distributions are very similar.  -->
-<!-- As a result, it is important to specify these priors carefully. -->
 
 ```{r, echo=FALSE}
 # If you want to plot R0 by istelf with custom lims, use this:
@@ -196,85 +190,6 @@ oc_prior %>%
   coord_cartesian(xlim = c(0, 3))
 ```
 
-<!-- For transparency and trend detection it is interesting to track how our estimation of $R_0$ is changing over time.  -->
-<!-- Below we plot the prior credible interval and posterior credible intervals that we reported so far.  -->
-<!-- We see that the current report slightly revises our estimated $R_0$ up relative to our previous report. -->
-
-```{r, eval=FALSE}
-#folder_loc
-#ok this is going to be messy, need to deal with the old R0s from the other model, going to pull them in separately
-model_name2<-"SEImIsRD"
-loc_name2<-"oc"
-OldR0s <- tibble(full_path = list.dirs(here("models", model_name2, loc_name2), full.names = T), 
-              folder_name = list.dirs(here("models", model_name2, loc_name2), full.names = F)) %>%
-  filter(str_detect(folder_name, "^\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}$")) %>% 
-  separate(col = folder_name, into = c("start_date", "end_date"), sep = "_") %>% 
-  group_by(end_date) %>% 
-  filter(start_date == min(start_date)) %>% # remove duplicate analyses
-  ungroup() %>% 
-  mutate(R0 = map(full_path, ~{
-    read_rds(file.path(., "oc_post.rds")) %>%
-      spread_draws(R0) %>%
-      pull(R0)})) %>% 
-  select(-full_path) %>%
-  mutate(start_date = ymd(start_date),
-         end_date = ymd(end_date)) %>% 
-  mutate(name = as.character(glue::glue("{month(start_date)}/{day(start_date)}-{month(end_date)}/{day(end_date)}")))
-
-OldR0s <- OldR0s %>% slice(-c(3))
-
-newR0s<-tibble(full_path = list.dirs(here("models", model_name, loc_name), full.names = T), 
-              folder_name = list.dirs(here("models", model_name, loc_name), full.names = F)) %>%
-  filter(str_detect(folder_name, "^\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}$")) %>% 
-  separate(col = folder_name, into = c("start_date", "end_date"), sep = "_") %>% 
-  group_by(end_date) %>% 
-  filter(start_date == min(start_date)) %>% # remove duplicate analyses
-  ungroup() %>% 
-  filter(start_date!="2020-04-06")%>% #have to do this because damon has some folder with no posterior in it
-  mutate(R0 = map(full_path, ~{
-    read_rds(file.path(., "oc_post.rds")) %>%
-      spread_draws(log_R0) %>%
-      mutate(R0=exp(log_R0))%>%
-      pull(R0)})) %>% 
-  select(-full_path) %>%
-  mutate(start_date = ymd(start_date),
-         end_date = ymd(end_date)) %>% 
-  mutate(name = as.character(glue::glue("{month(start_date)}/{day(start_date)}-{month(end_date)}/{day(end_date)}")))
-
-newR0s <- newR0s %>% slice(-c(1))
-
-prior_R0 <- tibble(R0 = read_rds(file.path(folder_loc, "oc_prior.rds")) %>% 
-                     spread_draws(log_R0) %>%
-                     mutate(R0=exp(log_R0))%>%
-                     pull(R0)) %>% 
-  summarize(R0 = list(R0)) %>%
-  mutate(name = "prior",
-         start_date = ymd("0000-01-01"),
-         end_date = ymd("0000-01-01"))
-
-
-ci_width <- c(0.5, 0.8, 0.95)
-
-R0s<-rbind(OldR0s, newR0s)
-
-bind_rows(prior_R0, R0s) %>% 
-  unnest(R0) %>% 
-  mutate(name = fct_reorder(name, end_date)) %>% 
-  group_by(name) %>% 
-  select(name, R0) %>% 
-  median_qi(.width = ci_width) %>% 
-  ggplot(aes(name, R0, ymin = .lower, ymax = .upper)) +
-  geom_pointinterval(interval_size_range = c(0.8, 1.8), fatten_point=1.0, color="dodgerblue4") +
-  theme_bw() +
-  scale_y_continuous(labels = comma) +
-  ggtitle(expression(paste("Historic/archived estimation of basic reproductive number, ",R[0])),
-          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
-  xlab("Prior and Estimation Time Periods") +
-  ylab(expression(R[0])) + 
-  geom_hline(yintercept = 1.0, linetype = "dashed") 
-#+
- # coord_cartesian(ylim = c(0, NA))
-```
 
 
 ```{r, echo=FALSE}

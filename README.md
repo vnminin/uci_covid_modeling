@@ -27,16 +27,23 @@ data_set <- data
 start_date <- "YYYY-mm-dd"
 end_date <- "YYYY-mm-dd"
 
-#specify the beta parameters for the prior for the fraction in the population not susceptible
+#specify the beta parameters for the prior for the fraction in the population not susceptible, and popsize
 frac_not_susceptible <- c(x, y)
+frac_infected_infectious <-c(w,z)
+frac_infectious_early <-c(u,v)
+
+new_popsize <- N
+
 
 #create the list which will be put into stan
 model_object <- create_model_objects(data_set, 
                                       first_day=start_date, 
                                       last_day=end_date,
                                       time_interval_in_days=3
-                                      popsize=3175692L, 
-                                      frac_carrs_beta=frac_not_susceptible)
+                                      popsize=new_popsize, 
+                                      frac_carrs_beta=frac_not_susceptible,
+                                      frac_carrs_infec_beta=frac_infected_infectious,
+                                      frac_infec_early_beta=frac_infectious_early)
 
 
 #set initial values and controls as needed, and run the code

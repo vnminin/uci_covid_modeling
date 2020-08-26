@@ -437,16 +437,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreeddbef627a90213e5ef1780b21ed27e997c55969btargetblankddbef62a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/ddbef627a90213e5ef1780b21ed27e997c55969b" target="_blank">ddbef62</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree8d52b429024bcbfffa88084bc5338a65d3c5e987targetblank8d52b42a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/8d52b429024bcbfffa88084bc5338a65d3c5e987" target="_blank">8d52b42</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreeddbef627a90213e5ef1780b21ed27e997c55969btargetblankddbef62a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree8d52b429024bcbfffa88084bc5338a65d3c5e987targetblank8d52b42a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/ddbef627a90213e5ef1780b21ed27e997c55969b" target="_blank">ddbef62</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/8d52b429024bcbfffa88084bc5338a65d3c5e987" target="_blank">8d52b42</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -456,11 +456,12 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
+Untracked files:
+    Untracked:  analysis/testing.Rmd
+
 Unstaged changes:
-    Modified:   analysis/about.Rmd
     Modified:   analysis/index.Rmd
     Modified:   analysis/jun20_jul25.Rmd
-    Modified:   analysis/license.Rmd
 
 </code></pre>
 <p>
@@ -499,6 +500,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/8d52b429024bcbfffa88084bc5338a65d3c5e987/docs/index.html" target="_blank">8d52b42</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+<td>
+more updates to website
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/79a6fd6ef7ce37ec9b8ba5bc4f62ddf2c125b580/analysis/index.Rmd" target="_blank">79a6fd6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+<td>
+updating about and license, experimenting with figure size
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -642,9 +677,12 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<div id="orange-county-ca-covid-19-situation-report-start-date---end-date" class="section level1">
-<h1>Orange County, CA COVID-19 Situation Report Start Date - End Date</h1>
+<div id="orange-county-ca-covid-19-situation-report" class="section level1">
+<h1>Orange County, CA COVID-19 Situation Report</h1>
+<div id="start-date---end-date" class="section level2">
+<h2>Start Date - End Date</h2>
 <p>The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day.</p>
+</div>
 <div id="executive-summary" class="section level2">
 <h2>Executive summary</h2>
 <ul>
@@ -663,8 +701,7 @@ Start workflowr project.
 <div id="model-structure" class="section level1">
 <h1>Model structure</h1>
 <p>We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, <span class="math inline">\(\text{I}_\text{e}\)</span> = individuals at early stages of infection, <span class="math inline">\(\text{I}_\text{p}\)</span> = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.</p>
-<p><img src="assets/model_diagram_seiird.svg" /></p>
-<p><img src="assets/model_diagram_seiird.svg" width="4in" style="display: block; margin: auto;" /></p>
+<p><img src="assets/model_diagram_seiird.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters:</p>
 <ul>
 <li>Basic reproductive number (<span class="math inline">\(R_0\)</span>)</li>
@@ -693,19 +730,16 @@ Start workflowr project.
 <div id="the-main-takeaways-are-1" class="section level3">
 <h3>The main takeaways are:</h3>
 <ul>
-<li>95% Bayesian credible interval for the basic reproductive number <span class="math inline">\(R_0\)</span> is (0.37, 0.8). The posterior probability that <span class="math inline">\(R_0\)</span> is above 1.0 is 0%. <!-- Moreover, our prior is set up in such a way that prior probability of  --> <!-- $R_0 < 1$ is  65%. To account for this, we can compute what is called a Bayes factor: the probability of observing the data in hand under the assumption that $R_0 < 1$ divided by the probability of observing the data in hand under the assumption that $R_0 >= 1$.  --> <!-- In our case the Bayes factor is equal to \infty{}, which means that the cases and deaths data are \infty{} time more likely under the assumption that $R_0 < 1$. This provides positive, but not yet strong evidence in favor of $R_0 < 1$. Bayes factor above 20 would be considered strong evidence [@kass1995bayes]. --> <!-- - 0.2% - 1.3% of all infections result in death. --> <!-- - The data are not informative about mean duration periods spent in E, $\text{I}_e$, and $\text{I}_p$ compartments, so our prior and posterior distributions are very similar.  --> <!-- As a result, it is important to specify these priors carefully. --></li>
+<li>95% Bayesian credible interval for the basic reproductive number <span class="math inline">\(R_0\)</span> is (0.37, 0.8). The posterior probability that <span class="math inline">\(R_0\)</span> is above 1.0 is 0%.</li>
 </ul>
 <p><img src="figure/index.Rmd/unnamed-chunk-2-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<!-- For transparency and trend detection it is interesting to track how our estimation of $R_0$ is changing over time.  -->
-<!-- Below we plot the prior credible interval and posterior credible intervals that we reported so far.  -->
-<!-- We see that the current report slightly revises our estimated $R_0$ up relative to our previous report. -->
-<p><img src="figure/index.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-4-2.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-3-1.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-3-2.png" width="1536" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="reported-deaths-and-positive-test-rate-forecast" class="section level1">
 <h1>Reported deaths and positive test rate forecast</h1>
 <p>We report predictive distribution of observed deaths and positive test rate during the observation interval (blue shaded area with black dots in the plot below). In addition, we show a four week ahead forecast for both quantities. Our forecast assumes that interventions (physical distancing orders, mask recommendations, etc.) stay at the status quo, and that there are 2100 tests in each three day interval in the future. We plan to archive our forecasts and retrospectively measure their predictive ability/skill.</p>
-<p><img src="figure/index.Rmd/unnamed-chunk-5-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /></p>
 </div>
 <div id="modeling-limitations" class="section level1">
 <h1>Modeling limitations</h1>
@@ -728,16 +762,16 @@ Start workflowr project.
 <div id="sensitivity-to-prior-for-r_0" class="section level2">
 <h2>Sensitivity to Prior for <span class="math inline">\(R_0\)</span></h2>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. The priors are listed in the titles of the figures. Although the prior distribution of <span class="math inline">\(R_0\)</span> does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior.</p>
-<p><img src="figure/index.Rmd/unnamed-chunk-7-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-8-1.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-8-2.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-8-3.png" width="1536" style="display: block; margin: auto;" /></p>
-<p><img src="figure/index.Rmd/unnamed-chunk-9-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-10-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-6-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-7-1.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-7-2.png" width="1536" style="display: block; margin: auto;" /><img src="figure/index.Rmd/unnamed-chunk-7-3.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-8-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-9-1.png" width="1536" style="display: block; margin: auto;" /></p>
 </div>
 <div id="sensitivity-to-prior-for-fraction-not-susceptible" class="section level2">
 <h2>Sensitivity to prior for fraction not susceptible</h2>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are not susceptible initially. This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of <span class="math inline">\(R_0\)</span>.</p>
 <!-- sensitivity 3 -->
-<p><img src="figure/index.Rmd/unnamed-chunk-11-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-12-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-10-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-11-1.png" width="1536" style="display: block; margin: auto;" /></p>
 <!-- sensitivity 4 -->
-<p><img src="figure/index.Rmd/unnamed-chunk-13-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-14-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/unnamed-chunk-12-1.png" width="1536" style="display: block; margin: auto;" /> <img src="figure/index.Rmd/unnamed-chunk-13-1.png" width="1536" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

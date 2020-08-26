@@ -45,7 +45,8 @@ theme_set(theme_bw(base_size =22))
 ```
 
 
-# Orange County, CA COVID-19 Situation Report Jun 20 - Jul 25
+# Orange County, CA COVID-19 Situation Report 
+## Jun 20 - Jul 25
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
 
 ```{r executive summary, warning=FALSE}
@@ -106,8 +107,10 @@ lumped_ochca_covid %>%
 # Model structure
 We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, $\text{I}_\text{e}$ = individuals at early stages of infection, $\text{I}_\text{p}$ = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.  
 
-![](assets/model_diagram_seiird.svg)
 
+```{r Model Structure, out.width = "70%"}
+knitr::include_graphics("assets/model_diagram_seiird.svg", error=FALSE)
+```
 
 Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters: 
 
@@ -154,7 +157,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.12, 0.8), legend.title = element_text(size=6), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) + 
+  theme(legend.position = c(0.12, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -338,7 +341,7 @@ death_plot <- ggplot() +
   #ggtitle("Deaths due to COVID-19") +
   xlab("Date") +
   ylab("Number of Deaths") +
-  theme(legend.position = c(0.35, 0.8), legend.title = element_text(size=8), legend.text = element_text(size=9), legend.background = element_rect(fill="transparent")) + 
+  theme(legend.position = c(0.35, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
 
@@ -360,7 +363,7 @@ positivity_plot <- ggplot() +
   #ggtitle("Fraction of Positive COVID-19 Tests") +
   xlab("Date") +
   ylab("Positivity Fraction") +
-  theme(legend.position = "none", legend.title = element_text(size=8), legend.text = element_text(size=9), legend.background = element_rect(fill="transparent")) + 
+  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
 
@@ -438,7 +441,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=6), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -522,7 +525,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=6), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -573,7 +576,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=9), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -621,7 +624,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=9), legend.text = element_text(size=6), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)

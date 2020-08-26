@@ -1,0 +1,23 @@
+---
+title: "testing"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(here)
+```
+
+```{r Model Structure, out.width="75%"}
+
+knitr::include_graphics("assets/model_diagram_seiird.svg", error=FALSE)
+```
+![](assets/model_diagram_seiird.svg)

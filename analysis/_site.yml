@@ -1,7 +1,7 @@
 name: "uci_covid_modeling"
 output_dir: ../docs
 navbar:
-  title: "Covid-19 Situation Report by Minin Lab"
+  title: "Covid-19 Situation Report by UC Irvine"
   left:
   - text: Latest Report
     href: index.html

@@ -16,8 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(here)
 ```
 
-```{r Model Structure, out.width="75%"}
+```{r Model Structure, out.width="90%"}
 
-knitr::include_graphics("assets/model_diagram_seiird.svg", error=FALSE)
+knitr::include_graphics("assets/model_figure.svg", error=FALSE)
 ```
-![](assets/model_diagram_seiird.svg)

@@ -1,0 +1,514 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.12)  27 AUG 2020 13:40
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**seiird_fig.tex
+(./seiird_fig.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-08-07>
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count168
+\c@section=\count169
+\c@subsection=\count170
+\c@subsubsection=\count171
+\c@paragraph=\count172
+\c@subparagraph=\count173
+\c@figure=\count174
+\c@table=\count175
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.
+sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.st
+y
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count176
+\Gm@cntv=\count177
+\c@Gm@tempcnt=\count178
+\Gm@bindingoffset=\dimen135
+\Gm@wd@mp=\dimen136
+\Gm@odd@mp=\dimen137
+\Gm@even@mp=\dimen138
+\Gm@layoutwidth=\dimen139
+\Gm@layoutheight=\dimen140
+\Gm@layouthoffset=\dimen141
+\Gm@layoutvoffset=\dimen142
+\Gm@dimlist=\toks16
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/
+tikz.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf
+.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfr
+cs.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+futil-common.tex
+\pgfutil@everybye=\toks17
+\pgfutil@tempdima=\dimen143
+\pgfutil@tempdimb=\dimen144
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+futil-common-lists.tex))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+futil-latex.def
+\pgfutil@abb=\box45
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ms/everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+frcs.code.tex
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision
+.tex)
+Package: pgfrcs 2020/01/08 v3.1.5b (3.1.5b)
+))
+Package: pgf 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf
+core.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.
+sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.
+sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graph
+ics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdfte
+x.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen145
+\Gin@req@width=\dimen146
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pg
+fsys.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgfsys.code.tex
+Package: pgfsys 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+fkeys.code.tex
+\pgfkeys@pathtoks=\toks18
+\pgfkeys@temptoks=\toks19
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+fkeysfiltered.code.tex
+\pgfkeys@tmptoks=\toks20
+))
+\pgf@x=\dimen147
+\pgf@y=\dimen148
+\pgf@xa=\dimen149
+\pgf@ya=\dimen150
+\pgf@xb=\dimen151
+\pgf@yb=\dimen152
+\pgf@xc=\dimen153
+\pgf@yc=\dimen154
+\pgf@xd=\dimen155
+\pgf@yd=\dimen156
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count179
+\c@pgf@countb=\count180
+\c@pgf@countc=\count181
+\c@pgf@countd=\count182
+\t@pgf@toka=\toks21
+\t@pgf@tokb=\toks22
+\t@pgf@tokc=\toks23
+\pgf@sys@id@count=\count183
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgf.cfg
+File: pgf.cfg 2020/01/08 v3.1.5b (3.1.5b)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2020/01/08 v3.1.5b (3.1.5b)
+)))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfsyssoftpath@smallbuffer@items=\count184
+\pgfsyssoftpath@bigbuffer@items=\count185
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/
+pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color
+.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcore.code.tex
+Package: pgfcore 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+.code.tex
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+calc.code.tex
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+util.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+parser.code.tex
+\pgfmath@dimen=\dimen157
+\pgfmath@count=\count186
+\pgfmath@box=\box46
+\pgfmath@toks=\toks24
+\pgfmath@stack@operand=\toks25
+\pgfmath@stack@operation=\toks26
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.code.tex
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.basic.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.trigonometric.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.random.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.comparison.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.base.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.round.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.misc.code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+functions.integerarithmetics.code.tex)))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+float.code.tex
+\c@pgfmathroundto@lastzeros=\count187
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.
+code.tex)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@picminx=\dimen158
+\pgf@picmaxx=\dimen159
+\pgf@picminy=\dimen160
+\pgf@picmaxy=\dimen161
+\pgf@pathminx=\dimen162
+\pgf@pathmaxx=\dimen163
+\pgf@pathminy=\dimen164
+\pgf@pathmaxy=\dimen165
+\pgf@xx=\dimen166
+\pgf@xy=\dimen167
+\pgf@yx=\dimen168
+\pgf@yy=\dimen169
+\pgf@zx=\dimen170
+\pgf@zy=\dimen171
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@path@lastx=\dimen172
+\pgf@path@lasty=\dimen173
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@shorten@end@additional=\dimen174
+\pgf@shorten@start@additional=\dimen175
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfpic=\box47
+\pgf@hbox=\box48
+\pgf@layerbox@main=\box49
+\pgf@picture@serial@count=\count188
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgflinewidth=\dimen176
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@pt@x=\dimen177
+\pgf@pt@y=\dimen178
+\pgf@pt@temp=\dimen179
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorequick.code.tex
+File: pgfcorequick.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfarrowsep=\dimen180
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@max=\dimen181
+\pgf@sys@shading@range@num=\count189
+\pgf@shadingcount=\count190
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfexternal@startupbox=\box50
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/p
+gfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfm
+oduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfnodeparttextbox=\box51
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfm
+oduleplot.code.tex
+File: pgfmoduleplot.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/
+pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@nodesepstart=\dimen182
+\pgf@nodesepend=\dimen183
+)
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/
+pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2020/01/08 v3.1.5b (3.1.5b)
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgff
+or.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfk
+eys.sty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+fkeys.code.tex))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.s
+ty
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+.code.tex))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pg
+ffor.code.tex
+Package: pgffor 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath
+.code.tex)
+\pgffor@iter=\dimen184
+\pgffor@skip=\dimen185
+\pgffor@stack=\toks27
+\pgffor@toks=\toks28
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlaye
+r/tikz/tikz.code.tex
+Package: tikz 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pg
+flibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgf@plot@mark@count=\count191
+\pgfplotmarksize=\dimen186
+)
+\tikz@lastx=\dimen187
+\tikz@lasty=\dimen188
+\tikz@lastxsaved=\dimen189
+\tikz@lastysaved=\dimen190
+\tikz@lastmovetox=\dimen191
+\tikz@lastmovetoy=\dimen192
+\tikzleveldistance=\dimen193
+\tikzsiblingdistance=\dimen194
+\tikz@figbox=\box52
+\tikz@figbox@bg=\box53
+\tikz@tempbox=\box54
+\tikz@tempbox@bg=\box55
+\tikztreelevel=\count192
+\tikznumberofchildren=\count193
+\tikznumberofcurrentchild=\count194
+\tikz@fig@count=\count195
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfm
+odulematrix.code.tex
+File: pgfmodulematrix.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\pgfmatrixcurrentrow=\count196
+\pgfmatrixcurrentcolumn=\count197
+\pgf@matrix@numberofcolumns=\count198
+)
+\tikz@expandcount=\count199
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlaye
+r/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+)))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlaye
+r/tikz/libraries/tikzlibraryarrows.code.tex
+File: tikzlibraryarrows.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pg
+flibraryarrows.code.tex
+File: pgflibraryarrows.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+\arrowsize=\dimen195
+))
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
+d-pdfmode.def
+File: l3backend-pdfmode.def 2020-08-07 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count266
+\l__pdf_internal_box=\box56
+) (./seiird_fig.aux)
+\openout1 = `seiird_fig.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(36.135pt, 542.02501pt, 36.135pt)
+* v-part:(T,H,B)=(36.135pt, 722.7pt, 36.135pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=542.02501pt
+* \textheight=722.7pt
+* \oddsidemargin=-36.135pt
+* \evensidemargin=-36.135pt
+* \topmargin=-73.135pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+ABD: EveryShipout initializing macros
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
+pdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(c:/Users/fiddl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstop
+df-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 28.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 28.
+
+Overfull \hbox (15.10822pt too wide) in paragraph at lines 11--29
+[][] 
+ []
+
+! I can't write on file `seiird_fig.pdf'.
+(Press Enter to retry, or Control-Z to exit; default file extension is `.pdf')
+Please type another file name for output
+! Emergency stop.
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.29 \end{document}
+                   
+*** (job aborted, file error in nonstop mode)
+
+ 
+Here is how much of TeX's memory you used:
+ 12217 strings out of 482841
+ 258570 string characters out of 5955014
+ 465937 words of memory out of 5000000
+ 27395 multiletter control sequences out of 15000+600000
+ 535386 words of font info for 30 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 60i,8n,60p,414b,618s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

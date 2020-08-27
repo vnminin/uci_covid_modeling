@@ -1,5 +1,5 @@
 ---
-title: "Orange County, CA COVID-19 Situation Report Start Date - End Date"
+title: "Orange County, CA COVID-19 Situation Report Jul 11 - Aug 15"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -27,7 +27,6 @@ loc_name <- "oc"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-theme_set(theme_bw(base_size =12))
 
 #if you want to run the analysis, change to TRUE. Otherwise the site will display the most recent results
 run_analysis <- FALSE
@@ -324,7 +323,7 @@ theme_set(theme_bw(base_size =22))
 ```
 
 # Orange County, CA COVID-19 Situation Report 
-## Start Date - End Date
+## Jul 11 - Aug 15
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
 
 ```{r executive summary, warning=FALSE}
@@ -373,8 +372,8 @@ lumped_ochca_covid %>%
   mutate(name = str_remove(name, "new_") %>% str_to_title()) %>% 
   mutate(name = fct_relevel(name, c("Tests", "Cases", "Deaths"))) %>% 
   ggplot(aes(end_date, value)) +
-  geom_line() +
-  geom_point() +
+  geom_line(size=2) +
+  geom_point(size=4) +
   facet_wrap(. ~ name, scales = "free_y") +
   xlab("Date") +
   ylab("Count") +
@@ -386,8 +385,8 @@ lumped_ochca_covid %>%
 We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, $\text{I}_\text{e}$ = individuals at early stages of infection, $\text{I}_\text{p}$ = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.  
 
 
-```{r Model Structure, out.width = "70%"}
-knitr::include_graphics("assets/model_diagram_seiird.svg", error=FALSE)
+```{r Model Structure, out.width = "90%"}
+knitr::include_graphics("assets/model_figure.svg", error=FALSE)
 ```
 
 Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters: 
@@ -435,7 +434,7 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.12, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -452,7 +451,7 @@ Posterior distributions encode our updated beliefs after seeing/analyzing data.
 
 ```{r, echo=FALSE}
 # If you want to plot R0 by istelf with custom lims, use this:
-oc_prior %>%
+R0 <- oc_prior %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   dplyr::select(-starts_with(".")) %>%
@@ -466,12 +465,8 @@ oc_prior %>%
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
   coord_cartesian(xlim = c(0, 3))
-```
 
-
-
-```{r, echo=FALSE}
-oc_prior %>%
+IFR <- oc_prior %>%
   spread_draws(IFR) %>% 
   select(-starts_with(".")) %>% 
   mutate(dist = "Prior") %>% 
@@ -484,31 +479,14 @@ oc_prior %>%
   #geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
   xlab("Infection-to-fatality ratio (IFR)") +
-  coord_cartesian(xlim = c(0, .05))
+  coord_cartesian(xlim = c(0, .03))
 
-weeks_vars <- quos(latent_dur, early_dur, prog_dur)
+param_plot <- R0 + IFR +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR')
 
-oc_prior %>%
-  spread_draws(!!!weeks_vars) %>% 
-  select(-starts_with(".")) %>% 
-  mutate(dist = "Prior") %>% 
-  pivot_longer(-dist) %>% 
-  bind_rows(oc_post %>%
-              spread_draws(!!!weeks_vars) %>% 
-              select(-starts_with(".")) %>% 
-              mutate(dist = "Posterior") %>% 
-              pivot_longer(-dist)) %>% 
-  mutate(name = fct_inorder(name)) %>% 
-  mutate(name = fct_recode(name,
-                           "Mean latent period duration" = "latent_dur",
-                           "Mean early infection duration" = "early_dur",
-                           "Mean progressing infection duration" = "prog_dur")) %>% 
-  ggplot(aes(x = value, y = dist)) +
-  facet_wrap(. ~ name, scales = "free_x") +
-  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
-  xlab("Weeks") +
-  ylab(NULL)
+param_plot
 ```
+
 
 
 
@@ -534,7 +512,7 @@ death_plot <- ggplot() +
   #ggtitle("Deaths due to COVID-19") +
   xlab("Date") +
   ylab("Number of Deaths") +
-  theme(legend.position = c(0.35, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
 
@@ -573,7 +551,7 @@ death_pos
 
 # Modeling limitations
 
-* Some model parameters are not well identified, so we rely on scientifically sound prior information (please check our assumptions and help us improve our priors!). We will include sensitivity to prior analyses as an appendix in future reports.
+* Some model parameters are not well identified, so we rely on scientifically sound prior information (please check our assumptions and help us improve our priors!). 
 * The model assumes a well mixed population with no geographic or age structure.
 * Basic reproductive number ($R_0$) is constant. However, implementation of physical distancing and school closures should gradually reduce it. Similarly, relaxing current physical distancing measures will start increasing $R_0$.
 
@@ -634,14 +612,15 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
 ```
+
 ```{r, warnings=FALSE}
 ## If you want to plot R0 by istelf with custom lims, use this:
-oc_prior_sensitivity1 %>%
+R0_s1 <- oc_prior_sensitivity1 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   select(-starts_with(".")) %>%
@@ -655,14 +634,11 @@ oc_prior_sensitivity1 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 6))+
-  ggtitle("Priors: R0~lognorm(log(2.5), 0.5)",)
+  coord_cartesian(xlim = c(0, 3))
 # and substitute
-unitless_vars <- quos(mild2sev_frac, sev2death_frac)
 
-#unitless_vars <- quos(R0, mild2sev_frac, sev2death_frac)
 
-oc_prior_sensitivity1%>%
+IFR_s1 <- oc_prior_sensitivity1%>%
   spread_draws(IFR) %>% 
   select(-starts_with(".")) %>% 
   mutate(dist = "Prior") %>% 
@@ -676,29 +652,12 @@ oc_prior_sensitivity1%>%
   ylab(NULL) +
   coord_cartesian(xlim = c(0, .05))
 
-weeks_vars <- quos(latent_dur, early_dur, prog_dur)
+param_plot_s1 <- R0_s1 + IFR_s1 +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+                    subtitle= 'R0 ~ lognormal(log(2.5), .5)')
 
-oc_prior_sensitivity1 %>%
-  spread_draws(!!!weeks_vars) %>%
-  select(-starts_with(".")) %>%
-  mutate(dist = "Prior") %>%
-  pivot_longer(-dist) %>%
-  bind_rows(oc_post_sensitivity1 %>%
-              spread_draws(!!!weeks_vars) %>%
-              select(-starts_with(".")) %>%
-              mutate(dist = "Posterior") %>%
-              pivot_longer(-dist)) %>%
-  mutate(name = fct_inorder(name)) %>%
-  mutate(name = fct_recode(name,
-                           "Mean latent period duration" = "latent_dur",
-                           "Mean early infection duration" = "early_dur",
-                           "Mean progressing infection duration" = "prog_dur")) %>%
-  ggplot(aes(x = value, y = dist)) +
-  facet_wrap(. ~ name, scales = "free_x") +
-  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
-  xlab("Weeks") +
-  ylab(NULL)+
-  ggtitle("Priors: R0~lognorm(log(2.5), 0.5)",)
+param_plot_s1
+
 ```
 
 ```{r, warning=FALSE}
@@ -718,15 +677,15 @@ ggplot() +
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
 
 ```
+
 ```{r, echo=FALSE}
-## If you want to plot R0 by istelf with custom lims, use this:
-oc_prior_sensitivity2 %>%
+R0_s2 <- oc_prior_sensitivity2 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   select(-starts_with(".")) %>%
@@ -740,14 +699,33 @@ oc_prior_sensitivity2 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 6))+
-  ggtitle("Priors: R0~lognorm(log(0.53), 0.78)",)
+  coord_cartesian(xlim = c(0, 3))
 # and substitute
-unitless_vars <- quos(mild2sev_frac, sev2death_frac)
+
+
+IFR_s2 <- oc_prior_sensitivity2%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity2 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s2 <- R0_s2 + IFR_s2 +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+                    subtitle= 'R0 ~ lognormal(log(.53), .78)')
+
+param_plot_s2
 ```
 
-## Sensitivity to prior for fraction not susceptible
-We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are not susceptible initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+## Sensitivity to prior for fraction initially infected
+We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
 As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of $R_0$. 
 
 <!-- sensitivity 3 -->
@@ -765,18 +743,18 @@ ggplot() +
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y") +
-  ggtitle("Latent & observed cumulative events: Mean Not Susceptible Twice as Large",
+  ggtitle("Latent & observed cumulative events: Mean Initial Infected Twice as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
 ```
+
 ```{r, warnings=FALSE}
-## If you want to plot R0 by istelf with custom lims, use this:
-oc_prior_sensitivity3 %>%
+R0_s3 <- oc_prior_sensitivity3 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   select(-starts_with(".")) %>%
@@ -790,12 +768,29 @@ oc_prior_sensitivity3 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 6))+
-  ggtitle("Priors: Mean Not Susceptible Twice as Large")
+  coord_cartesian(xlim = c(0, 3))
 # and substitute
-unitless_vars <- quos(mild2sev_frac, sev2death_frac)
 
-#unitless_vars <- quos(R0, mild2sev_frac, sev2death_frac)
+
+IFR_s3 <- oc_prior_sensitivity3%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity3 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s3 <- R0_s3 + IFR_s3 +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+                    subtitle= 'Mean Initial Infected Twice as Large')
+
+param_plot_s3
 ```
 
 <!-- sensitivity 4 -->
@@ -813,18 +808,18 @@ ggplot() +
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y") +
-  ggtitle("Latent & observed cumulative events: Mean Not Susceptible Half as Large",
+  ggtitle("Latent & observed cumulative events: Mean Initial Infected Half as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.15, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
 ```
+
 ```{r, warnings=FALSE}
-## If you want to plot R0 by istelf with custom lims, use this:
-oc_prior_sensitivity4 %>%
+R0_s4 <- oc_prior_sensitivity4 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   select(-starts_with(".")) %>%
@@ -838,11 +833,29 @@ oc_prior_sensitivity4 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 6))+
-  ggtitle("Priors: Mean Not Susceptible Half as Large")
+  coord_cartesian(xlim = c(0, 3))
 # and substitute
-unitless_vars <- quos(mild2sev_frac, sev2death_frac)
 
-#unitless_vars <- quos(R0, mild2sev_frac, sev2death_frac)
+
+IFR_s4 <- oc_prior_sensitivity4%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity4 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s4 <- R0_s4 + IFR_s4 +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+                    subtitle= 'Mean Initial Infected Half as Large')
+
+param_plot_s4
 ```
 
+Last updated on `r Sys.Date()`. 

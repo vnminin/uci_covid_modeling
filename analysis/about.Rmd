@@ -22,7 +22,7 @@ Jon Fintzi, Keith Lumbard, and Emily Ricotta
 National Institute of Allergy and Infectious Diseases
 
 ### Contact
-For questions please contact somebody.
+For questions please contact [Prof. Vladimir Minin](https://vnminin.github.io/).  
 
 ## Methodology
 
@@ -32,3 +32,5 @@ We use data provided by OCHCA. An aggregated version of our data is available in
 ### Statistical methodology
 Our analysis relies on a six compartment mechanistic model of the pandemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the methodology are available in the [manuscript](a link).
 
+### Software
+We used the [R](https://www.r-project.org/) software environment, [tidyverse](https://www.tidyverse.org/) and [workflowr](https://jdblischak.github.io/workflowr/) packages for this website. Our analysis was conducted in [Stan](https://mc-stan.org/) with the [rstan](https://mc-stan.org/users/interfaces/rstan) package. 

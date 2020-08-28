@@ -108,7 +108,7 @@ lumped_ochca_covid %>%
 We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, $\text{I}_\text{e}$ = individuals at early stages of infection, $\text{I}_\text{p}$ = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.  
 
 
-```{r Model Structure, out.width = "90%"}
+```{r Model Structure, out.width = "60%"}
 knitr::include_graphics("assets/model_figure.svg", error=FALSE)
 ```
 
@@ -278,11 +278,11 @@ death_pos
 * The model assumes a well mixed population with no geographic or age structure.
 * Basic reproductive number ($R_0$) is constant. However, implementation of physical distancing and school closures should gradually reduce it. Similarly, relaxing current physical distancing measures will start increasing $R_0$.
 
-# Planned model extensions 
+<!-- # Planned model extensions  -->
 
-* We plan to add H = hospitalized and ICU compartments to the model. This extension will allow us to inform the model with hospitalization and occupied ICU beds time series, in addition to already used test, case, and death counts. Equally importantly, we will be able to forecast hospital and ICU occupancy. 
-* We will allow $R_0$ to vary with time and will attempt to estimate its changes non-parameterically.
-* We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model.
+<!-- * We plan to add H = hospitalized and ICU compartments to the model. This extension will allow us to inform the model with hospitalization and occupied ICU beds time series, in addition to already used test, case, and death counts. Equally importantly, we will be able to forecast hospital and ICU occupancy.  -->
+<!-- * We will allow $R_0$ to vary with time and will attempt to estimate its changes non-parameterically. -->
+<!-- * We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model. -->
 
 
 # Appendix

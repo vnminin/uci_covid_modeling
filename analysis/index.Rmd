@@ -364,7 +364,8 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
 
 ## Executive summary
 
-- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).
+- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
+- 95% Bayesian credible interval for the effective reproductive number $R_e$ as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). We want to keep $R_e < 1$ in order to control virus transmission.
 - 95% Bayesian credible interval for the total number of infections that had occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r comma(death_inc_summaries["Cumulative Incidence",".lower"])`, `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`). The number of reported cases in this period was `r comma(death_inc_summaries["Cumulative Incidence","observed"])`.
 - 95% Bayesian credible interval for the infection-to-fatality ratio (IFR), defined as a fraction of deaths among the total number of infections, 
 is (`r IFR_bci[".lower"]`, `r IFR_bci[".upper"]`).
@@ -458,7 +459,9 @@ Posterior distributions encode our updated beliefs after seeing/analyzing data.
 
 ### The main takeaways are:
 
-- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`. 
+- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).  
+- Since the fraction of susceptible individuals $S(t)$ is constantly decreasing, according to our model, it is interesting to track the effective reproductive number, $R_e(t) = S(t)R_0$. 95% Bayesian credible interval for the basic reproductive number $R_e$ on `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`).
+<!-- The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`.  -->
 
 ```{r, echo=FALSE}
 # If you want to plot R0 by istelf with custom lims, use this:

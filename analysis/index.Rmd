@@ -329,6 +329,17 @@ The goal of this report is to inform interested parties about dynamics of SARS-C
 ```{r executive summary, warning=FALSE}
 R0_bci = oc_post %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
 
+R_eff_bci <- spread_draws(oc_post, log_R0) %>%
+  select(.draw, log_R0) %>%
+  left_join(prep_epi_curves(oc_post, model_objects) %>%
+              filter(g_text == "S",
+                     t == model_objects$actual_last_day) %>%
+              ungroup() %>%
+              select(S = epi_curves, .draw)) %>%
+  transmute(Reff = exp(log_R0) * S) %>% 
+  median_qi(Reff) %>% 
+  mutate_if(is.numeric, signif, 2)
+
 IFR_bci = oc_post %>% spread_draws(IFR) %>% median_qi(IFR) %>% mutate_if(is.numeric, signif, 2)
 
 rho_death_bci = oc_post %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)

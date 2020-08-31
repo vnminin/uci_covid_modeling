@@ -123,7 +123,7 @@ control_list <- list(adapt_delta = 0.99,
 # control_list <- list()
 
 # update population size with median of the posterior for fraction susceptibles day before analysis start
-new_pop_size <- median(for_estimating$S) * 3175692L
+new_pop_size <- as.integer(median(for_estimating$S) * 3175692L)
 
 #create model objects to input into stan, see helper_functions.R for details
 model_objects <- create_model_objects(ochca_covid = oc_data,
@@ -379,12 +379,13 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position="left") +
   ggtitle("Orange County, CA Latent & observed cumulative events",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -630,12 +631,13 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s1$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(2.5), 0.5)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -695,12 +697,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s2$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(0.53), 0.78)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", 
+        legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -765,12 +769,13 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s3$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Twice as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -830,12 +835,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s4$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Half as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", 
+        legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)

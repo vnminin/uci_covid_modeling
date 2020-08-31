@@ -76,7 +76,8 @@ target_date <- unique(oc_post_old_wide$t)[which.min(abs(unique(oc_post_old_wide$
 
 for_estimating <- oc_post_old_wide %>%
   filter(t == target_date) %>%
-  transmute(frac_carrs = 1 - S,
+  transmute(S=S,
+            frac_carrs = 1 - S,
             frac_carrs_infec = (IE + IP) / (E + IE + IP),
             frac_infec_early = IE /(IE + IP))
 
@@ -121,6 +122,9 @@ control_list <- list(adapt_delta = 0.99,
                      max_treedepth = 20)
 # control_list <- list()
 
+# update population size with median of the posterior for fraction susceptibles day before analysis start
+new_pop_size <- median(for_estimating$S) * 3175692L
+
 #create model objects to input into stan, see helper_functions.R for details
 model_objects <- create_model_objects(ochca_covid = oc_data,
                                       first_day = start_date,
@@ -128,6 +132,7 @@ model_objects <- create_model_objects(ochca_covid = oc_data,
                                       time_interval_in_days = 3,
                                       forecast_in_days = 7 * 4,
                                       future_tests_per_day = 700,
+                                      popsize = new_pop_size,
                                       frac_carrs_beta = frac_carrs_prior,
                                       frac_carrs_infec_beta = frac_carrs_infec_prior,
                                       frac_infec_early_beta = frac_infec_early_prior)

@@ -385,7 +385,9 @@ ggplot() +
   xlab("Date") +
   ylab(NULL) +
   theme(strip.background = element_blank(),
-           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+           strip.placement = "outside", 
+        strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -637,7 +639,8 @@ ggplot() +
   xlab("Date") +
   ylab(NULL) +
   theme(strip.background = element_blank(),
-           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -703,8 +706,8 @@ ggplot() +
   xlab("Date") +
   ylab(NULL) +
   theme(strip.background = element_blank(),
-           strip.placement = "outside", 
-        legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -775,7 +778,8 @@ ggplot() +
   xlab("Date") +
   ylab(NULL) +
   theme(strip.background = element_blank(),
-           strip.placement = "outside", legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -841,8 +845,8 @@ ggplot() +
   xlab("Date") +
   ylab(NULL) +
   theme(strip.background = element_blank(),
-           strip.placement = "outside", 
-        legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)

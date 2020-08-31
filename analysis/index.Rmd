@@ -592,7 +592,7 @@ We plan to archive our forecasts and retrospectively measure their predictive ab
 
 ## Sensitivity to Prior for $R_0$
 
-We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
 The priors are listed in the titles of the figures.
 Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior. 
 
@@ -755,7 +755,7 @@ param_plot_s2
 ```
 
 ## Sensitivity to prior for fraction initially infected
-We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
 As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of $R_0$. 
 
 <!-- sensitivity 3 -->

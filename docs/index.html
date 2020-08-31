@@ -346,7 +346,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-08-27
+<strong>Last updated:</strong> 2020-08-30
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -437,16 +437,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree7c5be6af374c9eba35ed42d215d9b16ee326414ftargetblank7c5be6aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/7c5be6af374c9eba35ed42d215d9b16ee326414f" target="_blank">7c5be6a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree2eb7b7368f02078135b3ed3d92492cc600c44bf5targetblank2eb7b73a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/2eb7b7368f02078135b3ed3d92492cc600c44bf5" target="_blank">2eb7b73</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree7c5be6af374c9eba35ed42d215d9b16ee326414ftargetblank7c5be6aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree2eb7b7368f02078135b3ed3d92492cc600c44bf5targetblank2eb7b73a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/7c5be6af374c9eba35ed42d215d9b16ee326414f" target="_blank">7c5be6a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/2eb7b7368f02078135b3ed3d92492cc600c44bf5" target="_blank">2eb7b73</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -457,6 +457,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/index.Rmd
+    Modified:   analysis/jun20_jul25.Rmd
 
 </code></pre>
 <p>
@@ -495,6 +496,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2eb7b7368f02078135b3ed3d92492cc600c44bf5/analysis/index.Rmd" target="_blank">2eb7b73</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+added some text with effexctive reproductive number
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/2eb7b7368f02078135b3ed3d92492cc600c44bf5/docs/index.html" target="_blank">2eb7b73</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+added some text with effexctive reproductive number
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -813,6 +848,219 @@ Start workflowr project.
 <div id="jul-11---aug-15" class="section level2">
 <h2>Jul 11 - Aug 15</h2>
 <p>The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day.</p>
+<p><img src="figure/index.Rmd/Latent%20vs%20observed%20incidence-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Latent-vs-observed-incidence-1">
+Past versions of “Latent vs observed incidence-1.png”
+</button>
+</p>
+<div id="fig-no-spaces-Latent-vs-observed-incidence-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/index.Rmd/unnamed-chunk-2-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/index.Rmd/unnamed-chunk-3-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="executive-summary" class="section level2">
 <h2>Executive summary</h2>
@@ -960,88 +1208,6 @@ igoldsteinh
 <li>Cases underestimate the total number of infections by a factor that ranges with 95% probability between 1.7 and 11. This means that we estimate that the total number of infections between July 11, 2020 and August 15, 2020 is between 25,000 and 160,000. The number of reported cases in this period was 15,000.</li>
 <li>95% Bayesian credible interval of death underreporting factor is (0.51, 0.97).</li>
 </ul>
-<p><img src="figure/index.Rmd/Latent%20vs%20observed%20incidence-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Latent-vs-observed-incidence-1">
-Past versions of “Latent vs observed incidence-1.png”
-</button>
-</p>
-<div id="fig-no-spaces-Latent-vs-observed-incidence-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">33f234e</a>
-</td>
-<td>
-vnminin
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">4ca76fb</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">a07b913</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">8abe830</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/Latent vs observed incidence-1.png" target="_blank">99d68f7</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-07-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 </div>
 <div id="prior-and-posterior-distributions-of-model-parameters" class="section level1">
@@ -1054,142 +1220,11 @@ igoldsteinh
 </li>
 <li>Since the fraction of susceptible individuals <span class="math inline">\(S(t)\)</span> is constantly decreasing, according to our model, it is interesting to track the effective reproductive number, <span class="math inline">\(R_e(t) = S(t)R_0\)</span>. 95% Bayesian credible interval for the basic reproductive number <span class="math inline">\(R_e\)</span> on August 15, 2020 is (0.42, 0.72). <!-- The posterior probability that $R_0$ is above 1.0 is 0%.  --></li>
 </ul>
-<p><img src="figure/index.Rmd/unnamed-chunk-2-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
-Past versions of unnamed-chunk-2-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">33f234e</a>
-</td>
-<td>
-vnminin
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">4ca76fb</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">8abe830</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">99d68f7</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-07-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 </div>
 <div id="reported-deaths-and-positive-test-rate-forecast" class="section level1">
 <h1>Reported deaths and positive test rate forecast</h1>
 <p>We report predictive distribution of observed deaths and positive test rate during the observation interval (blue shaded area with black dots in the plot below). In addition, we show a four week ahead forecast for both quantities. Our forecast assumes that interventions (physical distancing orders, mask recommendations, etc.) stay at the status quo, and that there are 2100 tests in each three day interval in the future. We plan to archive our forecasts and retrospectively measure their predictive ability/skill.</p>
-<p><img src="figure/index.Rmd/unnamed-chunk-3-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">33f234e</a>
-</td>
-<td>
-vnminin
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">4ca76fb</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">a07b913</a>
-</td>
-<td>
-igoldsteinh
-</td>
-<td>
-2020-08-26
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="modeling-limitations" class="section level1">
 <h1>Modeling limitations</h1>
@@ -1826,7 +1861,7 @@ igoldsteinh
 </table>
 </div>
 </div>
-<p>Last updated on 2020-08-27.</p>
+<p>Last updated on 2020-08-30.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

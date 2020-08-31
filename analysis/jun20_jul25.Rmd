@@ -74,6 +74,30 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
   column_to_rownames(var = "name")
 ```
 
+```{r Latent vs observed incidence, warning=FALSE}
+ci_width <- c(0.5, 0.8, 0.95)
+  
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc$posterior %>% 
+                    group_by(t, name, usage) %>% 
+                    median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc$observed,
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y") +
+  ggtitle("Orange County, CA Latent & observed cumulative events",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+
+
 ## Executive summary
 
 - 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).
@@ -140,28 +164,6 @@ between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and
 - 95% Bayesian credible interval of death underreporting factor is (`r rho_death_bci[".lower"]`, `r rho_death_bci[".upper"]`).
 
 
-```{r Latent vs observed incidence, warning=FALSE}
-ci_width <- c(0.5, 0.8, 0.95)
-  
-ggplot() +
-  geom_lineribbon(data = prepped_cumulative_inc$posterior %>% 
-                    group_by(t, name, usage) %>% 
-                    median_qi(.width = ci_width),
-  mapping = aes(t, value, ymin = .lower, ymax = .upper),
-  color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc$observed,
-           mapping = aes(x = t, y = observed),
-           fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
-  ggtitle("Orange County, CA Latent & observed cumulative events",
-          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
-  xlab("Date") +
-  ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
-  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
-  scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
-  scale_y_continuous(labels = comma)
-```
 
 # Prior and posterior distributions of model parameters
 Next we report prior and posterior distributions of key model parameters. 

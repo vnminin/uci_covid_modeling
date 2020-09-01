@@ -487,7 +487,7 @@ This means that we estimate that the total number of infections occurred between
 - Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay in tens of thousands in September. 
 - Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
 - Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
-- Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deseased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
+- Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deceased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
 
 <hr style="height:3px;border-width:0;color:gray;background-color:gray">
 

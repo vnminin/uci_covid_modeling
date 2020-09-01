@@ -27,7 +27,9 @@ For questions please contact [Prof. Vladimir Minin](https://vnminin.github.io/).
 ## Methodology
 
 ### Data
-We use data provided by OCHCA. An aggregated version of our data is available in the [github](https://github.com/vnminin/uci_covid_modeling/tree/master/data). Crucially, we exclude repeat tests given to patients who test positive (which happens when patients are hospitalized). We also do not analyze data in real time. This is because case, test, and death counts are often updated retroactively, and we wish to give data collectors time to provide complete results. Typically, there will be at least a ten day gap between the present day and the final date analyzed in the most recent report. 
+We use data provided by OCHCA. An aggregated version of our data is available in the [github](https://github.com/vnminin/uci_covid_modeling/tree/master/data). Crucially, we exclude repeat tests given to patients who test positive (which happens when patients are hospitalized). Our data may not correspond with publicly available data. 
+
+We also do not analyze data in real time. This is because case, test, and death counts are often updated retroactively, and we wish to give data collectors time to provide complete results. Typically, there will be at least a ten day gap between the present day and the final date analyzed in the most recent report. 
 
 ### Statistical methodology
 Our analysis relies on a six compartment mechanistic model of the pandemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the methodology are available in the [manuscript](a link).

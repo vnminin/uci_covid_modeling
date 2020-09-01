@@ -484,14 +484,17 @@ param_plot
 ## Summary (statements are made assuming 95% credibility levels)
 - The number of reported cases (`r comma(death_inc_summaries["Cumulative Incidence","observed"])` in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
 This means that we estimate that the total number of infections occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
-- Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay tens of thousands in September. 
-- Deaths are also underreported, but not significantly so. Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
+- Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay in tens of thousands in September. 
+- Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
 - Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
 - Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deseased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
 
-## Abbreviated technical details
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+
+## Abbreviated technical details (optional)
 
 Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. 
+More flashed out method description is in the [manuscript](a link). 
 
 ### Model inputs
 Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.
@@ -503,8 +506,8 @@ lumped_ochca_covid %>%
   mutate(name = str_remove(name, "new_") %>% str_to_title()) %>% 
   mutate(name = fct_relevel(name, c("Tests", "Cases", "Deaths"))) %>% 
   ggplot(aes(end_date, value)) +
-  geom_line(size=2) +
-  geom_point(size=4) +
+  geom_line(size=1) +
+  geom_point(size=3) +
   facet_wrap(. ~ name, scales = "free_y") +
   xlab("Date") +
   ylab("Count") +

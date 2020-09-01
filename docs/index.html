@@ -328,7 +328,7 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -337,7 +337,7 @@ $(document).ready(function () {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -346,10 +346,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-08-31
+<strong>Last updated:</strong> 2020-09-01
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>uci_covid_modeling/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -365,12 +365,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -437,16 +437,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree660bde6adb0d5f20269cec4ba692d39e569bbef6targetblank660bde6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/660bde6adb0d5f20269cec4ba692d39e569bbef6" target="_blank">660bde6</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreed3179bac3bd429160eae4808e1402ef4565c1bb6targetblankd3179baa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/d3179bac3bd429160eae4808e1402ef4565c1bb6" target="_blank">d3179ba</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree660bde6adb0d5f20269cec4ba692d39e569bbef6targetblank660bde6a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreed3179bac3bd429160eae4808e1402ef4565c1bb6targetblankd3179baa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/660bde6adb0d5f20269cec4ba692d39e569bbef6" target="_blank">660bde6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/d3179bac3bd429160eae4808e1402ef4565c1bb6" target="_blank">d3179ba</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -455,6 +455,9 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -493,6 +496,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d3179bac3bd429160eae4808e1402ef4565c1bb6/analysis/index.Rmd" target="_blank">d3179ba</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+<td>
+forgot to rebuild
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/d3179bac3bd429160eae4808e1402ef4565c1bb6/docs/index.html" target="_blank">d3179ba</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+<td>
+forgot to rebuild
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1414,16 +1451,17 @@ igoldsteinh
 <div id="summary-statements-are-made-assuming-95-credibility-levels" class="section level2">
 <h2>Summary (statements are made assuming 95% credibility levels)</h2>
 <ul>
-<li>The number of reported cases (15,000 in this period) underestimates the actual number of infections by a factor that ranges between 1.6 and 11. This means that we estimate that the total number of infections occurred between July 11, 2020 and August 15, 2020 is between 23,000 and 160,000.</li>
-<li>Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay tens of thousands in September.</li>
-<li>Deaths are also underreported, but not significantly so. Somewhere between 0.2% and 1% of all infections (not cases!) result in death.</li>
+<li>The number of reported cases (15,000 in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between 1.6 and 11. This means that we estimate that the total number of infections occurred between July 11, 2020 and August 15, 2020 is between 23,000 and 160,000.</li>
+<li>Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay in tens of thousands in September.</li>
+<li>Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between 0.2% and 1% of all infections (not cases!) result in death.</li>
 <li>Basic reproductive number (<span class="math inline">\(R_0\)</span>), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (0.43, 0.78).</li>
 <li>Effective reproductive number (<span class="math inline">\(R_e\)</span>), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deseased), as of August 15, 2020 is inside the interval (0.41, 0.72). <strong>We want to keep <span class="math inline">\(R_e &lt; 1\)</span> in order to control virus transmission</strong>.</li>
 </ul>
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 </div>
-<div id="abbreviated-technical-details" class="section level2">
-<h2>Abbreviated technical details</h2>
-<p>Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data.</p>
+<div id="abbreviated-technical-details-optional" class="section level2">
+<h2>Abbreviated technical details (optional)</h2>
+<p>Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More flashed out method description is in the <a href="a%20link">manuscript</a>.</p>
 <div id="model-inputs" class="section level3">
 <h3>Model inputs</h3>
 <p>Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.</p>
@@ -2365,7 +2403,7 @@ igoldsteinh
 </table>
 </div>
 </div>
-<p>Last updated on 2020-08-31.</p>
+<p>Last updated on 2020-09-01.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

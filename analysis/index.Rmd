@@ -123,7 +123,7 @@ control_list <- list(adapt_delta = 0.99,
 # control_list <- list()
 
 # update population size with median of the posterior for fraction susceptibles day before analysis start
-new_pop_size <- median(for_estimating$S) * 3175692L
+new_pop_size <- as.integer(median(for_estimating$S) * 3175692L)
 
 #create model objects to input into stan, see helper_functions.R for details
 model_objects <- create_model_objects(ochca_covid = oc_data,
@@ -374,16 +374,19 @@ ggplot() +
   geom_lineribbon(data = prepped_cumulative_inc$posterior %>% 
                     group_by(t, name, usage) %>% 
                     median_qi(.width = ci_width),
-  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper), size=1.5,
   color = "steelblue4") +
   geom_col(data = prepped_cumulative_inc$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position="left") +
   ggtitle(str_c("OC latent & observed trajectories, posterior median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", 
+        strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -398,10 +401,10 @@ death_plot <- ggplot() +
                     group_by(t) %>% 
                     median_qi(.width = ci_width),
                   mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
-                  size = 0.8,
+                  size = 1.5,
                   color = "steelblue4") +
   geom_point(data = prepped_death$observed,
-             mapping = aes(t, observed),
+             mapping = aes(t, observed), size=2,
              fill = "black") +
   #ggtitle("Deaths due to COVID-19") +
   xlab("Date") +
@@ -421,9 +424,9 @@ positivity_plot <- ggplot() +
                     group_by(t) %>% 
                     median_qi(.width = ci_width),
                   mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
-                  size = 0.8, color = "steelblue4") +
+                  size = 1.5, color = "steelblue4") +
   geom_point(data = prepped_pos$observed,
-             mapping = aes(t, observed),
+             mapping = aes(t, observed), size=2,
              fill = "black") +
   #ggtitle("Fraction of Positive COVID-19 Tests") +
   xlab("Date") +
@@ -434,8 +437,7 @@ positivity_plot <- ggplot() +
 
 
 death_pos <- death_plot + positivity_plot +   
-  plot_annotation(title = 'Observed & Predicted Deaths and Positive Test Fraction in 3 Day Periods',
-                  subtitle=str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " "))
+  plot_annotation(title = 'Observed & Predicted Deaths and Positive Test Fraction in 3 Day Periods', theme=theme(plot.title = element_text(hjust = 0.2)))
 
 death_pos
 
@@ -474,26 +476,24 @@ IFR <- oc_prior %>%
   coord_cartesian(xlim = c(0, .03))
 
 param_plot <- R0 + IFR +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR')
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',theme=theme(plot.title = element_text(hjust = 0.15)))
 
 param_plot
 ```
 
-
-### Summary (statements are made assuming 95% credibility levels)
-- 
-- Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
+## Summary (statements are made assuming 95% credibility levels)
+- The number of reported cases (`r comma(death_inc_summaries["Cumulative Incidence","observed"])` in this period) underestimates the actual number of infections by a factor that ranges between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
+This means that we estimate that the total number of infections occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
+- Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay tens of thousands in September. 
+- Deaths are also underreported, but not significantly so. Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
+- Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
 - Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deseased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
-- The total number of infections that had occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` falls within (`r comma(death_inc_summaries["Cumulative Incidence",".lower"])`, `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`). Due to underreporting of coronavirus infections, the above range is typically larger than the number of reported cases in the same period. The number of reported  `r comma(death_inc_summaries["Cumulative Incidence","observed"])`.
-- 95% Bayesian credible interval for the infection-to-fatality ratio (IFR), defined as a fraction of deaths among the total number of infections, 
-is (`r IFR_bci[".lower"]`, `r IFR_bci[".upper"]`).
 
+## Abbreviated technical details
 
-Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
+Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. 
 
-**Since we rely on a mechanistic model, it is important to acknowledge limitations of this model. We will try to be transparent about our assumptions in the hope to receive feedback about their realism. So if something does not look right to you, please get in touch with us to help us improve our model.**   
-
-# Model inputs
+### Model inputs
 Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.
 
 ```{r model inputs}
@@ -512,7 +512,7 @@ lumped_ochca_covid %>%
   theme(strip.text = element_text(size = 20))
 ```
 
-# Model structure
+### Model structure
 We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, $\text{I}_\text{e}$ = individuals at early stages of infection, $\text{I}_\text{p}$ = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.  
 
 
@@ -534,49 +534,9 @@ Similarly we assume that observed deaths are noisy realizations of the actual nu
 We use a Bayesian estimation framework, which means that all estimated quantities receive credible intervals (e.g., 80% or 95% credible intervals). 
 Width of these credible intervals encode the amount of uncertainty that we have in the estimated quantities. 
 
-# Latent cumulative deaths, cumulative incidence, and prevalence
-
-We report estimated trajectories of latent cumulative deaths, incidence (i.e., total infections and deaths that have occurred by some prespecified time point), and  prevalence . 
-These trajectories represent our estimation of accumulation of unobserved/hidden number of infections and deaths in the Orange County population.
-We also project these three trajectories 4 weeks into the future.
-
-### The main takeaways are:
-
-- Cases underestimate the total number of infections by a factor that ranges with 95% probability between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
-This means that we estimate that the total number of infections 
-between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`. The number of reported cases in this period was `r comma(death_inc_summaries["Cumulative Incidence","observed"])`.
-- 95% Bayesian credible interval of death underreporting factor is (`r rho_death_bci[".lower"]`, `r rho_death_bci[".upper"]`).
 
 
 
-# Prior and posterior distributions of model parameters
-Next we report prior and posterior distributions of key model parameters. 
-Prior distributions represent our beliefs about these parameters before seeing/analyzing data. 
-Posterior distributions encode our updated beliefs after seeing/analyzing data.
-
-### The main takeaways are:
-
-- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).  
-- Since the fraction of susceptible individuals $S(t)$ is constantly decreasing, according to our model, it is interesting to track the effective reproductive number, $R_e(t) = S(t)R_0$. 95% Bayesian credible interval for the basic reproductive number $R_e$ on `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`).
-<!-- The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`.  -->
-
-
-
-
-
-# Reported deaths and positive test rate forecast
-We report predictive distribution of observed deaths and positive test rate during the observation interval (blue shaded area with black dots in the plot below). In addition, we show a four week ahead forecast for both quantities.
-Our forecast assumes that interventions (physical distancing orders, mask recommendations, etc.) stay at the status quo, and that there are 2100 tests in each three day interval in the future.
-We plan to archive our forecasts and retrospectively measure their predictive ability/skill. 
-
-
-
-
-# Modeling limitations
-
-* Some model parameters are not well identified, so we rely on scientifically sound prior information (please check our assumptions and help us improve our priors!). 
-* The model assumes a well mixed population with no geographic or age structure.
-* Basic reproductive number ($R_0$) is constant. However, implementation of physical distancing and school closures should gradually reduce it. Similarly, relaxing current physical distancing measures will start increasing $R_0$.
 
 <!-- # Planned model extensions  -->
 
@@ -585,9 +545,9 @@ We plan to archive our forecasts and retrospectively measure their predictive ab
 <!-- * We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model. -->
 
 
-# Appendix
+## Appendix
 
-## Sensitivity to Prior for $R_0$
+### Sensitivity to Prior for $R_0$
 
 We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
 The priors are listed in the titles of the figures.
@@ -630,12 +590,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s1$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(2.5), 0.5)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -695,12 +657,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s2$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(0.53), 0.78)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -747,7 +711,7 @@ param_plot_s2 <- R0_s2 + IFR_s2 +
 param_plot_s2
 ```
 
-## Sensitivity to prior for fraction initially infected
+### Sensitivity to prior for fraction initially infected
 We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
 As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of $R_0$. 
 
@@ -765,12 +729,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s3$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Twice as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -830,12 +796,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s4$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Half as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)

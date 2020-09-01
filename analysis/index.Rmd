@@ -547,6 +547,7 @@ Width of these credible intervals encode the amount of uncertainty that we have 
 <!-- * We will allow $R_0$ to vary with time and will attempt to estimate its changes non-parameterically. -->
 <!-- * We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model. -->
 
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
 
 ## Appendix
 

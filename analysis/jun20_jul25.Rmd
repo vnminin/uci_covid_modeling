@@ -52,6 +52,17 @@ The goal of this report is to inform interested parties about dynamics of SARS-C
 ```{r executive summary, warning=FALSE}
 R0_bci = oc_post %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
 
+R_eff_bci <- spread_draws(oc_post, log_R0) %>%
+  select(.draw, log_R0) %>%
+  left_join(prep_epi_curves(oc_post, model_objects) %>%
+              filter(g_text == "S",
+                     t == model_objects$actual_last_day) %>%
+              ungroup() %>%
+              select(S = epi_curves, .draw)) %>%
+  transmute(Reff = exp(log_R0) * S) %>% 
+  median_qi(Reff) %>% 
+  mutate_if(is.numeric, signif, 2)
+
 IFR_bci = oc_post %>% spread_draws(IFR) %>% median_qi(IFR) %>% mutate_if(is.numeric, signif, 2)
 
 rho_death_bci = oc_post %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)
@@ -86,21 +97,115 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position="left") +
   ggtitle("Orange County, CA Latent & observed cumulative events",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", 
+        strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("18 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
 ```
 
+```{r warning=FALSE}
+ci_width <- c(0.5, 0.8, 0.95)
+prepped_death <- prep_death(model_objects, oc_post, ci_width)
+
+death_plot <- ggplot() +
+  geom_lineribbon(data = prepped_death$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
+                  size = 0.8,
+                  color = "steelblue4") +
+  geom_point(data = prepped_death$observed,
+             mapping = aes(t, observed),
+             fill = "black") +
+  #ggtitle("Deaths due to COVID-19") +
+  xlab("Date") +
+  ylab("Number of Deaths") +
+  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+prepped_pos <- prep_pos(model_objects, oc_post, ci_width)
+
+test <- prepped_pos$posterior %>% 
+  group_by(t) %>% 
+  median_qi(.width = ci_width) 
+
+positivity_plot <- ggplot() +
+  geom_lineribbon(data = prepped_pos$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
+                  size = 0.8, color = "steelblue4") +
+  geom_point(data = prepped_pos$observed,
+             mapping = aes(t, observed),
+             fill = "black") +
+  #ggtitle("Fraction of Positive COVID-19 Tests") +
+  xlab("Date") +
+  ylab("Positivity Fraction") +
+  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+
+death_pos <- death_plot + positivity_plot +   
+  plot_annotation(title = 'Observed & Predicted Deaths and Positive Test Fraction in 3 Day Periods',
+                  subtitle=str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " "))
+
+death_pos
+
+```
+
+```{r, echo=FALSE}
+# If you want to plot R0 by istelf with custom lims, use this:
+R0 <- oc_prior %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  dplyr::select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post %>%
+              spread_draws(log_R0)%>% mutate(R0=exp(log_R0)) %>%
+              dplyr::select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, 3))
+
+IFR <- oc_prior %>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab("Infection-to-fatality ratio (IFR)") +
+  coord_cartesian(xlim = c(0, .03))
+
+param_plot <- R0 + IFR +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR')
+
+param_plot
+```
+
 
 ## Executive summary
 
-- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).
+- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
+- 95% Bayesian credible interval for the effective reproductive number $R_e$ as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). We want to keep $R_e < 1$ in order to control virus transmission.
 - 95% Bayesian credible interval for the total number of infections that had occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r comma(death_inc_summaries["Cumulative Incidence",".lower"])`, `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`). The number of reported cases in this period was `r comma(death_inc_summaries["Cumulative Incidence","observed"])`.
 - 95% Bayesian credible interval for the infection-to-fatality ratio (IFR), defined as a fraction of deaths among the total number of infections, 
 is (`r IFR_bci[".lower"]`, `r IFR_bci[".upper"]`).
@@ -172,45 +277,10 @@ Posterior distributions encode our updated beliefs after seeing/analyzing data.
 
 ### The main takeaways are:
 
-- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`. 
+- 95% Bayesian credible interval for the basic reproductive number $R_0$ is (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`).  
+- Since the fraction of susceptible individuals $S(t)$ is constantly decreasing, according to our model, it is interesting to track the effective reproductive number, $R_e(t) = S(t)R_0$. 95% Bayesian credible interval for the basic reproductive number $R_e$ on `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`).
+<!-- The posterior probability that $R_0$ is above 1.0 is `r mean(spread_draws(oc_post, log_R0)$log_R0 > 0) %>% scales::percent()`.  -->
 
-```{r, echo=FALSE}
-# If you want to plot R0 by istelf with custom lims, use this:
-R0 <- oc_prior %>%
-  spread_draws(log_R0) %>%
-  mutate(R0=exp(log_R0))%>%
-  dplyr::select(-starts_with(".")) %>%
-  mutate(dist = "Prior") %>%
-  bind_rows(oc_post %>%
-              spread_draws(log_R0)%>% mutate(R0=exp(log_R0)) %>%
-              dplyr::select(-starts_with(".")) %>%
-              mutate(dist = "Posterior")) %>%
-  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
-  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
-  geom_vline(xintercept = 1.0, linetype = "dashed") +
-  ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
-
-IFR <- oc_prior %>%
-  spread_draws(IFR) %>% 
-  select(-starts_with(".")) %>% 
-  mutate(dist = "Prior") %>% 
-  bind_rows(oc_post %>%
-              spread_draws(IFR) %>% 
-              select(-starts_with(".")) %>% 
-              mutate(dist = "Posterior"))  %>%
-  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
-  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
-  #geom_vline(xintercept = 1.0, linetype = "dashed") +
-  ylab(NULL) +
-  xlab("Infection-to-fatality ratio (IFR)") +
-  coord_cartesian(xlim = c(0, .03))
-
-param_plot <- R0 + IFR +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR')
-
-param_plot
-```
 
 
 
@@ -220,57 +290,6 @@ We report predictive distribution of observed deaths and positive test rate duri
 Our forecast assumes that interventions (physical distancing orders, mask recommendations, etc.) stay at the status quo, and that there are 2100 tests in each three day interval in the future.
 We plan to archive our forecasts and retrospectively measure their predictive ability/skill. 
 
-```{r warning=FALSE}
-ci_width <- c(0.5, 0.8, 0.95)
-prepped_death <- prep_death(model_objects, oc_post, ci_width)
-
-death_plot <- ggplot() +
-  geom_lineribbon(data = prepped_death$posterior %>% 
-                    group_by(t) %>% 
-                    median_qi(.width = ci_width),
-                  mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
-                  size = 0.8,
-                  color = "steelblue4") +
-  geom_point(data = prepped_death$observed,
-             mapping = aes(t, observed),
-             fill = "black") +
-  #ggtitle("Deaths due to COVID-19") +
-  xlab("Date") +
-  ylab("Number of Deaths") +
-  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
-  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
-  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
-
-prepped_pos <- prep_pos(model_objects, oc_post, ci_width)
-
-test <- prepped_pos$posterior %>% 
-  group_by(t) %>% 
-  median_qi(.width = ci_width) 
-
-positivity_plot <- ggplot() +
-  geom_lineribbon(data = prepped_pos$posterior %>% 
-                    group_by(t) %>% 
-                    median_qi(.width = ci_width),
-                  mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
-                  size = 0.8, color = "steelblue4") +
-  geom_point(data = prepped_pos$observed,
-             mapping = aes(t, observed),
-             fill = "black") +
-  #ggtitle("Fraction of Positive COVID-19 Tests") +
-  xlab("Date") +
-  ylab("Positivity Fraction") +
-  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
-  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
-  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
-
-
-death_pos <- death_plot + positivity_plot +   
-  plot_annotation(title = 'Observed & Predicted Deaths and Positive Test Fraction in 3 Day Periods',
-                  subtitle=str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " "))
-
-death_pos
-
-```
 
 
 
@@ -291,7 +310,7 @@ death_pos
 
 ## Sensitivity to Prior for $R_0$
 
-We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
 The priors are listed in the titles of the figures.
 Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior. 
 
@@ -332,12 +351,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s1$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(2.5), 0.5)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -397,12 +418,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s2$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events R0~lognorm(log(0.53), 0.78)",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -450,7 +473,7 @@ param_plot_s2
 ```
 
 ## Sensitivity to prior for fraction initially infected
-We examine how sensitive our conclusions about $R_0$ to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
 As we would expect, changing this prior changes the number of people we estimate will become infected or are currently infectious. However, it seems to have little impact on the posterior of $R_0$. 
 
 <!-- sensitivity 3 -->
@@ -467,12 +490,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s3$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Twice as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -532,12 +557,14 @@ ggplot() +
   geom_col(data = prepped_cumulative_inc_s4$observed,
            mapping = aes(x = t, y = observed),
            fill = "black") +
-  facet_wrap(. ~ name, scales = "free_y") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
   ggtitle("Latent & observed cumulative events: Mean Initial Infected Half as Large",
           subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
   xlab("Date") +
   ylab(NULL) +
-  theme(legend.position = c(0.10, 0.88), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("12 day"), date_labels = "%b %d") +
   scale_y_continuous(labels = comma)
@@ -582,4 +609,3 @@ param_plot_s4 <- R0_s4 + IFR_s4 +
 
 param_plot_s4
 ```
-

@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 library(lubridate)
 library(here)
+library(fs)
 library(tidyverse)
 library(tidybayes)
 library(scales)
@@ -40,22 +41,17 @@ rstan_options(auto_write = TRUE)
 # Read OCHCA Data ---------------------------------------------------------
 oc_data <- read.csv(here("data", "oc_data.csv"))
 
-#old_folder_name = "2020-03-16_2020-04-20"
-#old_folder_name = "2020-04-14_2020-05-19"
-old_folder_name = "2020-05-24_2020-06-28"
+oc_data$posted_date <- as.Date(oc_data$posted_date)
+
+old_folder_name = "2020-06-15_2020-07-20"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
-#start_date <- as.Date("2020-04-13")
-#end_date <- as.Date("2020-05-19")
-
-# start_date <- as.Date("2020-05-23")
-# end_date <- as.Date("2020-06-28")
-
-start_date <- as.Date("2020-06-20")
-end_date <- as.Date("2020-07-25")
+#set start and end date of analysis
+start_date <- as.Date("2020-07-18")
+end_date <- as.Date("2020-08-22")
 
 # Setup Model Objects -----------------------------------------------------
 
@@ -124,6 +120,11 @@ control_list <- list(adapt_delta = 0.99,
 
 # update population size with median of the posterior for fraction susceptibles day before analysis start
 new_pop_size <- as.integer(median(for_estimating$S) * 3175692L)
+
+test <-   oc_data%>%
+  lump_ochca_covid(time_interval_in_days = 3,
+                           first_day = start_date,
+                           last_day = end_date)
 
 #create model objects to input into stan, see helper_functions.R for details
 model_objects <- create_model_objects(ochca_covid = oc_data,
@@ -249,7 +250,7 @@ init_func3 <- function() list(frac_carrs = frac_carrs_prior3[1] / sum(frac_carrs
                              frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
                              frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
 
-oc_post_sensitivity3 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+oc_post_sensitivity3 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                              data = model_objects_sensitivity3,
                              init = init_func3,
                              seed = 0,
@@ -261,7 +262,7 @@ write_rds(oc_post_sensitivity3, file.path(folder_loc, "oc_post_sensitivity3.rds"
 
 # Sample Prior Sensitivity 3 ----------------------------------------------
 
-oc_prior_sensitivity3 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+oc_prior_sensitivity3 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                               data = model_objects_sensitivity3_priors_only,
                               init = init_func3,
                               seed = 0,
@@ -277,7 +278,7 @@ init_func4 <- function() list(frac_carrs = frac_carrs_prior4[1] / sum(frac_carrs
                               frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
                               frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
 
-oc_post_sensitivity4 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+oc_post_sensitivity4 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                              data = model_objects_sensitivity4,
                              init = init_func4,
                              seed = 0,
@@ -289,7 +290,7 @@ write_rds(oc_post_sensitivity4, file.path(folder_loc, "oc_post_sensitivity4.rds"
 
 # Sample Prior Sensitivity 4 ----------------------------------------------
 
-oc_prior_sensitivity4 <- stan(file = here("models", model_name, str_c(model_name, ".stan")),
+oc_prior_sensitivity4 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                               data = model_objects_sensitivity4_priors_only,
                               init = init_func4,
                               seed = 0,
@@ -327,7 +328,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 theme_set(theme_bw(base_size =22)) 
 ```
 
-## Orange County, CA COVID-19 Situation Report, Jul 11 - Aug 15
+## Orange County, CA COVID-19 Situation Report, Jul 18 - Aug 22
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
 Methodological details are provided below and in the accompanying manuscript.
 

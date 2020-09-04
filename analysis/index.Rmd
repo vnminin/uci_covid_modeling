@@ -1,5 +1,5 @@
 ---
-title: "Orange County, CA COVID-19 Situation Report Jul 11-Aug 15"
+title: "Orange County, CA COVID Situation Report"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -328,7 +328,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 theme_set(theme_bw(base_size =22)) 
 ```
 
-## Orange County, CA COVID-19 Situation Report, Jul 18 - Aug 22
+## Orange County, CA COVID Situation Report, Jul 18 - Aug 22
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
 Methodological details are provided below and in the accompanying manuscript.
 

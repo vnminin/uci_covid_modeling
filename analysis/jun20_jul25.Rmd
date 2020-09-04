@@ -1,5 +1,5 @@
 ---
-title: "Orange County, CA COVID-19 Situation Report Jun 20 - Jul 25"
+title: "Orange County, CA COVID-19 Situation Report"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -45,7 +45,7 @@ theme_set(theme_bw(base_size =22))
 ```
 
 
-## Orange County, CA COVID-19 Situation Report, Jun 20 - Jul 25
+## Orange County, CA COVID Situation Report, Jun 20 - Jul 25
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict (if feasible) the outbreak epidemic trajectory. Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. More specifically, we use daily numbers of new cases and deaths, while taking into account changes in the total number of tests reported on each day. 
 
 ```{r executive summary, warning=FALSE}

@@ -328,7 +328,9 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 theme_set(theme_bw(base_size =22)) 
 ```
 
-## Orange County, CA COVID Situation Report, Jul 18 - Aug 22
+## Orange County, CA COVID-19 Situation Report, `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")`
+
+>>>>>>> 416b006edda81a9d0db508602faa74b0fff6a8b8
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
 Methodological details are provided below and in the accompanying manuscript.
 
@@ -370,7 +372,9 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
 
 ```{r Latent vs observed incidence, warning=FALSE}
 ci_width <- c(0.5, 0.8, 0.95)
-  
+prepped_cumulative_inc <- map(prepped_cumulative_inc, ~mutate(., name = str_replace(name,
+                                  "(Cumulative.+)",
+                                  str_c("\\1\nSince ", format(model_objects$actual_first_day, "%b %d")))))
 ggplot() +
   geom_lineribbon(data = prepped_cumulative_inc$posterior %>% 
                     group_by(t, name, usage) %>% 

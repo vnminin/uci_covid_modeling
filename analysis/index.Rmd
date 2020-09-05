@@ -11,6 +11,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_chunk$set(autodep = TRUE)
 library(lubridate)
 library(here)
 library(fs)
@@ -21,7 +22,7 @@ library(patchwork)
 
 ```
 
-```{r}
+```{r reading-model-objects, cache=TRUE}
 model_name <- "SEIeIpRD"
 loc_name <- "oc"
 
@@ -330,11 +331,10 @@ theme_set(theme_bw(base_size =22))
 
 ## Orange County, CA COVID-19 Situation Report, `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")`
 
->>>>>>> 416b006edda81a9d0db508602faa74b0fff6a8b8
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
-Methodological details are provided below and in the accompanying manuscript.
+Methodological details are provided below and in the accompanying [manuscript](arxiv link).
 
-```{r executive summary, warning=FALSE}
+```{r executive-summary, warning=FALSE, cache=TRUE}
 R0_bci = oc_post %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
 
 R_eff_bci <- spread_draws(oc_post, log_R0) %>%
@@ -370,7 +370,7 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
   column_to_rownames(var = "name")
 ```
 
-```{r Latent vs observed incidence, warning=FALSE}
+```{r latent-vs-observed-incidence, warning=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 prepped_cumulative_inc <- map(prepped_cumulative_inc, ~mutate(., name = str_replace(name,
                                   "(Cumulative.+)",
@@ -397,7 +397,7 @@ ggplot() +
   scale_y_continuous(labels = comma)
 ```
 
-```{r warning=FALSE}
+```{r ppc-forecasts, warning=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 prepped_death <- prep_death(model_objects, oc_post, ci_width)
 
@@ -448,7 +448,7 @@ death_pos
 
 ```
 
-```{r, echo=FALSE}
+```{r R0-IFR, echo=FALSE, cache=TRUE}
 # If you want to plot R0 by istelf with custom lims, use this:
 R0 <- oc_prior %>%
   spread_draws(log_R0) %>%
@@ -504,7 +504,7 @@ More flashed out method description is in the [manuscript](a link).
 ### Model inputs
 Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.
 
-```{r model inputs}
+```{r model-inputs, cache=TRUE}
 lumped_ochca_covid %>% 
   dplyr::select(-start_date) %>% 
   pivot_longer(-end_date) %>% 
@@ -563,7 +563,7 @@ The priors are listed in the titles of the figures.
 Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior. 
 
 
-```{r, echo=FALSE}
+```{r reading-sensitivity-objects, echo=FALSE, cache=TRUE}
 #Read in
 #sensitivity1 is lognorm(log(2.5), .5)
 #sensitivity2 is lognorm(log(.53), .78)
@@ -587,7 +587,7 @@ prepped_cumulative_inc_s3 <- prep_cumulative_inc(model_objects, oc_post_sensitiv
 prepped_cumulative_inc_s4 <- prep_cumulative_inc(model_objects, oc_post_sensitivity4)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 
 ggplot() +
@@ -612,7 +612,7 @@ ggplot() +
   scale_y_continuous(labels = comma)
 ```
 
-```{r, warnings=FALSE}
+```{r, warnings=FALSE, cache=TRUE}
 ## If you want to plot R0 by istelf with custom lims, use this:
 R0_s1 <- oc_prior_sensitivity1 %>%
   spread_draws(log_R0) %>%
@@ -654,7 +654,7 @@ param_plot_s1
 
 ```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 
 ggplot() +
@@ -680,7 +680,7 @@ ggplot() +
 
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 R0_s2 <- oc_prior_sensitivity2 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
@@ -726,7 +726,7 @@ We examine how sensitive our conclusions about $R_0$ are to our prior assumption
 
 <!-- sensitivity 3 -->
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 
 ggplot() +
@@ -751,7 +751,7 @@ ggplot() +
   scale_y_continuous(labels = comma)
 ```
 
-```{r, warnings=FALSE}
+```{r, warnings=FALSE, cache=TRUE}
 R0_s3 <- oc_prior_sensitivity3 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
@@ -793,7 +793,7 @@ param_plot_s3
 
 <!-- sensitivity 4 -->
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 
 ggplot() +
@@ -818,7 +818,7 @@ ggplot() +
   scale_y_continuous(labels = comma)
 ```
 
-```{r, warnings=FALSE}
+```{r, warnings=FALSE, cache=TRUE}
 R0_s4 <- oc_prior_sensitivity4 %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%

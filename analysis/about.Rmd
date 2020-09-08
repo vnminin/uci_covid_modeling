@@ -9,7 +9,7 @@ editor_options:
 
 ## About
 
-This website provides reports on the dynamics and future trends of COVID-19 in Orange County, CA. Please visit the [github](https://github.com/vnminin/uci_covid_modeling) for details on the code, and read the [manuscript](a link) associated with this endeavor for further methodological details.
+This website provides reports on the dynamics and future trends of COVID-19 in Orange County, CA. Please visit the [github](https://github.com/vnminin/uci_covid_modeling) for details on the code, and read the [manuscript](https://arxiv.org/abs/2009.02654) associated with this endeavor for further methodological details.
 
 ### Authors
 
@@ -32,7 +32,7 @@ We use data provided by OCHCA. An aggregated version of our data is available in
 We also do not analyze data in real time. This is because case, test, and death counts are often updated retroactively, and we wish to give data collectors time to provide complete results. Typically, there will be at least a ten day gap between the present day and the final date analyzed in the most recent report. 
 
 ### Statistical methodology
-Our analysis relies on a six compartment mechanistic model of the pandemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the methodology are available in the [manuscript](a link).
+Our analysis relies on a six compartment mechanistic model of the pandemic. We then use Bayesian inference to provide inference on key disease dynamics and make predictions on future observed cases and deaths. Further descriptions of the methodology are available in the [manuscript](https://arxiv.org/abs/2009.02654).
 
 ### Software
 We used the [R](https://www.r-project.org/) software environment, [tidyverse](https://www.tidyverse.org/) and [workflowr](https://jdblischak.github.io/workflowr/) packages for this website. Our analysis was conducted in [Stan](https://mc-stan.org/) with the [rstan](https://mc-stan.org/users/interfaces/rstan) package. 

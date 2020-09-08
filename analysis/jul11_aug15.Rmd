@@ -45,7 +45,7 @@ theme_set(theme_bw(base_size =22))
 
 ## Orange County, CA COVID-19 Situation Report, Jul 11 - Aug 15
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
-Methodological details are provided below and in the accompanying manuscript.
+Methodological details are provided below and in the accompanying [manuscript](https://arxiv.org/abs/2009.02654).
 
 ```{r executive summary, warning=FALSE}
 R0_bci = oc_post %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
@@ -210,7 +210,7 @@ This means that we estimate that the total number of infections occurred between
 ## Abbreviated technical details (optional)
 
 Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. 
-More flashed out method description is in the [manuscript](a link). 
+More flashed out method description is in the [manuscript](https://arxiv.org/abs/2009.02654). 
 
 ### Model inputs
 Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.

@@ -11,6 +11,8 @@ navbar:
         href: jun20_jul25.html
       - text: "Jul 11 - Aug 15"
         href: jul11_aug15.html
+      - text: "Jul 18 - Aug 22"
+        href: jul18_aug22.html
   - text: About
     href: about.html
   - text: License

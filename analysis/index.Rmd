@@ -44,15 +44,20 @@ oc_data <- read.csv(here("data", "oc_data.csv"))
 
 oc_data$posted_date <- as.Date(oc_data$posted_date)
 
-old_folder_name = "2020-06-15_2020-07-20"
+old_folder_name = "2020-07-18_2020-08-22"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-07-18")
-end_date <- as.Date("2020-08-22")
+start_date <- as.Date("2020-07-24")
+end_date <- as.Date("2020-08-28")
+
+test <-   oc_data%>%
+  lump_ochca_covid(time_interval_in_days = 3,
+                           first_day = start_date,
+                           last_day = end_date)
 
 # Setup Model Objects -----------------------------------------------------
 

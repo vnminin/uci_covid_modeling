@@ -293,10 +293,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="jun20_jul25.html">Jun 20 - Jul 25</a>
+      <a href="jul18_aug22.html">Jul 18 - Aug 22</a>
     </li>
     <li>
       <a href="jul11_aug15.html">Jul 11 - Aug 15</a>
+    </li>
+    <li>
+      <a href="jun20_jul25.html">Jun 20 - Jul 25</a>
     </li>
   </ul>
 </li>
@@ -380,16 +383,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreee7bdeeb533106c2f9c17b62858c435fd66060127targetblanke7bdeeba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/e7bdeeb533106c2f9c17b62858c435fd66060127" target="_blank">e7bdeeb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreeab9898ae0c0af20f3d26a64e90834b3a9feda3c9targetblankab9898aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9" target="_blank">ab9898a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreee7bdeeb533106c2f9c17b62858c435fd66060127targetblanke7bdeeba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreeab9898ae0c0af20f3d26a64e90834b3a9feda3c9targetblankab9898aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/e7bdeeb533106c2f9c17b62858c435fd66060127" target="_blank">e7bdeeb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9" target="_blank">ab9898a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -398,11 +401,13 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/index_cache/
+    Ignored:    analysis/jul18_aug22_cache/
 
 Unstaged changes:
-    Modified:   README.md
+    Modified:   analysis/_site.yml
     Modified:   analysis/about.Rmd
-    Modified:   uci_covid_modeling.Rproj
+    Modified:   analysis/jul18_aug22.Rmd
 
 </code></pre>
 <p>
@@ -441,6 +446,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/223d72fd14fef171397cf61d4bc156df7b8d85cd/analysis/about.Rmd" target="_blank">223d72f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+<td>
+arxiv link!
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/223d72fd14fef171397cf61d4bc156df7b8d85cd/docs/about.html" target="_blank">223d72f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+<td>
+arxiv link!
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -732,14 +771,14 @@ Start workflowr project.
 </div>
 <div id="contact" class="section level3">
 <h3>Contact</h3>
-<p>For questions please contact <a href="https://vnminin.github.io/">Prof. Vladimir Minin</a>.</p>
+<p><a href="https://vnminin.github.io/">Prof. Vladimir Minin</a>.</p>
 </div>
 </div>
 <div id="methodology" class="section level2">
 <h2>Methodology</h2>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>We use data provided by OCHCA. An aggregated version of our data is available in the <a href="https://github.com/vnminin/uci_covid_modeling/tree/master/data">github</a>. Crucially, we exclude repeat tests given to patients who test positive (which happens when patients are hospitalized). Our data may not correspond with publicly available data.</p>
+<p>We use data provided by <a href="https://www.ochealthinfo.com">OCHCA</a>. An aggregated version of our data is available in the <a href="https://github.com/vnminin/uci_covid_modeling/tree/master/data">github</a>. Crucially, we exclude repeat tests given to patients who test positive (which happens when patients are hospitalized). Our data may not correspond with publicly available data.</p>
 <p>We also do not analyze data in real time. This is because case, test, and death counts are often updated retroactively, and we wish to give data collectors time to provide complete results. Typically, there will be at least a ten day gap between the present day and the final date analyzed in the most recent report.</p>
 </div>
 <div id="statistical-methodology" class="section level3">

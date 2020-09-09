@@ -10,6 +10,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_chunk$set(autodep = TRUE)
 library(lubridate)
 library(here)
 library(tidyverse)
@@ -19,7 +20,7 @@ library(patchwork)
 
 ```
 
-```{r}
+```{r reading-model-objects, cache=TRUE}
 # Pick folder to build model from. Defaults to most recent end date with earliest start date
 model_name <- "SEIeIpRD"
 loc_name <- "oc"

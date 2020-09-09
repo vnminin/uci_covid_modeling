@@ -28,7 +28,7 @@ loc_name <- "oc"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-folder_name <-"2020-07-11_2020-08-15"
+folder_name <-"2020-07-18_2020-08-22"
 
 folder_loc <- here("code", model_name, loc_name, folder_name)
 

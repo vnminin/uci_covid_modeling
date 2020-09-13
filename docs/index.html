@@ -355,7 +355,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2020-09-09
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
 </p>
 <p>
 <strong>Knit directory:</strong> <code>uci_covid_modeling/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -371,12 +371,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -510,7 +510,10 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/index_cache/
-    Ignored:    analysis/jul18_aug22_cache/
+    Ignored:    code/.DS_Store
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -1619,17 +1622,6 @@ Date
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>
-<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">ab9898a</a>
-</td>
-<td>
-Damon Bayer
-</td>
-<td>
-2020-09-08
-</td>
-</tr>
 <tr>
 <td>
 <a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">8b62aff</a>
@@ -3401,13 +3393,13 @@ igoldsteinh
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre><code>R version 4.0.0 (2020-04-24)
+<pre><code>R version 4.0.2 (2020-06-22)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.4
+Running under: macOS Catalina 10.15.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -3422,21 +3414,33 @@ other attached packages:
 [13] fs_1.4.2        here_0.1        lubridate_1.7.9 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.5         lattice_0.20-41    utf8_1.1.4         assertthat_0.2.1  
- [5] rprojroot_1.3-2    digest_0.6.25      plyr_1.8.6         R6_2.4.1          
- [9] cellranger_1.1.0   backports_1.1.8    reprex_0.3.0       evaluate_0.14     
-[13] coda_0.19-3        httr_1.4.1         pillar_1.4.6       rlang_0.4.7       
-[17] readxl_1.3.1       rstudioapi_0.11    whisker_0.4        blob_1.2.1        
-[21] rmarkdown_2.3      munsell_0.5.0      broom_0.7.0        compiler_4.0.0    
-[25] httpuv_1.5.4       modelr_0.1.8       xfun_0.15          pkgconfig_2.0.3   
-[29] htmltools_0.5.0    tidyselect_1.1.0   arrayhelpers_1.1-0 fansi_0.4.1       
-[33] crayon_1.3.4       dbplyr_1.4.4       withr_2.2.0        later_1.1.0.1     
-[37] ggdist_2.1.1       grid_4.0.0         jsonlite_1.7.0     gtable_0.3.0      
-[41] lifecycle_0.2.0    DBI_1.1.0          git2r_0.27.1       magrittr_1.5      
-[45] cli_2.0.2          stringi_1.4.6      promises_1.1.1     xml2_1.3.2        
-[49] ellipsis_0.3.1     generics_0.0.2     vctrs_0.3.1        tools_4.0.0       
-[53] svUnit_1.0.3       glue_1.4.1         hms_0.5.3          yaml_2.2.1        
-[57] colorspace_1.4-1   rvest_0.3.5        knitr_1.29         haven_2.3.1       </code></pre>
+ [1] matrixStats_0.56.0   RColorBrewer_1.1-2   httr_1.4.1          
+ [4] rprojroot_1.3-2      rstan_2.21.1         tools_4.0.2         
+ [7] backports_1.1.8      utf8_1.1.4           R6_2.4.1            
+[10] DBI_1.1.0            colorspace_1.4-1     ggdist_2.2.0        
+[13] withr_2.2.0          gridExtra_2.3        tidyselect_1.1.0    
+[16] prettyunits_1.1.1    processx_3.4.3       curl_4.3            
+[19] compiler_4.0.2       git2r_0.27.1         cli_2.0.2           
+[22] rvest_0.3.5          arrayhelpers_1.1-0   xml2_1.3.2          
+[25] labeling_0.3         callr_3.4.3          digest_0.6.25       
+[28] StanHeaders_2.21.0-5 rmarkdown_2.3        pkgconfig_2.0.3     
+[31] htmltools_0.5.0      dbplyr_1.4.4         rlang_0.4.7         
+[34] readxl_1.3.1         rstudioapi_0.11      farver_2.0.3        
+[37] generics_0.0.2       svUnit_1.0.3         jsonlite_1.7.0      
+[40] distributional_0.1.0 inline_0.3.15        magrittr_1.5        
+[43] loo_2.3.1            Rcpp_1.0.5           munsell_0.5.0       
+[46] fansi_0.4.1          lifecycle_0.2.0      stringi_1.4.6       
+[49] whisker_0.4          yaml_2.2.1           pkgbuild_1.1.0      
+[52] plyr_1.8.6           grid_4.0.2           blob_1.2.1          
+[55] parallel_4.0.2       promises_1.1.1       crayon_1.3.4        
+[58] lattice_0.20-41      haven_2.3.1          hms_0.5.3           
+[61] knitr_1.29           ps_1.3.3             pillar_1.4.6        
+[64] codetools_0.2-16     stats4_4.0.2         reprex_0.3.0        
+[67] glue_1.4.1           evaluate_0.14        V8_3.2.0            
+[70] RcppParallel_5.0.2   modelr_0.1.8         vctrs_0.3.2         
+[73] httpuv_1.5.4         cellranger_1.1.0     gtable_0.3.0        
+[76] assertthat_0.2.1     xfun_0.15            broom_0.7.0         
+[79] coda_0.19-3          later_1.1.0.1        ellipsis_0.3.1      </code></pre>
 </div>
 </div>
 </div>

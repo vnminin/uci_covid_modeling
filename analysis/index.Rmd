@@ -468,7 +468,8 @@ R0 <- oc_prior %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
 
 IFR <- oc_prior %>%
   spread_draws(IFR) %>% 
@@ -486,7 +487,7 @@ IFR <- oc_prior %>%
   coord_cartesian(xlim = c(0, .03))
 
 param_plot <- R0 + IFR +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',theme=theme(plot.title = element_text(hjust = 0.15)))
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.15)))
 
 param_plot
 ```
@@ -633,7 +634,8 @@ R0_s1 <- oc_prior_sensitivity1 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
 # and substitute
 
 
@@ -700,7 +702,8 @@ R0_s2 <- oc_prior_sensitivity2 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
 # and substitute
 
 
@@ -719,7 +722,7 @@ IFR_s2 <- oc_prior_sensitivity2%>%
   coord_cartesian(xlim = c(0, .05))
 
 param_plot_s2 <- R0_s2 + IFR_s2 +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
                     subtitle= 'R0 ~ lognormal(log(.53), .78)')
 
 param_plot_s2
@@ -771,7 +774,8 @@ R0_s3 <- oc_prior_sensitivity3 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
 # and substitute
 
 
@@ -790,7 +794,7 @@ IFR_s3 <- oc_prior_sensitivity3%>%
   coord_cartesian(xlim = c(0, .05))
 
 param_plot_s3 <- R0_s3 + IFR_s3 +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
                     subtitle= 'Mean Initial Infected Twice as Large')
 
 param_plot_s3
@@ -838,7 +842,8 @@ R0_s4 <- oc_prior_sensitivity4 %>%
   stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
   geom_vline(xintercept = 1.0, linetype = "dashed") +
   ylab(NULL) +
-  coord_cartesian(xlim = c(0, 3))
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
 # and substitute
 
 
@@ -857,7 +862,7 @@ IFR_s4 <- oc_prior_sensitivity4%>%
   coord_cartesian(xlim = c(0, .05))
 
 param_plot_s4 <- R0_s4 + IFR_s4 +
-    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
                     subtitle= 'Mean Initial Infected Half as Large')
 
 param_plot_s4

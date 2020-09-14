@@ -439,7 +439,7 @@ positivity_plot <- ggplot() +
              fill = "black") +
   #ggtitle("Fraction of Positive COVID-19 Tests") +
   xlab("Date") +
-  ylab("Positivity Fraction") +
+  ylab("Positivity Percent") +
   scale_y_continuous(labels = percent) +
   theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +

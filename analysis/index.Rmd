@@ -19,7 +19,7 @@ library(tidyverse)
 library(tidybayes)
 library(scales)
 library(patchwork)
-
+theme_set(theme_bw(base_size =22)) 
 ```
 
 ```{r reading-model-objects, cache=TRUE}
@@ -331,7 +331,6 @@ time_interval_in_days <- model_objects$time_interval_in_days
 
 oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 
-theme_set(theme_bw(base_size =22)) 
 ```
 
 ## Orange County, CA COVID-19 Situation Report, `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")`
@@ -441,6 +440,7 @@ positivity_plot <- ggplot() +
   #ggtitle("Fraction of Positive COVID-19 Tests") +
   xlab("Date") +
   ylab("Positivity Fraction") +
+  scale_y_continuous(labels = percent) +
   theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("14 day"), date_labels = "%b %d")

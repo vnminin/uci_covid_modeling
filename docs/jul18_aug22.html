@@ -352,7 +352,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-09
+<strong>Last updated:</strong> 2020-09-12
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -371,12 +371,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -419,12 +419,60 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
 </p>
 </div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div id="strongCachestrongdetected" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+The following chunks had caches available:
+<ul>
+<li>
+executive-summary
+</li>
+<li>
+latent-vs-observed-incidence
+</li>
+<li>
+model-inputs
+</li>
+<li>
+ppc-forecasts
+</li>
+<li>
+R0-IFR
+</li>
+<li>
+reading-model-objects
+</li>
+<li>
+reading-sensitivity-objects
+</li>
+<li>
+unnamed-chunk-1
+</li>
+<li>
+unnamed-chunk-2
+</li>
+<li>
+unnamed-chunk-3
+</li>
+<li>
+unnamed-chunk-4
+</li>
+<li>
+unnamed-chunk-5
+</li>
+<li>
+unnamed-chunk-6
+</li>
+<li>
+unnamed-chunk-7
+</li>
+<li>
+unnamed-chunk-8
+</li>
+</ul>
+<p>To ensure reproducibility of the results, delete the cache directory <code>jul18_aug22_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
 </div>
 </div>
 </div>
@@ -443,16 +491,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree5cbf476eeecbeec28bcdf072352263596cb7cf47targetblank5cbf476a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/5cbf476eeecbeec28bcdf072352263596cb7cf47" target="_blank">5cbf476</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree5c6a0d9708625f6ebcfd3a127e442c6ac7533b14targetblank5c6a0d9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/5c6a0d9708625f6ebcfd3a127e442c6ac7533b14" target="_blank">5c6a0d9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree5cbf476eeecbeec28bcdf072352263596cb7cf47targetblank5cbf476a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree5c6a0d9708625f6ebcfd3a127e442c6ac7533b14targetblank5c6a0d9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/5cbf476eeecbeec28bcdf072352263596cb7cf47" target="_blank">5cbf476</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/5c6a0d9708625f6ebcfd3a127e442c6ac7533b14" target="_blank">5c6a0d9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -461,11 +509,8 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    analysis/index_cache/
-
-Unstaged changes:
-    Modified:   analysis/jul18_aug22.Rmd
+    Ignored:    analysis/jul18_aug22_cache/
 
 </code></pre>
 <p>
@@ -504,6 +549,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/2b665a54ed8f483887bb6e7e9b395fdaa7f62968/docs/jul18_aug22.html" target="_blank">2b665a5</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-12
+</td>
+<td>
+tried to add google analytics unsuccessfully yet
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/analysis/jul18_aug22.Rmd" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+<td>
+used correct folder for archived jul18 - aug22
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/jul18_aug22.html" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+<td>
+used correct folder for archived jul18 - aug22
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -583,13 +679,168 @@ jul 24 - aug 28 update
 <h2>Orange County, CA COVID-19 Situation Report, Jul 18 - Aug 22</h2>
 <p>The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. Methodological details are provided below and in the accompanying <a href="https://arxiv.org/abs/2009.02654">manuscript</a>.</p>
 <p><img src="figure/jul18_aug22.Rmd/latent-vs-observed-incidence-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-latent-vs-observed-incidence-1">
+Past versions of latent-vs-observed-incidence-1.png
+</button>
+</p>
+<div id="fig-latent-vs-observed-incidence-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/latent-vs-observed-incidence-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/ppc-forecasts-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ppc-forecasts-1">
+Past versions of ppc-forecasts-1.png
+</button>
+</p>
+<div id="fig-ppc-forecasts-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/ppc-forecasts-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/ppc-forecasts-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/ppc-forecasts-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/R0-IFR-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-R0-IFR-1">
+Past versions of R0-IFR-1.png
+</button>
+</p>
+<div id="fig-R0-IFR-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/R0-IFR-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/R0-IFR-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/R0-IFR-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="summary-statements-are-made-assuming-95-credibility-levels" class="section level2">
 <h2>Summary (statements are made assuming 95% credibility levels)</h2>
 <ul>
-<li>The number of reported cases (11,000 in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between 1.3 and 13. This means that we estimate that the total number of infections occurred between July 18, 2020 and August 22, 2020 is between 14,000 and 150,000.</li>
+<li>The number of reported cases (11,000 in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between 1.3 and 13. This means that we estimate that the total number of infections occurred between July 11, 2020 and August 22, 2020 is between 14,000 and 150,000.</li>
 <li>Prevalence (number of infectious individuals at any time point) is declining, but is projected to stay in tens of thousands in September.</li>
 <li>Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between 0.1% and 0.9% of all infections (not cases!) result in death.</li>
 <li>Basic reproductive number (<span class="math inline">\(R_0\)</span>), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (0.28, 0.73).</li>
@@ -604,11 +855,107 @@ jul 24 - aug 28 update
 <h3>Model inputs</h3>
 <p>Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.</p>
 <p><img src="figure/jul18_aug22.Rmd/model-inputs-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model-inputs-1">
+Past versions of model-inputs-1.png
+</button>
+</p>
+<div id="fig-model-inputs-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/model-inputs-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/model-inputs-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/model-inputs-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="model-structure" class="section level3">
 <h3>Model structure</h3>
 <p>We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, <span class="math inline">\(\text{I}_\text{e}\)</span> = individuals at early stages of infection, <span class="math inline">\(\text{I}_\text{p}\)</span> = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.</p>
 <p><img src="assets/model_figure.svg" width="60%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model_figure">
+Past versions of model_figure.svg
+</button>
+</p>
+<div id="fig-model_figure" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/assets/model_figure.svg" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters:</p>
 <ul>
 <li>Basic reproductive number (<span class="math inline">\(R_0\)</span>)</li>
@@ -631,20 +978,470 @@ jul 24 - aug 28 update
 <h3>Sensitivity to Prior for <span class="math inline">\(R_0\)</span></h3>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. The priors are listed in the titles of the figures. Although the prior distribution of <span class="math inline">\(R_0\)</span> does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior.</p>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-1-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-1-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-2-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-2-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-2-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-2-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-3-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-3-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-3-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-3-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-4-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-4-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-4-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sensitivity-to-prior-for-fraction-initially-infected" class="section level3">
 <h3>Sensitivity to prior for fraction initially infected</h3>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially. This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior.</p>
 <!-- sensitivity 3 -->
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-5-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-5-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-5-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-5-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-6-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-6-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-6-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-6-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- sensitivity 4 -->
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-7-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-7-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-7-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-7-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/jul18_aug22.Rmd/unnamed-chunk-8-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>Last updated on 2020-09-09.</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8c05c26e979754ac6d90469498178f4bb81ef0de/docs/figure/jul18_aug22.Rmd/unnamed-chunk-8-1.png" target="_blank">8c05c26</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5cbf476eeecbeec28bcdf072352263596cb7cf47/docs/figure/jul18_aug22.Rmd/unnamed-chunk-8-1.png" target="_blank">5cbf476</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/jul18_aug22.Rmd/unnamed-chunk-8-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Last updated on 2020-09-12.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -652,18 +1449,16 @@ jul 24 - aug 28 update
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre><code>R version 4.0.2 (2020-06-22)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18362)
+<pre><code>R version 4.0.0 (2020-04-24)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.4
 
 Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
-[1] LC_COLLATE=English_United States.1252 
-[2] LC_CTYPE=English_United States.1252   
-[3] LC_MONETARY=English_United States.1252
-[4] LC_NUMERIC=C                          
-[5] LC_TIME=English_United States.1252    
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -675,34 +1470,22 @@ other attached packages:
 [13] here_0.1        lubridate_1.7.9 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] matrixStats_0.56.0   fs_1.4.2             RColorBrewer_1.1-2  
- [4] httr_1.4.1           rprojroot_1.3-2      rstan_2.21.2        
- [7] tools_4.0.2          backports_1.1.8      utf8_1.1.4          
-[10] R6_2.4.1             DBI_1.1.0            colorspace_1.4-1    
-[13] ggdist_2.2.0         withr_2.2.0          gridExtra_2.3       
-[16] tidyselect_1.1.0     prettyunits_1.1.1    processx_3.4.3      
-[19] curl_4.3             compiler_4.0.2       git2r_0.27.1        
-[22] cli_2.0.2            rvest_0.3.5          arrayhelpers_1.1-0  
-[25] xml2_1.3.2           labeling_0.3         callr_3.4.3         
-[28] digest_0.6.25        StanHeaders_2.21.0-5 rmarkdown_2.3       
-[31] pkgconfig_2.0.3      htmltools_0.5.0      dbplyr_1.4.4        
-[34] rlang_0.4.7          readxl_1.3.1         rstudioapi_0.11     
-[37] farver_2.0.3         generics_0.0.2       svUnit_1.0.3        
-[40] jsonlite_1.7.0       distributional_0.1.0 inline_0.3.15       
-[43] magrittr_1.5         loo_2.3.1            Rcpp_1.0.5          
-[46] munsell_0.5.0        fansi_0.4.1          lifecycle_0.2.0     
-[49] stringi_1.4.6        whisker_0.4          yaml_2.2.1          
-[52] pkgbuild_1.1.0       plyr_1.8.6           grid_4.0.2          
-[55] blob_1.2.1           parallel_4.0.2       promises_1.1.1      
-[58] crayon_1.3.4         lattice_0.20-41      haven_2.3.1         
-[61] hms_0.5.3            knitr_1.29           ps_1.3.3            
-[64] pillar_1.4.6         codetools_0.2-16     stats4_4.0.2        
-[67] reprex_0.3.0         glue_1.4.2           evaluate_0.14       
-[70] V8_3.2.0             RcppParallel_5.0.2   modelr_0.1.8        
-[73] vctrs_0.3.2          httpuv_1.5.4         cellranger_1.1.0    
-[76] gtable_0.3.0         assertthat_0.2.1     xfun_0.15           
-[79] broom_0.7.0          coda_0.19-3          later_1.1.0.1       
-[82] ellipsis_0.3.1      </code></pre>
+ [1] Rcpp_1.0.5         lattice_0.20-41    utf8_1.1.4         assertthat_0.2.1  
+ [5] rprojroot_1.3-2    digest_0.6.25      plyr_1.8.6         R6_2.4.1          
+ [9] cellranger_1.1.0   backports_1.1.8    reprex_0.3.0       evaluate_0.14     
+[13] coda_0.19-3        httr_1.4.1         pillar_1.4.6       rlang_0.4.7       
+[17] readxl_1.3.1       rstudioapi_0.11    whisker_0.4        blob_1.2.1        
+[21] rmarkdown_2.3      munsell_0.5.0      broom_0.7.0        compiler_4.0.0    
+[25] httpuv_1.5.4       modelr_0.1.8       xfun_0.15          pkgconfig_2.0.3   
+[29] htmltools_0.5.0    tidyselect_1.1.0   arrayhelpers_1.1-0 fansi_0.4.1       
+[33] crayon_1.3.4       dbplyr_1.4.4       withr_2.2.0        later_1.1.0.1     
+[37] ggdist_2.1.1       grid_4.0.0         jsonlite_1.7.0     gtable_0.3.0      
+[41] lifecycle_0.2.0    DBI_1.1.0          git2r_0.27.1       magrittr_1.5      
+[45] cli_2.0.2          stringi_1.4.6      fs_1.4.2           promises_1.1.1    
+[49] xml2_1.3.2         ellipsis_0.3.1     generics_0.0.2     vctrs_0.3.1       
+[53] tools_4.0.0        svUnit_1.0.3       glue_1.4.1         hms_0.5.3         
+[57] yaml_2.2.1         colorspace_1.4-1   rvest_0.3.5        knitr_1.29        
+[61] haven_2.3.1       </code></pre>
 </div>
 </div>
 </div>

@@ -19,6 +19,7 @@ library(tidyverse)
 library(tidybayes)
 library(scales)
 library(patchwork)
+library(glue)
 theme_set(theme_bw(base_size =22)) 
 ```
 
@@ -490,6 +491,28 @@ param_plot <- R0 + IFR +
     plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.15)))
 
 param_plot
+```
+
+
+```{r R0 over time, cache=T}
+R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
+  mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
+    end_date = ymd(str_sub(file_path, start = -10))) %>% 
+  filter(start_date > ymd("2020-06-16")) %>% # comment this out to include models not in archive
+  # mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')}\n-\n{format(end_date, format = '%b %e')}"))) %>% 
+  mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')} - {format(end_date, format = '%b %e')}"))) %>% 
+  mutate(post = map(file_path, ~read_rds(path(., "oc_post.rds")))) %>% 
+  mutate(tmp = map(post, ~spread_draws(., log_R0))) %>% 
+  unnest(tmp) %>% 
+  mutate(R0 = exp(log_R0)) %>%
+  select(label, R0) %>% 
+  ggplot(aes(label, R0)) +
+  stat_eye(fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4") + 
+  xlab("Date Range") +
+  ylab(expression(R[0])) +
+  geom_hline(yintercept = 1, linetype = "dashed")
+
+R0_over_time_plot
 ```
 
 ## Summary (statements are made assuming 95% credibility levels)

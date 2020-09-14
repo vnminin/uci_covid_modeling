@@ -517,7 +517,7 @@ R0_over_time_plot
 
 ## Summary (statements are made assuming 95% credibility levels)
 - The number of reported cases (`r comma(death_inc_summaries["Cumulative Incidence","observed"])` in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
-This means that we estimate that the total number of infections occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
+This means that we estimate that the total number of infections which occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
 - Prevalence (number of infectious individuals at any time point) is declining, but is projected to be inside the interval (`r prepped_cumulative_inc$posterior %>% filter(name == "Prevalence", t == max(t)) %>% pull(value) %>% quantile(c(0.025, 0.975)) %>% signif(digits=2) %>% scales::comma() %>% paste(collapse = ", ")`) on `r format(max(prepped_cumulative_inc$posterior$t), "%B %e")`.
 - Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
 - Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
@@ -528,7 +528,7 @@ This means that we estimate that the total number of infections occurred between
 ## Abbreviated technical details (optional)
 
 Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. 
-More flashed out method description is in the [manuscript](https://arxiv.org/abs/2009.02654). 
+A more fleshed out method description is in the [manuscript](https://arxiv.org/abs/2009.02654). 
 
 ### Model inputs
 Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.
@@ -589,7 +589,7 @@ Width of these credible intervals encode the amount of uncertainty that we have 
 
 We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
 The priors are listed in the titles of the figures.
-Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), the our results and conclusions are not too sensitive to a particular specification of this prior. 
+Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), our results and conclusions are not too sensitive to a particular specification of this prior. 
 
 
 ```{r reading-sensitivity-objects, echo=FALSE, cache=TRUE}
@@ -753,7 +753,7 @@ param_plot_s2
 
 
 ### Sensitivity to prior for fraction initially infected
-We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially.  This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially. This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
 
 <!-- sensitivity 3 -->
 

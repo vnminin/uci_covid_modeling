@@ -32,7 +32,7 @@ source(here("code", model_name, "plot_functions.R"))
 
 
 #if you want to run the analysis, change to TRUE. Otherwise the site will display the most recent results
-run_analysis <- TRUE
+run_analysis <- FALSE
 
 if (run_analysis==TRUE){
 library(rstan)

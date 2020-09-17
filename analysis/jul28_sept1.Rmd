@@ -14,10 +14,13 @@ knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 knitr::opts_chunk$set(autodep = TRUE)
 library(lubridate)
 library(here)
+library(fs)
 library(tidyverse)
 library(tidybayes)
 library(scales)
 library(patchwork)
+library(glue)
+theme_set(theme_bw(base_size =22)) 
 
 ```
 
@@ -199,13 +202,13 @@ IFR <- oc_prior %>%
   coord_cartesian(xlim = c(0, .03))
 
 param_plot <- R0 + IFR +
-    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.15)))
+    plot_annotation(title = expression(paste('Prior and Posterior Summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.14)))
 
 param_plot
 ```
 
 
-```{r R0 over time, cache=T}
+```{r R0-over-time, cache=TRUE}
 R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
   mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
     end_date = ymd(str_sub(file_path, start = -10))) %>% 
@@ -221,7 +224,8 @@ R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_
   stat_eye(fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4") + 
   xlab("Date Range") +
   ylab(expression(R[0])) +
-  geom_hline(yintercept = 1, linetype = "dashed")
+  geom_hline(yintercept = 1, linetype = "dashed") + 
+plot_annotation(title = expression(paste('Historical estimates of the basic reproductive number, ', R[0], ', from previous reports')),theme=theme(plot.title = element_text(hjust = 0.4)))
 
 R0_over_time_plot
 ```

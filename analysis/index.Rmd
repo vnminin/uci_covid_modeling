@@ -373,6 +373,29 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
   select(name, c(t, ratio_l, ratio_u, .lower, .upper, observed)) %>%
   mutate_if(is.numeric, signif, 2) %>%
   column_to_rownames(var = "name")
+
+death_offset <- oc_data %>%
+  filter(posted_date <= model_objects$actual_first_day) %>% 
+  pull(new_deaths) %>% 
+  sum()
+
+data_for_calcat <- prepped_cumulative_inc$posterior %>% 
+  filter(name == "Cumulative Deaths") %>% 
+  select(date = t, cummort = value) %>%
+  mutate(cummort = cummort + death_offset) %>% 
+  group_by(date) %>% 
+  median_qi() %>% 
+  select(date, cummort_mean = cummort, cummort_CI95l = .lower, cummort_CI95u = .upper) %>% 
+  right_join(tibble(date = seq(min(model_objects$dates_pp), max(model_objects$dates_pp), 1))) %>% 
+  pivot_longer(-date) %>% 
+  arrange(date) %>%
+  group_by(name) %>%
+  mutate(id.value = na.approx(value, maxgap = 2)) %>% # linear interpolation for daily values
+  pivot_wider(id_cols = date, names_from = name, values_from = id.value) %>% 
+  mutate(county = "Orange County", fips = 6059) %>% 
+  select(date, county, fips, cummort_mean, cummort_CI95u)
+
+write_csv(data_for_calcat, path = "data/data_for_calcat.csv")
 ```
 
 ```{r latent-vs-observed-incidence, warning=FALSE, cache=TRUE}

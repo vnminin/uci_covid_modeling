@@ -11,6 +11,14 @@ editor_options:
 
 This website provides reports on the dynamics and future trends of spread of SARS-CoV-2 in Orange County, CA. Please visit the [github](https://github.com/vnminin/uci_covid_modeling) for details on the code, and read the [manuscript](https://arxiv.org/abs/2009.02654) associated with this endeavor for further methodological details.
 
+<a href="https://www.stat.uci.edu" target="_blank"><img src = "assets/UCI14_2Line_ICS_Dept_Stats_blue.png" class="center"/></a>
+<a href="https://infectiousdiseaseinitiative.uci.edu" target="_blank"><img src = "assets/U
+CI19_Infectious_Disease_Science_Int_2L_blue.png"/ width="33%"></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://www.niaid.nih.gov" target="_blank"><img src = "assets/niaid_logo.png"/ width="30%"></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://www.ochealthinfo.com" target="_blank"><img src = "assets/ochca_logo.png"/ width="30%"></a>
+
 ### Authors
 
 Damon Bayer, Isaac Goldstein, and Vladimir N. Minin<br>

@@ -33,7 +33,7 @@ source(here("code", model_name, "plot_functions.R"))
 
 oc_data <- read.csv(here("data", "oc_data.csv"))
 #if you want to run the analysis, change to TRUE. Otherwise the site will display the most recent results
-run_analysis <- FALSE
+run_analysis <- TRUE
 
 if (run_analysis==TRUE){
 library(rstan)
@@ -46,15 +46,15 @@ rstan_options(auto_write = TRUE)
 
 oc_data$posted_date <- as.Date(oc_data$posted_date)
 
-old_folder_name = "2020-07-28_2020-09-01"
+old_folder_name = "2020-08-02_2020-09-06"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-08-02")
-end_date <- as.Date("2020-09-06")
+start_date <- as.Date("2020-08-07")
+end_date <- as.Date("2020-09-11")
 
 test <-   oc_data%>%
   lump_ochca_covid(time_interval_in_days = 3,

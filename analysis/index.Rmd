@@ -600,6 +600,7 @@ lumped_ochca_covid %>%
   facet_wrap(. ~ name, scales = "free_y") +
   xlab("Date") +
   ylab("Count") +
+  scale_y_continuous(labels = comma) +
   ggtitle("Orange County, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid$end_date[2] - lumped_ochca_covid$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d", )+
   theme(strip.text = element_text(size = 20))
 ```

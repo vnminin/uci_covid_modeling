@@ -367,10 +367,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-05
+<strong>Last updated:</strong> 2020-10-06
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
 </p>
 <p>
 <strong>Knit directory:</strong> <code>uci_covid_modeling/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -391,7 +391,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -434,12 +434,60 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
 </p>
 </div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div id="strongCachestrongdetected" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+The following chunks had caches available:
+<ul>
+<li>
+executive-summary
+</li>
+<li>
+latent-vs-observed-incidence
+</li>
+<li>
+model-inputs
+</li>
+<li>
+ppc-forecasts
+</li>
+<li>
+R0-IFR
+</li>
+<li>
+R0-over-time
+</li>
+<li>
+reading-sensitivity-objects
+</li>
+<li>
+unnamed-chunk-1
+</li>
+<li>
+unnamed-chunk-2
+</li>
+<li>
+unnamed-chunk-3
+</li>
+<li>
+unnamed-chunk-4
+</li>
+<li>
+unnamed-chunk-5
+</li>
+<li>
+unnamed-chunk-6
+</li>
+<li>
+unnamed-chunk-7
+</li>
+<li>
+unnamed-chunk-8
+</li>
+</ul>
+<p>To ensure reproducibility of the results, delete the cache directory <code>index_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
 </div>
 </div>
 </div>
@@ -458,40 +506,32 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree89814c5fe4567834e4ed21aae2f2c63c250d2ef8targetblank89814c5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/89814c5fe4567834e4ed21aae2f2c63c250d2ef8" target="_blank">89814c5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreee3f4c18ea18d734243f8f298ba1863982bb7d52ftargetblanke3f4c18a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/vnminin/uci_covid_modeling/tree/e3f4c18ea18d734243f8f298ba1863982bb7d52f" target="_blank">e3f4c18</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtree89814c5fe4567834e4ed21aae2f2c63c250d2ef8targetblank89814c5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomvnmininucicovidmodelingtreee3f4c18ea18d734243f8f298ba1863982bb7d52ftargetblanke3f4c18a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/89814c5fe4567834e4ed21aae2f2c63c250d2ef8" target="_blank">89814c5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/vnminin/uci_covid_modeling/tree/e3f4c18ea18d734243f8f298ba1863982bb7d52f" target="_blank">e3f4c18</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/aug12_sept16_cache/
-    Ignored:    analysis/aug2_sept6_cache/
-    Ignored:    analysis/aug7_sept11_cache/
-    Ignored:    analysis/jul18_aug22_cache/
-    Ignored:    analysis/jul24_aug28_cache/
-    Ignored:    analysis/jul28_sept1_cache/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/index_cache/
+    Ignored:    code/.DS_Store
+    Ignored:    code/SEIeIpRD/oc/.DS_Store
 
-Untracked files:
-    Untracked:  analysis/aug12_sept16.Rmd
-    Untracked:  code/SEIeIpRD/oc/2020-08-17_2020-09-21/
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
+Staged changes:
     Modified:   analysis/index.Rmd
-    Modified:   data/data_for_calcat.csv
-    Modified:   data/oc_data.csv
 
 </code></pre>
 <p>
@@ -530,6 +570,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/analysis/index.Rmd" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+<td>
+model update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/vnminin/uci_covid_modeling/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/index.html" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+<td>
+model update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2275,9 +2349,663 @@ Start workflowr project.
 <h2>Orange County, CA COVID-19 Situation Report, Aug 17 - Sep 21</h2>
 <p>The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. Methodological details are provided below and in the accompanying <a href="https://arxiv.org/abs/2009.02654">manuscript</a>. We are also contributing to <a href="https://www.stat.uci.edu/covid19/index.html">COVID Trends by UC Irvine</a> project that provides data visualizations of California County trends across time and space.</p>
 <p><img src="figure/index.Rmd/latent-vs-observed-incidence-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-latent-vs-observed-incidence-1">
+Past versions of latent-vs-observed-incidence-1.png
+</button>
+</p>
+<div id="fig-latent-vs-observed-incidence-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/246fc9cf34e61aa672cc7e60885af33644947cf2/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">246fc9c</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/latent-vs-observed-incidence-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/ppc-forecasts-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ppc-forecasts-1">
+Past versions of ppc-forecasts-1.png
+</button>
+</p>
+<div id="fig-ppc-forecasts-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d7bda0b1c3ad7a8c273e06103e3b36fcfabc81dc/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">d7bda0b</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/246fc9cf34e61aa672cc7e60885af33644947cf2/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">246fc9c</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/cd4e6515d8b528a3d5e08d8a01f832a0e441330b/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">cd4e651</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/0f11928129e1b8d5838315fd2127b7b1ffe0dce4/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">0f11928</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/ppc-forecasts-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/R0-IFR-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-R0-IFR-1">
+Past versions of R0-IFR-1.png
+</button>
+</p>
+<div id="fig-R0-IFR-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/667521afa66cadb41820cdbc361f0778b44a2283/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">667521a</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/238022087f7c3aeee8d64a2f6b42e1f30527db91/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">2380220</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/dbab6de143180c74d888b798a837240598a5b9f2/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">dbab6de</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/R0-IFR-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/R0-over-time-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-R0-over-time-1">
+Past versions of R0-over-time-1.png
+</button>
+</p>
+<div id="fig-R0-over-time-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/667521afa66cadb41820cdbc361f0778b44a2283/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">667521a</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b971c34f06a859059c217cecfbeec07ebc2ab1fc/docs/figure/index.Rmd/R0-over-time-1.png" target="_blank">b971c34</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="summary-statements-are-made-assuming-95-credibility-levels" class="section level2">
 <h2>Summary (statements are made assuming 95% credibility levels)</h2>
@@ -2297,11 +3025,228 @@ Start workflowr project.
 <h3>Model inputs</h3>
 <p>Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.</p>
 <p><img src="figure/index.Rmd/model-inputs-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model-inputs-1">
+Past versions of model-inputs-1.png
+</button>
+</p>
+<div id="fig-model-inputs-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4d65a26326a654172b78a085494588b3a73e2d00/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">4d65a26</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/64f3007edc3400d7b29ffd9b30113537c28582bd/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">64f3007</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-29
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/model-inputs-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="model-structure" class="section level3">
 <h3>Model structure</h3>
 <p>We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, <span class="math inline">\(\text{I}_\text{e}\)</span> = individuals at early stages of infection, <span class="math inline">\(\text{I}_\text{p}\)</span> = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.</p>
 <p><img src="assets/model_figure.svg" width="60%" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-model_figure">
+Past versions of model_figure.svg
+</button>
+</p>
+<div id="fig-model_figure" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/assets/model_figure.svg" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters:</p>
 <ul>
 <li>Basic reproductive number (<span class="math inline">\(R_0\)</span>)</li>
@@ -2324,20 +3269,2153 @@ Start workflowr project.
 <h3>Sensitivity to Prior for <span class="math inline">\(R_0\)</span></h3>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. The priors are listed in the titles of the figures. Although the prior distribution of <span class="math inline">\(R_0\)</span> does have some effect on its posterior (as it should), our results and conclusions are not too sensitive to a particular specification of this prior.</p>
 <p><img src="figure/index.Rmd/unnamed-chunk-1-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-1-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/unnamed-chunk-2-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d7bda0b1c3ad7a8c273e06103e3b36fcfabc81dc/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">d7bda0b</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/dbab6de143180c74d888b798a837240598a5b9f2/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">dbab6de</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/3857e0ab8433c84a2027b0e645a5da289ecc7f99/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">3857e0a</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-2-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/unnamed-chunk-3-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/3857e0ab8433c84a2027b0e645a5da289ecc7f99/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">3857e0a</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-30
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-3-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d7bda0b1c3ad7a8c273e06103e3b36fcfabc81dc/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">d7bda0b</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/dbab6de143180c74d888b798a837240598a5b9f2/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">dbab6de</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-4-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sensitivity-to-prior-for-fraction-initially-infected" class="section level3">
 <h3>Sensitivity to prior for fraction initially infected</h3>
 <p>We examine how sensitive our conclusions about <span class="math inline">\(R_0\)</span> are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially. This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior.</p>
 <!-- sensitivity 3 -->
 <p><img src="figure/index.Rmd/unnamed-chunk-5-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-5-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/unnamed-chunk-6-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d7bda0b1c3ad7a8c273e06103e3b36fcfabc81dc/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">d7bda0b</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/dbab6de143180c74d888b798a837240598a5b9f2/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">dbab6de</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-6-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- sensitivity 4 -->
 <p><img src="figure/index.Rmd/unnamed-chunk-7-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-7-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><img src="figure/index.Rmd/unnamed-chunk-8-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>Last updated on 2020-10-05.</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e3f4c18ea18d734243f8f298ba1863982bb7d52f/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">e3f4c18</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-10-05
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/758ba66cd25441a02eeed6b7b47125e4ce0e61ea/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">758ba66</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/bb66666a8ad8a2e5df655c7bd8fbb5b164c42e4b/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">bb66666</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-21
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/74b96fb211cc4a7289b56a961bd270af02bb922d/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">74b96fb</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/babbc10df3977c07c0de4a104dd0daa38b3a2d7b/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">babbc10</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/d7bda0b1c3ad7a8c273e06103e3b36fcfabc81dc/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">d7bda0b</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/b9129e66be4c4cd2cfee2ec665f783309697a162/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">b9129e6</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/dbab6de143180c74d888b798a837240598a5b9f2/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">dbab6de</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e819db9948145ef008e91920574867198b3122a1/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">e819db9</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/2ae9065cad796b569b391638cd6d16a752f4b16d/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">2ae9065</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/ab9898ae0c0af20f3d26a64e90834b3a9feda3c9/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">ab9898a</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e4e122f57bc1866cbbd15c4e4730cebabb2cf51a/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">e4e122f</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8b62aff70e5d519fa8e27720146dd52fda65ecae/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">8b62aff</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/7922317e01fa2daa43d62aeddf66afb829d81f1e/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">7922317</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f21abf7a7a22fbad98a734ae2ae9a373b8c9ae1a/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">f21abf7</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/349da669cc049049451d37381bc403e3f822f24d/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">349da66</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/22fb043ee76b73abd16a431400d81709f6e32542/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">22fb043</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-09-04
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/416b006edda81a9d0db508602faa74b0fff6a8b8/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">416b006</a>
+</td>
+<td>
+Damon Bayer
+</td>
+<td>
+2020-09-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/e7bdeeb533106c2f9c17b62858c435fd66060127/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">e7bdeeb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-09-02
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/f67a6e25c96cb5040ef60f07e92e77b80fa122db/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">f67a6e2</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/5fd3a50983ba9d5eae8c42fbe75952cf6e05279e/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">5fd3a50</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-31
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/33f234e7c52f4bdfef0263cc115e7ad00187bcec/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">33f234e</a>
+</td>
+<td>
+vnminin
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/66985899cb882e8ec0182581b85d59ede290acf8/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">6698589</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/4ca76fb526ff3b7ea07005cad767beaf844d9172/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">4ca76fb</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/a07b913f35f32ad16b8a2f89c8393844f65895e7/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">a07b913</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/8abe8302671aa52c7fd0f83ef80853b0f508a8d3/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">8abe830</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/vnminin/uci_covid_modeling/blob/99d68f7ac87fa3d8af07dfe97124e72eedbdfe14/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">99d68f7</a>
+</td>
+<td>
+igoldsteinh
+</td>
+<td>
+2020-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Last updated on 2020-10-06.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2346,56 +5424,53 @@ Start workflowr project.
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre><code>R version 4.0.2 (2020-06-22)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18362)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
 
 Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
 
 locale:
-[1] LC_COLLATE=English_United States.1252 
-[2] LC_CTYPE=English_United States.1252   
-[3] LC_MONETARY=English_United States.1252
-[4] LC_NUMERIC=C                          
-[5] LC_TIME=English_United States.1252    
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
  [1] zoo_1.8-8       glue_1.4.2      patchwork_1.0.1 scales_1.1.1   
- [5] tidybayes_2.1.1 forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0    
- [9] purrr_0.3.4     readr_1.3.1     tidyr_1.1.0     tibble_3.0.3   
-[13] ggplot2_3.3.2   tidyverse_1.3.0 fs_1.4.2        here_0.1       
+ [5] tidybayes_2.1.1 forcats_0.5.0   stringr_1.4.0   dplyr_1.0.2    
+ [9] purrr_0.3.4     readr_1.3.1     tidyr_1.1.2     tibble_3.0.3   
+[13] ggplot2_3.3.2   tidyverse_1.3.0 fs_1.5.0        here_0.1       
 [17] lubridate_1.7.9 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] matrixStats_0.56.0   RColorBrewer_1.1-2   httr_1.4.1          
- [4] rprojroot_1.3-2      rstan_2.21.2         tools_4.0.2         
- [7] backports_1.1.8      utf8_1.1.4           R6_2.4.1            
-[10] DBI_1.1.0            colorspace_1.4-1     ggdist_2.2.0        
-[13] withr_2.2.0          gridExtra_2.3        tidyselect_1.1.0    
-[16] prettyunits_1.1.1    processx_3.4.3       curl_4.3            
-[19] compiler_4.0.2       git2r_0.27.1         cli_2.0.2           
-[22] rvest_0.3.5          arrayhelpers_1.1-0   xml2_1.3.2          
-[25] labeling_0.3         callr_3.4.3          StanHeaders_2.21.0-5
-[28] digest_0.6.25        rmarkdown_2.3        pkgconfig_2.0.3     
-[31] htmltools_0.5.0      dbplyr_1.4.4         rlang_0.4.7         
-[34] readxl_1.3.1         rstudioapi_0.11      farver_2.0.3        
-[37] generics_0.0.2       svUnit_1.0.3         jsonlite_1.7.0      
-[40] distributional_0.1.0 inline_0.3.15        magrittr_1.5        
-[43] loo_2.3.1            Rcpp_1.0.5           munsell_0.5.0       
-[46] fansi_0.4.1          lifecycle_0.2.0      stringi_1.4.6       
-[49] whisker_0.4          yaml_2.2.1           pkgbuild_1.1.0      
-[52] plyr_1.8.6           grid_4.0.2           blob_1.2.1          
-[55] parallel_4.0.2       promises_1.1.1       crayon_1.3.4        
-[58] lattice_0.20-41      haven_2.3.1          hms_0.5.3           
-[61] knitr_1.29           ps_1.3.3             pillar_1.4.6        
-[64] codetools_0.2-16     stats4_4.0.2         reprex_0.3.0        
-[67] evaluate_0.14        V8_3.2.0             RcppParallel_5.0.2  
-[70] modelr_0.1.8         vctrs_0.3.2          httpuv_1.5.4        
-[73] cellranger_1.1.0     gtable_0.3.0         assertthat_0.2.1    
-[76] xfun_0.15            broom_0.7.0          coda_0.19-3         
-[79] later_1.1.0.1        ellipsis_0.3.1      </code></pre>
+ [1] matrixStats_0.56.0   httr_1.4.2           rprojroot_1.3-2     
+ [4] rstan_2.21.1         tools_4.0.2          backports_1.1.10    
+ [7] utf8_1.1.4           R6_2.4.1             DBI_1.1.0           
+[10] colorspace_1.4-1     ggdist_2.2.0         withr_2.3.0         
+[13] gridExtra_2.3        tidyselect_1.1.0     prettyunits_1.1.1   
+[16] processx_3.4.4       curl_4.3             compiler_4.0.2      
+[19] git2r_0.27.1         cli_2.0.2            rvest_0.3.6         
+[22] arrayhelpers_1.1-0   xml2_1.3.2           callr_3.4.4         
+[25] StanHeaders_2.21.0-6 digest_0.6.25        rmarkdown_2.3       
+[28] pkgconfig_2.0.3      htmltools_0.5.0      dbplyr_1.4.4        
+[31] rlang_0.4.7          readxl_1.3.1         rstudioapi_0.11     
+[34] farver_2.0.3         generics_0.0.2       svUnit_1.0.3        
+[37] jsonlite_1.7.1       distributional_0.2.0 inline_0.3.16       
+[40] magrittr_1.5         loo_2.3.1            Rcpp_1.0.5          
+[43] munsell_0.5.0        fansi_0.4.1          lifecycle_0.2.0     
+[46] stringi_1.5.3        whisker_0.4          yaml_2.2.1          
+[49] pkgbuild_1.1.0       plyr_1.8.6           grid_4.0.2          
+[52] blob_1.2.1           parallel_4.0.2       promises_1.1.1      
+[55] crayon_1.3.4         lattice_0.20-41      haven_2.3.1         
+[58] hms_0.5.3            knitr_1.30           ps_1.3.4            
+[61] pillar_1.4.6         codetools_0.2-16     stats4_4.0.2        
+[64] reprex_0.3.0         evaluate_0.14        V8_3.2.0            
+[67] RcppParallel_5.0.2   modelr_0.1.8         vctrs_0.3.4         
+[70] httpuv_1.5.4         cellranger_1.1.0     gtable_0.3.0        
+[73] assertthat_0.2.1     xfun_0.17            broom_0.7.0         
+[76] coda_0.19-4          later_1.1.0.1        ellipsis_0.3.1      </code></pre>
 </div>
 </div>
 </div>

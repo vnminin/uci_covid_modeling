@@ -46,15 +46,15 @@ rstan_options(auto_write = TRUE)
 
 oc_data$posted_date <- as.Date(oc_data$posted_date)
 
-old_folder_name = "2020-08-12_2020-09-16"
+old_folder_name = "2020-08-17_2020-09-21"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-08-17")
-end_date <- as.Date("2020-09-21")
+start_date <- as.Date("2020-08-28")
+end_date <- as.Date("2020-10-02")
 
 test <-   oc_data%>%
   lump_ochca_covid(time_interval_in_days = 3,
@@ -64,7 +64,7 @@ test <-   oc_data%>%
 # Setup Model Objects -----------------------------------------------------
 
 #acquire posterior samples for fraction infected, fraction infectious, fraction early infectious 
-#one day before current analysis start date
+#nearest day to when current analysis starts
 oc_post_old_wide <- oc_post_old %>%
   spread_draws(epi_curves[i]) %>%
   ungroup() %>%
@@ -335,7 +335,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 
 ```
 
-## Orange County, CA COVID-19 Situation Report, October 6, 2020
+## Orange County, CA COVID-19 Situation Report, October 13, 2020
 #### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
 
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
@@ -441,7 +441,8 @@ ggplot() +
                     median_qi(.width = ci_width),
   mapping = aes(t, value, ymin = .lower, ymax = .upper), size=1.5,
   color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc$observed,
+  geom_col(data = prepped_cumulative_inc$observed %>%
+             filter(usage == "train"),
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y", strip.position="left") +
@@ -682,7 +683,8 @@ ggplot() +
   median_qi(.width = ci_width),
   mapping = aes(t, value, ymin = .lower, ymax = .upper),
   color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc_s1$observed,
+  geom_col(data = prepped_cumulative_inc_s1$observed %>% 
+                    filter(usage == "train"),
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
@@ -750,7 +752,8 @@ ggplot() +
                     median_qi(.width = ci_width),
                   mapping = aes(t, value, ymin = .lower, ymax = .upper),
                   color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc_s2$observed,
+  geom_col(data = prepped_cumulative_inc_s2$observed %>% 
+                    filter(usage == "train"),
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
@@ -823,7 +826,8 @@ ggplot() +
   median_qi(.width = ci_width),
   mapping = aes(t, value, ymin = .lower, ymax = .upper),
   color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc_s3$observed,
+  geom_col(data = prepped_cumulative_inc_s3$observed %>% 
+                    filter(usage == "train"),
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
@@ -891,7 +895,8 @@ ggplot() +
   median_qi(.width = ci_width),
   mapping = aes(t, value, ymin = .lower, ymax = .upper),
   color = "steelblue4") +
-  geom_col(data = prepped_cumulative_inc_s4$observed,
+  geom_col(data = prepped_cumulative_inc_s4$observed %>% 
+                    filter(usage == "train"),
            mapping = aes(x = t, y = observed),
            fill = "black") +
   facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +

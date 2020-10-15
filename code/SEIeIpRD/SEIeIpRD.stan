@@ -204,9 +204,9 @@ functions{
     init_concs[1] = 1- init_fracs[1];
     init_concs[2] = exp(log(init_fracs[1]) + log1m(init_fracs[2]));
     init_concs[3] =
-      exp(log(init_fracs[1]) + log(init_fracs[2]) + log1m(init_fracs[3]));
-    init_concs[4] =
       exp(log(init_fracs[1]) + log(init_fracs[2]) + log(init_fracs[3]));
+    init_concs[4] =
+      exp(log(init_fracs[1]) + log(init_fracs[2]) + log1m(init_fracs[3]));
 
     // return concentrations
     return init_concs;

@@ -401,12 +401,17 @@ data_for_calcat_re <- spread_draws(oc_post, log_R0) %>%
   pivot_wider(id_cols = date, names_from = name, values_from = id.value) %>% 
   select(date, re_mean, re_CI95l, re_CI95u)
 
-data_for_calcat_mort <- prepped_cumulative_inc$posterior %>% 
-  filter(name == "Cumulative Deaths") %>% 
-  select(date = t, cummort = value) %>%
-  mutate(cummort = cummort + death_offset) %>% 
+
+data_for_calcat_mort <- oc_post %>%
+  spread_draws(deaths_pp[i]) %>% 
+  group_by(.draw) %>% 
+  arrange(.draw, i) %>% 
+  mutate(cummort = cumsum(deaths_pp) + death_offset) %>%
+  mutate(date = model_objects$dates_pp[i]) %>%
+  ungroup() %>% 
+  select(cummort, date) %>% 
   group_by(date) %>% 
-  median_qi() %>% 
+  mean_qi() %>% 
   select(date, cummort_mean = cummort, cummort_CI95l = .lower, cummort_CI95u = .upper) %>% 
   right_join(tibble(date = seq(min(model_objects$dates_pp), max(model_objects$dates_pp), 1))) %>% 
   pivot_longer(-date) %>% 
@@ -415,8 +420,6 @@ data_for_calcat_mort <- prepped_cumulative_inc$posterior %>%
   mutate(id.value = na.approx(value, maxgap = 2)) %>% # linear interpolation for daily values
   pivot_wider(id_cols = date, names_from = name, values_from = id.value) %>% 
   select(date, cummort_mean, cummort_CI95l, cummort_CI95u)
-
-
 
 data_for_calcat <- full_join(data_for_calcat_re, data_for_calcat_mort) %>% 
   mutate(county = "Orange County", fips = 6059) %>% 

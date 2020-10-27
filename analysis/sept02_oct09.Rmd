@@ -1,0 +1,617 @@
+---
+title: "Orange County, CA COVID Situation Report Sept 04 - Oct 09"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
+#knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_chunk$set(autodep = TRUE)
+library(lubridate)
+library(here)
+library(fs)
+library(tidyverse)
+library(tidybayes)
+library(scales)
+library(patchwork)
+library(glue)
+theme_set(theme_bw(base_size =22)) 
+
+```
+
+
+```{r reading-model-objects, cache=TRUE}
+# Pick folder to build model from. Defaults to most recent end date with earliest start date
+model_name <- "SEIeIpRD"
+loc_name <- "oc"
+
+source(here("code", model_name, "helper_functions.R"))
+source(here("code", model_name, "plot_functions.R"))
+
+folder_name <-"2020-09-04_2020-10-09"
+
+folder_loc <- here("code", model_name, loc_name, folder_name)
+
+oc_post <- read_rds(file.path(folder_loc, "oc_post.rds"))
+model_objects <- read_rds(file.path(folder_loc, "model_objects.rds"))
+
+lumped_ochca_covid <- model_objects$lumped_ochca_covid
+time_interval_in_days <- model_objects$time_interval_in_days
+
+oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
+
+theme_set(theme_bw(base_size =22)) 
+
+```
+
+## Orange County, CA COVID-19 Situation Report, October 19, 2020
+#### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
+
+The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
+Methodological details are provided below and in the accompanying [manuscript](https://arxiv.org/abs/2009.02654). We are also contributing to [COVID Trends by UC Irvine](https://www.stat.uci.edu/covid19/index.html) project that provides data visualizations of California County trends across time and space. 
+
+```{r executive-summary, warning=FALSE, cache=TRUE}
+R0_bci = oc_post %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
+
+R_eff_bci <- spread_draws(oc_post, log_R0) %>%
+  select(.draw, log_R0) %>%
+  left_join(prep_epi_curves(oc_post, model_objects) %>%
+              filter(g_text == "S",
+                     t == model_objects$actual_last_day) %>%
+              ungroup() %>%
+              select(S = epi_curves, .draw)) %>%
+  transmute(Reff = exp(log_R0) * S) %>% 
+  median_qi(Reff) %>% 
+  mutate_if(is.numeric, signif, 2)
+
+IFR_bci = oc_post %>% spread_draws(IFR) %>% median_qi(IFR) %>% mutate_if(is.numeric, signif, 2)
+
+rho_death_bci = oc_post %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)
+
+ci_width <- 0.95
+prepped_cumulative_inc <- prep_cumulative_inc(model_objects, oc_post)
+
+death_inc_summaries <- prepped_cumulative_inc$posterior %>% 
+  filter(usage == "train") %>%
+  dplyr::select(-usage) %>% 
+  group_by(t, name) %>% 
+  median_qi(.width = ci_width) %>% 
+  left_join(prepped_cumulative_inc$observed) %>% 
+  mutate(ratio_l = .lower / observed) %>%
+  mutate(ratio_u = .upper / observed) %>% 
+  group_by(name) %>%
+  filter(t == max(t)) %>%
+  select(name, c(t, ratio_l, ratio_u, .lower, .upper, observed)) %>%
+  mutate_if(is.numeric, signif, 2) %>%
+  column_to_rownames(var = "name")
+```
+
+
+```{r latent-vs-observed-incidence, warning=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+prepped_cumulative_inc <- map(prepped_cumulative_inc, ~mutate(., name = str_replace(name,
+                                  "(Cumulative.+)",
+                                  str_c("\\1\nSince ", format(model_objects$actual_first_day, "%b %d")))))
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc$posterior %>% 
+                    group_by(t, name, usage) %>% 
+                    median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper), size=1.5,
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc$observed %>%
+             filter(usage == "train"),
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position="left") +
+  ggtitle(str_c("OC latent & observed trajectories, posterior median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", 
+        strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("21 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+
+```{r ppc-forecasts, warning=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+prepped_death <- prep_death(model_objects, oc_post, ci_width)
+
+death_plot <- ggplot() +
+  geom_lineribbon(data = prepped_death$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
+                  size = 1.5,
+                  color = "steelblue4") +
+  geom_point(data = prepped_death$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Deaths due to COVID-19") +
+  xlab("Date") +
+  ylab("Number of Deaths") +
+  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+prepped_pos <- prep_pos(model_objects, oc_post, ci_width)
+
+test <- prepped_pos$posterior %>% 
+  group_by(t) %>% 
+  median_qi(.width = ci_width) 
+
+positivity_plot <- ggplot() +
+  geom_lineribbon(data = prepped_pos$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
+                  size = 1.5, color = "steelblue4") +
+  geom_point(data = prepped_pos$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Fraction of Positive COVID-19 Tests") +
+  xlab("Date") +
+  ylab("Positivity Percent") +
+  scale_y_continuous(labels = percent) +
+  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+
+death_pos <- death_plot + positivity_plot +   
+  plot_annotation(title = 'Observed & Predicted Deaths and Positive Test Percent in 3 Day Periods', theme=theme(plot.title = element_text(hjust = 0.2)))
+
+death_pos
+
+```
+
+```{r R0-IFR, echo=FALSE, cache=TRUE}
+# If you want to plot R0 by istelf with custom lims, use this:
+R0 <- oc_prior %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  dplyr::select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post %>%
+              spread_draws(log_R0)%>% mutate(R0=exp(log_R0)) %>%
+              dplyr::select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
+
+IFR <- oc_prior %>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab("Infection-to-fatality ratio (IFR)") +
+  coord_cartesian(xlim = c(0, .03))
+
+param_plot <- R0 + IFR +
+    plot_annotation(title = expression(paste('Prior and Posterior Summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.14)))
+
+param_plot
+```
+
+
+```{r R0-over-time, cache=TRUE}
+R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
+  mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
+    end_date = ymd(str_sub(file_path, start = -10))) %>% 
+  filter(start_date > ymd("2020-06-16")) %>% # comment this out to include models not in archive
+  # mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')}\n-\n{format(end_date, format = '%b %e')}"))) %>% 
+  mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')} - {format(end_date, format = '%b %e')}"))) %>% 
+  mutate(post = map(file_path, ~read_rds(path(., "oc_post.rds")))) %>% 
+  mutate(tmp = map(post, ~spread_draws(., log_R0))) %>% 
+  unnest(tmp) %>% 
+  mutate(R0 = exp(log_R0)) %>%
+  select(label, R0) %>% 
+  ggplot(aes(label, R0)) +
+  stat_eye(fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4") + 
+  xlab("Date Range") +
+  ylab(expression(R[0])) +
+  geom_hline(yintercept = 1, linetype = "dashed") + 
+plot_annotation(title = expression(paste('Historical estimates of the basic reproductive number, ', R[0], ', from previous reports')),theme=theme(plot.title = element_text(hjust = 0.4)))
+
+R0_over_time_plot
+```
+
+## Summary (statements are made assuming 95% credibility levels)
+- The number of reported cases (`r comma(death_inc_summaries["Cumulative Incidence","observed"])` in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
+This means that we estimate that the total number of infections which occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
+- Prevalence (number of infectious individuals at any time point) is declining, but is projected to be inside the interval (`r prepped_cumulative_inc$posterior %>% filter(name == "Prevalence", t == max(t)) %>% pull(value) %>% quantile(c(0.025, 0.975)) %>% signif(digits=2) %>% scales::comma() %>% paste(collapse = ", ")`) on `r format(max(prepped_cumulative_inc$posterior$t), "%B %e")`.
+- Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
+- Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
+- Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deceased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
+
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+
+## Abbreviated technical details (optional)
+
+Our approach is based on fitting a mechanistic model of SARS-CoV-2 spread to multiple sources of surveillance data. 
+A more fleshed out method description is in the [manuscript](https://arxiv.org/abs/2009.02654). 
+
+### Model inputs
+Our method takes three time series as input: daily new tests, case counts, and deaths. However, we find daily resolution to be too noisy due to delay in testing reports, weekend effect, etc. So we aggregated/binned the three types of counts in 3 day intervals. These aggregated time series are shown below.
+
+```{r model-inputs, cache=TRUE}
+lumped_ochca_covid %>% 
+  dplyr::select(-start_date) %>% 
+  pivot_longer(-end_date) %>% 
+  mutate(name = str_remove(name, "new_") %>% str_to_title()) %>% 
+  mutate(name = fct_relevel(name, c("Tests", "Cases", "Deaths"))) %>% 
+  ggplot(aes(end_date, value)) +
+  geom_line(size=1) +
+  geom_point(size=3) +
+  facet_wrap(. ~ name, scales = "free_y") +
+  xlab("Date") +
+  ylab("Count") +
+  scale_y_continuous(labels = comma) +
+  ggtitle("Orange County, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid$end_date[2] - lumped_ochca_covid$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d", )+
+  theme(strip.text = element_text(size = 20))
+```
+
+### Model structure
+We assume that all individuals in Orange County, CA can be split into 6 compartments: S = susceptible individuals, E = infected, but not yet infectious individuals, $\text{I}_\text{e}$ = individuals at early stages of infection, $\text{I}_\text{p}$ = individuals at progressed stages of infection (assumed 20% less infectious than individuals at the early infection stage), R = recovered individuals, D = individuals who died due to COVID-19. Possible progressions of an individual through the above compartments are depicted in the diagram below.  
+
+
+```{r Model Structure, out.width = "60%"}
+knitr::include_graphics("assets/model_figure.svg", error=FALSE)
+```
+
+Mathematically, we assume that dynamics of the proportions of individuals in each compartment follow a set of ordinary differential equations corresponding to the above diagram. These equations are controlled by the following parameters: 
+
+- Basic reproductive number ($R_0$)
+- mean duration of the latent period
+- mean duration of the early infection period
+- mean duration of the progressed infection period
+- probability of transitioning from progressed infection to death, rather than to recovery (i.e., IFR)
+
+We fit this model to data by assuming that case counts are noisy realizations of the actual number of individuals progressing from $\text{I}_\text{e}$ compartment to $\text{I}_\text{p}$ compartment. 
+Similarly we assume that observed deaths are noisy realizations of the actual number of individuals progressing from $\text{I}_\text{p}$ compartment to $\text{D}$ compartment. 
+*A priori*, we assume that death counts are significantly less noisy than case counts.
+We use a Bayesian estimation framework, which means that all estimated quantities receive credible intervals (e.g., 80% or 95% credible intervals). 
+Width of these credible intervals encode the amount of uncertainty that we have in the estimated quantities. 
+
+
+
+
+
+<!-- # Planned model extensions  -->
+
+<!-- * We plan to add H = hospitalized and ICU compartments to the model. This extension will allow us to inform the model with hospitalization and occupied ICU beds time series, in addition to already used test, case, and death counts. Equally importantly, we will be able to forecast hospital and ICU occupancy.  -->
+<!-- * We will allow $R_0$ to vary with time and will attempt to estimate its changes non-parameterically. -->
+<!-- * We would like to add age structure into the model. This is not a high priority at the moment, because we suspect we don't have enough data to estimate additional parameters that will need to be added to the model. -->
+
+<hr style="height:3px;border-width:0;color:gray;background-color:gray">
+
+## Appendix
+
+### Sensitivity to Prior for $R_0$
+
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for this parameter. 
+The priors are listed in the titles of the figures.
+Although the prior distribution of $R_0$ does have some effect on its posterior (as it should), our results and conclusions are not too sensitive to a particular specification of this prior. 
+
+
+```{r reading-sensitivity-objects, echo=FALSE, cache=TRUE}
+#Read in
+#sensitivity1 is lognorm(log(2.5), .5)
+#sensitivity2 is lognorm(log(.53), .78)
+#folder_loc <- "Models/simple_mod_for_simulation/2020-03-15_2020-04-28"
+oc_post_sensitivity1<- read_rds(file.path(folder_loc, "oc_post_sensitivity1.rds"))
+oc_prior_sensitivity1 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity1.rds"))
+
+oc_post_sensitivity2<- read_rds(file.path(folder_loc, "oc_post_sensitivity2.rds"))
+oc_prior_sensitivity2 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity2.rds"))
+
+oc_post_sensitivity3 <- read_rds(file.path(folder_loc, "oc_post_sensitivity3.rds"))
+oc_prior_sensitivity3 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity3.rds"))
+
+oc_post_sensitivity4<- read_rds(file.path(folder_loc, "oc_post_sensitivity4.rds"))
+oc_prior_sensitivity4 <- read_rds(file.path(folder_loc, "oc_prior_sensitivity4.rds"))
+
+
+prepped_cumulative_inc_s1 <- prep_cumulative_inc(model_objects, oc_post_sensitivity1)
+prepped_cumulative_inc_s2 <- prep_cumulative_inc(model_objects, oc_post_sensitivity2)
+prepped_cumulative_inc_s3 <- prep_cumulative_inc(model_objects, oc_post_sensitivity3)
+prepped_cumulative_inc_s4 <- prep_cumulative_inc(model_objects, oc_post_sensitivity4)
+```
+
+```{r, echo=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s1$posterior %>%
+  group_by(t, name, usage) %>%
+  median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s1$observed %>% 
+                    filter(usage == "train"),
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
+  ggtitle("Latent & observed cumulative events R0~lognorm(log(2.5), 0.5)",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("21 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+
+```{r, warnings=FALSE, cache=TRUE}
+## If you want to plot R0 by istelf with custom lims, use this:
+R0_s1 <- oc_prior_sensitivity1 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity1 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
+# and substitute
+
+
+IFR_s1 <- oc_prior_sensitivity1%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity1 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s1 <- R0_s1 + IFR_s1 +
+    plot_annotation(title = 'Prior and Posterior summaries for R0 and IFR',
+                    subtitle= 'R0 ~ lognormal(log(2.5), .5)')
+
+param_plot_s1
+
+```
+
+```{r, warning=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s2$posterior %>%
+                    group_by(t, name, usage) %>%
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+                  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s2$observed %>% 
+                    filter(usage == "train"),
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
+  ggtitle("Latent & observed cumulative events R0~lognorm(log(0.53), 0.78)",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("21 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+
+```
+
+```{r, echo=FALSE, cache=TRUE}
+R0_s2 <- oc_prior_sensitivity2 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity2 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
+# and substitute
+
+
+IFR_s2 <- oc_prior_sensitivity2%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity2 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s2 <- R0_s2 + IFR_s2 +
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
+                    subtitle= 'R0 ~ lognormal(log(.53), .78)')
+
+param_plot_s2
+```
+
+
+### Sensitivity to prior for fraction initially infected
+We examine how sensitive our conclusions about $R_0$ are to our prior assumptions by repeating estimation of all model parameters under different priors for the parameter controlling how many people are infected initially. This prior changes depending on the time period, so we adjust by changing the prior mean to be twice as large or one half as large as the default prior. 
+
+<!-- sensitivity 3 -->
+
+```{r, echo=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s3$posterior %>%
+  group_by(t, name, usage) %>%
+  median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s3$observed %>% 
+                    filter(usage == "train"),
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
+  ggtitle("Latent & observed cumulative events: Mean Initial Infected Twice as Large",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("21 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+
+```{r, warnings=FALSE, cache=TRUE}
+R0_s3 <- oc_prior_sensitivity3 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity3 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
+# and substitute
+
+
+IFR_s3 <- oc_prior_sensitivity3%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity3 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s3 <- R0_s3 + IFR_s3 +
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
+                    subtitle= 'Mean Initial Infected Twice as Large')
+
+param_plot_s3
+```
+
+<!-- sensitivity 4 -->
+
+```{r, echo=FALSE, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+
+ggplot() +
+  geom_lineribbon(data = prepped_cumulative_inc_s4$posterior %>%
+  group_by(t, name, usage) %>%
+  median_qi(.width = ci_width),
+  mapping = aes(t, value, ymin = .lower, ymax = .upper),
+  color = "steelblue4") +
+  geom_col(data = prepped_cumulative_inc_s4$observed %>% 
+                    filter(usage == "train"),
+           mapping = aes(x = t, y = observed),
+           fill = "black") +
+  facet_wrap(. ~ name, scales = "free_y", strip.position = "left") +
+  ggtitle("Latent & observed cumulative events: Mean Initial Infected Half as Large",
+          subtitle = str_c("Posterior Median &", str_c(percent(ci_width), collapse = ", "), "credible intervals", sep = " ")) +
+  xlab("Date") +
+  ylab(NULL) +
+  theme(strip.background = element_blank(),
+           strip.placement = "outside", strip.text = element_text(size = 22),
+        legend.position = c(0.092, 0.9), legend.title = element_text(size=15.5), legend.text = element_text(size=15.5), legend.background = element_rect(fill="transparent")) +
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("21 day"), date_labels = "%b %d") +
+  scale_y_continuous(labels = comma)
+```
+
+```{r, warnings=FALSE, cache=TRUE}
+R0_s4 <- oc_prior_sensitivity4 %>%
+  spread_draws(log_R0) %>%
+  mutate(R0=exp(log_R0))%>%
+  select(-starts_with(".")) %>%
+  mutate(dist = "Prior") %>%
+  bind_rows(oc_post_sensitivity4 %>%
+              spread_draws(log_R0) %>%
+              mutate(R0=exp(log_R0))%>%
+              select(-starts_with(".")) %>%
+              mutate(dist = "Posterior")) %>%
+  ggplot(aes(x = R0, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  xlab(expression(R[0])) +
+  coord_cartesian(xlim = c(0, 2.5))
+# and substitute
+
+
+IFR_s4 <- oc_prior_sensitivity4%>%
+  spread_draws(IFR) %>% 
+  select(-starts_with(".")) %>% 
+  mutate(dist = "Prior") %>% 
+  bind_rows(oc_post_sensitivity4 %>%
+              spread_draws(IFR) %>% 
+              select(-starts_with(".")) %>% 
+              mutate(dist = "Posterior"))  %>%
+  ggplot(aes(x =IFR, y = dist), fill = stat(x > 1.0)) +
+  stat_halfeye(normalize= "xy", fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4", slab_size = 0.5) +
+  #geom_vline(xintercept = 1.0, linetype = "dashed") +
+  ylab(NULL) +
+  coord_cartesian(xlim = c(0, .05))
+
+param_plot_s4 <- R0_s4 + IFR_s4 +
+    plot_annotation(title = expression(paste('Prior and Posterior summaries for ', R[0], ' and IFR')),
+                    subtitle= 'Mean Initial Infected Half as Large')
+
+param_plot_s4
+```
+
+Last updated on `r Sys.Date()`. 

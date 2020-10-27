@@ -46,15 +46,15 @@ rstan_options(auto_write = TRUE)
 
 oc_data$posted_date <- as.Date(oc_data$posted_date)
 
-old_folder_name = "2020-08-28_2020-10-02"
+old_folder_name = "2020-09-04_2020-10-09"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-09-04")
-end_date <- as.Date("2020-10-09")
+start_date <- as.Date("2020-09-11")
+end_date <- as.Date("2020-10-16")
 
 test <-   oc_data%>%
   lump_ochca_covid(time_interval_in_days = 3,
@@ -335,7 +335,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 
 ```
 
-## Orange County, CA COVID-19 Situation Report, October 19, 2020
+## Orange County, CA COVID-19 Situation Report, October 26, 2020
 #### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
 
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 

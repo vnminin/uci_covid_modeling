@@ -380,7 +380,7 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
 
 ```{r process-calcat, warning=FALSE, cache=FALSE}
 death_offset <- oc_data %>%
-  filter(posted_date <= model_objects$actual_first_day) %>% 
+  filter(posted_date <= model_objects$actual_last_day) %>% 
   pull(new_deaths) %>% 
   sum()
 
@@ -388,12 +388,13 @@ data_for_calcat_re <- spread_draws(oc_post, log_R0) %>%
   select(.draw, log_R0) %>%
   left_join(prep_epi_curves(oc_post, model_objects) %>%
               filter(g_text == "S")) %>% 
+  filter(t > model_objects$actual_last_day) %>% 
   select(date = t, log_R0, S = epi_curves) %>%
   group_by(date) %>% 
   transmute(Reff = exp(log_R0) * S) %>% 
   median_qi() %>% 
   select(date, re_mean = Reff, re_CI95l = .lower, re_CI95u = .upper) %>% 
-  right_join(tibble(date = seq(min(model_objects$dates_pp), max(model_objects$dates_pp), 1))) %>% 
+  right_join(tibble(date = seq(model_objects$actual_last_day, max(model_objects$dates_pp), 1))) %>% 
   pivot_longer(-date) %>% 
   arrange(date) %>%
   group_by(name) %>%
@@ -405,15 +406,16 @@ data_for_calcat_re <- spread_draws(oc_post, log_R0) %>%
 data_for_calcat_mort <- oc_post %>%
   spread_draws(deaths_pp[i]) %>% 
   group_by(.draw) %>% 
-  arrange(.draw, i) %>% 
+  arrange(.draw, i) %>%
+  mutate(date = model_objects$dates_pp[i]) %>% 
+  filter(date > model_objects$actual_last_day) %>% 
   mutate(cummort = cumsum(deaths_pp) + death_offset) %>%
-  mutate(date = model_objects$dates_pp[i]) %>%
   ungroup() %>% 
   select(cummort, date) %>% 
   group_by(date) %>% 
   mean_qi() %>% 
   select(date, cummort_mean = cummort, cummort_CI95l = .lower, cummort_CI95u = .upper) %>% 
-  right_join(tibble(date = seq(min(model_objects$dates_pp), max(model_objects$dates_pp), 1))) %>% 
+  right_join(tibble(date = seq(model_objects$actual_last_day, max(model_objects$dates_pp), 1))) %>% 
   pivot_longer(-date) %>% 
   arrange(date) %>%
   group_by(name) %>%
@@ -422,6 +424,7 @@ data_for_calcat_mort <- oc_post %>%
   select(date, cummort_mean, cummort_CI95l, cummort_CI95u)
 
 data_for_calcat <- full_join(data_for_calcat_re, data_for_calcat_mort) %>% 
+  drop_na() %>% 
   mutate(county = "Orange County", fips = 6059) %>% 
   select(date, county, fips, everything())
 

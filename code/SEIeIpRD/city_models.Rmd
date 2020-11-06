@@ -451,3 +451,95 @@ param_plot_sa <- R0_sa + IFR_sa +
 param_plot_irvine
 param_plot_sa
 ```
+```{r, cache=TRUE}
+ci_width <- c(0.5, 0.8, 0.95)
+prepped_death_irvine <- prep_death(model_objects_irvine, oc_post_irvine, ci_width)
+
+death_plot_irvine <- ggplot() +
+  geom_lineribbon(data = prepped_death_irvine$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
+                  size = 1.5,
+                  color = "steelblue4") +
+  geom_point(data = prepped_death_irvine$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Deaths due to COVID-19") +
+  xlab("Date") +
+  ylab("Number of Deaths") +
+  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+prepped_pos_irvine <- prep_pos(model_objects_irvine, oc_post_irvine, ci_width)
+
+positivity_plot_irvine <- ggplot() +
+  geom_lineribbon(data = prepped_pos_irvine$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
+                  size = 1.5, color = "steelblue4") +
+  geom_point(data = prepped_pos_irvine$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Fraction of Positive COVID-19 Tests") +
+  xlab("Date") +
+  ylab("Positivity Percent") +
+  scale_y_continuous(labels = percent) +
+  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+
+death_pos_irvine <- death_plot_irvine + positivity_plot_irvine +   
+  plot_annotation(title = 'Irvine Observed & Predicted Deaths and Positive Test Percent in 3 Day Periods', theme=theme(plot.title = element_text(hjust = 0.2)))
+
+# santa ana
+prepped_death_sa<- prep_death(model_objects_sa, oc_post_sa, ci_width)
+
+death_plot_sa<- ggplot() +
+  geom_lineribbon(data = prepped_death_sa$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, deaths, ymin = .lower, ymax = .upper),
+                  size = 1.5,
+                  color = "steelblue4") +
+  geom_point(data = prepped_death_sa$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Deaths due to COVID-19") +
+  xlab("Date") +
+  ylab("Number of Deaths") +
+  theme(legend.position = c(0.75, 0.8), legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+prepped_pos_sa <- prep_pos(model_objects_sa, oc_post_sa, ci_width)
+
+positivity_plot_sa <- ggplot() +
+  geom_lineribbon(data = prepped_pos_sa$posterior %>% 
+                    group_by(t) %>% 
+                    median_qi(.width = ci_width),
+                  mapping = aes(t, percent_positive, ymin = .lower, ymax = .upper),
+                  size = 1.5, color = "steelblue4") +
+  geom_point(data = prepped_pos_sa$observed,
+             mapping = aes(t, observed), size=2,
+             fill = "black") +
+  #ggtitle("Fraction of Positive COVID-19 Tests") +
+  xlab("Date") +
+  ylab("Positivity Percent") +
+  scale_y_continuous(labels = percent) +
+  theme(legend.position = "none", legend.title = element_text(size=16), legend.text = element_text(size=16), legend.background = element_rect(fill="transparent")) + 
+  scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
+  scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
+
+
+death_pos_sa <- death_plot_sa + positivity_plot_sa +   
+  plot_annotation(title = 'Santa Ana Observed & Predicted Deaths and Positive Test Percent in 3 Day Periods', theme=theme(plot.title = element_text(hjust = 0.2)))
+
+death_pos_irvine
+death_pos_sa
+
+```
+

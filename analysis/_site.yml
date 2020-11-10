@@ -7,8 +7,10 @@ navbar:
     href: index.html
   - text: Archived Reports
     menu:
+      - text: "Sept 18 - Oct 23"
+        href: sept18_oct23.html
       - text: "Sept 11 - Oct 16"
-        href: sept02_oct09.html
+        href: sept11_oct16.html
       - text: "Sept 04 - Oct 09"
         href: sept02_oct09.html
       - text: "Aug 28 - Oct 02"

@@ -45,15 +45,15 @@ rstan_options(auto_write = TRUE)
 
 city_data$posted_date <- as.Date(city_data$posted_date)
 
-old_folder_name = "2020-09-04_2020-10-09"
+old_folder_name = "2020-08-17_2020-09-21"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-09-11")
-end_date <- as.Date("2020-10-16")
+start_date <- as.Date("2020-08-28")
+end_date <- as.Date("2020-10-02")
 
 test <- city_data %>%
     filter(city == "Irvine") %>%
@@ -68,6 +68,21 @@ test <- city_data %>%
               new_deaths = sum(new_deaths)) %>%
     dplyr::select(-lump) %>%
     arrange(start_date)
+
+test2 <- city_data %>%
+    filter(city == "Santa Ana") %>%
+    filter(posted_date >= lubridate::ymd(start_date),
+           posted_date <= lubridate::ymd(end_date)) %>%
+    group_by(lump = as.integer(floor((max(posted_date) - posted_date) / 3))) %>%
+    filter(n() == 3) %>%
+    summarize(start_date = min(posted_date),
+              end_date = max(posted_date),
+              new_cases = sum(new_cases),
+              new_tests = sum(new_tests),
+              new_deaths = sum(new_deaths)) %>%
+    dplyr::select(-lump) %>%
+    arrange(start_date)
+
 
 # Setup Model Objects -----------------------------------------------------
 
@@ -94,8 +109,28 @@ for_estimating <- oc_post_old_wide %>%
             frac_infec_early = IE /(IE + IP))
 
 #purpose: provide method of moments estimators for parameters of a beta distribution
+# for the city of irvine, adjusting the mean to be proportional to reported 
+# county prevalence in daniel parker's study from august 15
 #param: x: draws from a beta distribution
 #output: method of moment estimates for alpha and beta of a beta distribution
+mom_beta_irvine <- function(x) {
+  x_bar <- .91 * mean(x)
+  v_bar <- var(x)
+
+  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
+    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
+}
+
+#same as above for santa ana
+mom_beta_sa <- function(x) {
+  x_bar <- 1.58 * mean(x)
+  v_bar <- var(x)
+
+  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
+    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
+}
+
+#regular version for retrieving fraction infected and fraction infected early
 mom_beta <- function(x) {
   x_bar <- mean(x)
   v_bar <- var(x)
@@ -104,12 +139,17 @@ mom_beta <- function(x) {
     beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
 }
 
-
-frac_carrs_prior <- mom_beta(for_estimating$frac_carrs)
+frac_carrs_prior_irvine <- mom_beta_irvine(for_estimating$frac_carrs)
+frac_carrs_prior_sa <- mom_beta_sa(for_estimating$frac_carrs)
 frac_carrs_infec_prior <- mom_beta(for_estimating$frac_carrs_infec)
 frac_infec_early_prior <- mom_beta(for_estimating$frac_infec_early)
 
-init_func <- function() list(frac_carrs = frac_carrs_prior[1] / sum(frac_carrs_prior),
+init_func_irvine <- function() list(frac_carrs = frac_carrs_prior_irvine[1] / sum(frac_carrs_prior_irvine),
+                             frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
+                             frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
+
+
+init_func_sa <- function() list(frac_carrs = frac_carrs_prior_sa[1] / sum(frac_carrs_prior_sa),
                              frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
                              frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
 
@@ -118,8 +158,8 @@ control_list <- list(adapt_delta = 0.99,
 # control_list <- list()
 
 # update population size with median of the posterior for fraction susceptibles day before analysis start
-new_pop_size_irvine <- as.integer(median(for_estimating$S) * 212569L)
-new_pop_size_santa_ana <- as.integer(median(for_estimating$S) * 348131L)
+new_pop_size_irvine <- as.integer(median(for_estimating$S) * 287401L)
+new_pop_size_santa_ana <- as.integer(median(for_estimating$S) * 332318L)
 
 city_data_irvine <- city_data %>%
   filter(city == "Irvine")
@@ -134,7 +174,7 @@ model_objects_irvine <- create_model_objects(ochca_covid = city_data_irvine,
                                       forecast_in_days = 48,
                                       future_tests_per_day = 700,
                                       popsize = new_pop_size_irvine,
-                                      frac_carrs_beta = frac_carrs_prior,
+                                      frac_carrs_beta = frac_carrs_prior_irvine,
                                       frac_carrs_infec_beta = frac_carrs_infec_prior,
                                       frac_infec_early_beta = frac_infec_early_prior)
 
@@ -145,11 +185,11 @@ model_objects_santa_ana <- create_model_objects(ochca_covid = city_data_santa_an
                                       forecast_in_days = 48,
                                       future_tests_per_day = 700,
                                       popsize = new_pop_size_santa_ana,
-                                      frac_carrs_beta = frac_carrs_prior,
+                                      frac_carrs_beta = frac_carrs_prior_sa,
                                       frac_carrs_infec_beta = frac_carrs_infec_prior,
                                       frac_infec_early_beta = frac_infec_early_prior)
 
-#create a model objects for smapling from the prior distributions, used in figure creation
+#create a model objects for sampling from the prior distributions, used in figure creation
 model_objects_irvine_priors_only <- model_objects_irvine
 model_objects_irvine_priors_only$priors_only <- T
 model_objects_irvine_priors_only$forecast_in_days <- 0
@@ -179,7 +219,7 @@ write_rds(model_objects_santa_ana, file.path(folder_loc_santa_ana, "model_object
 # Sample Posterior --------------------------------------------------------
 oc_post_irvine <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                 data = model_objects_irvine,
-                init = init_func,
+                init = init_func_irvine,
                 seed = 0,
                 chains = 4,
                 control = control_list)
@@ -190,7 +230,7 @@ write_rds(oc_post_irvine, file.path(folder_loc_irvine, "oc_post_irvine.rds"))
 # Sample Prior ------------------------------------------------------------
 oc_prior_irvine <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                  data = model_objects_irvine_priors_only,
-                 init = init_func,
+                 init = init_func_irvine,
                  seed = 0,
                  chains = 4,
                  control = control_list)
@@ -201,7 +241,7 @@ write_rds(oc_prior_irvine, file.path(folder_loc_irvine, "oc_prior_irvine.rds"))
 # Sample Posterior --------------------------------------------------------
 oc_post_santa_ana <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                 data = model_objects_santa_ana,
-                init = init_func,
+                init = init_func_sa,
                 seed = 0,
                 chains = 4,
                 control = control_list)
@@ -212,7 +252,7 @@ write_rds(oc_post_santa_ana, file.path(folder_loc_santa_ana, "oc_post_santa_ana.
 # Sample Prior ------------------------------------------------------------
 oc_prior_santa_ana <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
                  data = model_objects_santa_ana_priors_only,
-                 init = init_func,
+                 init = init_func_sa,
                  seed = 0,
                  chains = 4,
                  control = control_list)
@@ -239,7 +279,7 @@ oc_post_irvine <- read_rds(file.path(folder_loc_irvine, "oc_post.rds"))
 model_objects_irvine <- read_rds(file.path(folder_loc_irvine, "model_objects_irvine.rds"))
 oc_prior_irvine <- read_rds(file.path(folder_loc_irvine, "oc_prior.rds"))
 
-oc_post_sa <- read_rds(file.path(folder_loc_sa, "oc_post_santa_ana.rds"))
+oc_post_santa_ana <- read_rds(file.path(folder_loc_sa, "oc_post_santa_ana.rds"))
 model_objects_sa <- read_rds(file.path(folder_loc_sa, "model_objects_santa_ana.rds"))
 oc_prior_sa <- read_rds(file.path(folder_loc_sa, "oc_prior_santa_ana.rds"))
 
@@ -289,11 +329,11 @@ death_inc_summaries_irvine <- prepped_cumulative_inc_irvine$posterior %>%
   mutate_if(is.numeric, signif, 2) %>%
   column_to_rownames(var = "name")
 
-R0_bci_sa = oc_post_sa %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
+R0_bci_sa = oc_post_santa_ana %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
 
-R_eff_bci_sa <- spread_draws(oc_post_sa, log_R0) %>%
+R_eff_bci_sa <- spread_draws(oc_post_santa_ana, log_R0) %>%
   select(.draw, log_R0) %>%
-  left_join(prep_epi_curves(oc_post_sa, model_objects_sa) %>%
+  left_join(prep_epi_curves(oc_post_santa_ana, model_objects_sa) %>%
               filter(g_text == "S",
                      t == model_objects_sa$actual_last_day) %>%
               ungroup() %>%
@@ -302,12 +342,12 @@ R_eff_bci_sa <- spread_draws(oc_post_sa, log_R0) %>%
   median_qi(Reff) %>% 
   mutate_if(is.numeric, signif, 2)
 
-IFR_bci_sa = oc_post_sa %>% spread_draws(IFR) %>% median_qi(IFR) %>% mutate_if(is.numeric, signif, 2)
+IFR_bci_sa = oc_post_santa_ana %>% spread_draws(IFR) %>% median_qi(IFR) %>% mutate_if(is.numeric, signif, 2)
 
-rho_death_bci_sa = oc_post_sa %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)
+rho_death_bci_sa = oc_post_santa_ana %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)
 
 ci_width <- 0.95
-prepped_cumulative_inc_sa <- prep_cumulative_inc(model_objects_sa, oc_post_sa)
+prepped_cumulative_inc_sa <- prep_cumulative_inc(model_objects_sa, oc_post_santa_ana)
 
 death_inc_summaries_sa <- prepped_cumulative_inc_sa$posterior %>% 
   filter(usage == "train") %>%
@@ -323,6 +363,71 @@ death_inc_summaries_sa <- prepped_cumulative_inc_sa$posterior %>%
   mutate_if(is.numeric, signif, 2) %>%
   column_to_rownames(var = "name")
 
+```
+
+```{r, R0-IFR-violin, warning=FALSE, cache=TRUE}
+# create two data sets, one with r0 the other with ifr for both counties
+prior_r0 <- oc_prior_irvine %>%
+  spread_draws(log_R0) %>%
+  mutate(R0 = exp(log_R0),
+         Type = "Prior") %>%
+  dplyr::select(R0, Type) %>%
+  filter(R0 < 3)
+
+irvine_r0 <- oc_post_irvine %>%
+  spread_draws(log_R0) %>%
+  mutate(R0 = exp(log_R0),
+         Type = "Irvine") %>%
+  dplyr::select(R0, Type)
+
+sa_r0 <- oc_post_santa_ana %>%
+  spread_draws(log_R0) %>%
+  mutate(R0 = exp(log_R0),
+         Type = "Santa Ana") %>%
+  dplyr::select(R0, Type)
+
+r0_data <- rbind(prior_r0, irvine_r0, sa_r0)
+
+r0_data$Type <- factor(r0_data$Type, levels = c("Prior", "Irvine", "Santa Ana"))
+r0_plot <- r0_data%>%
+  ggplot(aes(Type, R0)) +
+  stat_eye(fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4") + 
+  xlab("Prior and Posteriors by City")+
+  ylab(expression(R[0])) +
+  ylim(c(0, 3))
+  geom_hline(yintercept = 1, linetype = "dashed") 
+
+prior_IFR <- oc_prior_irvine %>%
+  spread_draws(IFR) %>%
+  mutate(Type = "Prior") %>%
+  dplyr::select(IFR, Type)
+
+irvine_IFR <- oc_post_irvine %>%
+  spread_draws(IFR) %>%
+  mutate(Type = "Irvine") %>%
+  dplyr::select(IFR, Type)
+
+sa_IFR <- oc_post_santa_ana %>%
+  spread_draws(IFR) %>%
+  mutate(Type = "Santa Ana") %>%
+  dplyr::select(IFR, Type)
+
+IFR_data <- rbind(prior_IFR, irvine_IFR, sa_IFR)
+
+IFR_data$Type <- factor(IFR_data$Type, levels = c("Prior", "Irvine", "Santa Ana"))
+IFR_plot <- IFR_data %>%
+  ggplot(aes(Type, IFR)) +
+  stat_eye(fill="lightskyblue1", slab_color ="lightskyblue4", color="dodgerblue4") + 
+  xlab("Prior and Posteriors by City")+
+  ylab("IFR") +
+  ylim(c(0, max(IFR_data$IFR)))
+  geom_hline(yintercept = 1, linetype = "dashed") 
+
+city_param_plot <- r0_plot / IFR_plot +
+  plot_annotation(title = "R0 and IFR in two cities in Orange County, CA", 
+                  subtitle = "Sept 25 through Oct 30")
+
+ggsave(filename = "city_parameters_plot.pdf", plot = city_param_plot, device = "pdf", path = here("code", "SEIeIpRD"), width = 8.5, height = 8, units = "in")
 ```
 
 ```{r latent-vs-observed-incidence, warning=FALSE, cache=TRUE}
@@ -419,7 +524,7 @@ R0_sa <- oc_prior_sa %>%
   mutate(R0=exp(log_R0))%>%
   dplyr::select(-starts_with(".")) %>%
   mutate(dist = "Prior") %>%
-  bind_rows(oc_post_sa %>%
+  bind_rows(oc_post_santa_ana %>%
               spread_draws(log_R0)%>% mutate(R0=exp(log_R0)) %>%
               dplyr::select(-starts_with(".")) %>%
               mutate(dist = "Posterior")) %>%
@@ -434,7 +539,7 @@ IFR_sa <- oc_prior_sa %>%
   spread_draws(IFR) %>% 
   select(-starts_with(".")) %>% 
   mutate(dist = "Prior") %>% 
-  bind_rows(oc_post_sa %>%
+  bind_rows(oc_post_santa_ana %>%
               spread_draws(IFR) %>% 
               select(-starts_with(".")) %>% 
               mutate(dist = "Posterior"))  %>%
@@ -451,6 +556,7 @@ param_plot_sa <- R0_sa + IFR_sa +
 param_plot_irvine
 param_plot_sa
 ```
+
 ```{r, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 prepped_death_irvine <- prep_death(model_objects_irvine, oc_post_irvine, ci_width)
@@ -496,7 +602,7 @@ death_pos_irvine <- death_plot_irvine + positivity_plot_irvine +
   plot_annotation(title = 'Irvine Observed & Predicted Deaths and Positive Test Percent in 3 Day Periods', theme=theme(plot.title = element_text(hjust = 0.2)))
 
 # santa ana
-prepped_death_sa<- prep_death(model_objects_sa, oc_post_sa, ci_width)
+prepped_death_sa<- prep_death(model_objects_santa_ana, oc_post_santa_ana, ci_width)
 
 death_plot_sa<- ggplot() +
   geom_lineribbon(data = prepped_death_sa$posterior %>% 
@@ -515,7 +621,7 @@ death_plot_sa<- ggplot() +
   scale_fill_brewer(name="Credibility level", labels=str_c(percent(rev(ci_width))), guide = guide_legend(title.position = "top", direction = "horizontal")) +
   scale_x_date(breaks=c("14 day"), date_labels = "%b %d")
 
-prepped_pos_sa <- prep_pos(model_objects_sa, oc_post_sa, ci_width)
+prepped_pos_sa <- prep_pos(model_objects_santa_ana, oc_post_santa_ana, ci_width)
 
 positivity_plot_sa <- ggplot() +
   geom_lineribbon(data = prepped_pos_sa$posterior %>% 

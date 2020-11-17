@@ -7,6 +7,8 @@ navbar:
     href: index.html
   - text: Archived Reports
     menu:
+      - text: "Sept 25 - Oct 30"
+        href: sept25_oct30.html
       - text: "Sept 18 - Oct 23"
         href: sept18_oct23.html
       - text: "Sept 11 - Oct 16"
@@ -48,4 +50,3 @@ output:
     theme: flatly
     highlight: textmate
     css: style.css
-

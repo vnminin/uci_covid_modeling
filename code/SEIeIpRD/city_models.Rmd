@@ -33,7 +33,7 @@ loc_name <- "oc"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-run_analysis <- FALSE
+run_analysis <- TRUE
 if (run_analysis == TRUE) {
 city_data <- read_csv("C:/Users/fiddl/Documents/uci_covid19_dashboard/data/oc_city_data.csv")
   
@@ -269,19 +269,19 @@ loc_name <- "cities"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-folder_name_irvine <-"irvine_2020-09-11_2020-10-16"
-folder_name_sa <-"sa_2020-09-11_2020-10-16"
+folder_name_irvine <-"irvine_2020-09-25_2020-10-30"
+folder_name_sa <-"sa_2020-09-25_2020-10-30"
 
 folder_loc_irvine <- here("code", model_name, loc_name, folder_name_irvine)
 folder_loc_sa <- here("code", model_name, loc_name, folder_name_sa)
 
-oc_post_irvine <- read_rds(file.path(folder_loc_irvine, "oc_post.rds"))
+oc_post_irvine <- read_rds(file.path(folder_loc_irvine, "oc_post_irvine.rds"))
 model_objects_irvine <- read_rds(file.path(folder_loc_irvine, "model_objects_irvine.rds"))
-oc_prior_irvine <- read_rds(file.path(folder_loc_irvine, "oc_prior.rds"))
+oc_prior_irvine <- read_rds(file.path(folder_loc_irvine, "oc_prior_irvine.rds"))
 
 oc_post_santa_ana <- read_rds(file.path(folder_loc_sa, "oc_post_santa_ana.rds"))
-model_objects_sa <- read_rds(file.path(folder_loc_sa, "model_objects_santa_ana.rds"))
-oc_prior_sa <- read_rds(file.path(folder_loc_sa, "oc_prior_santa_ana.rds"))
+model_objects_santa_ana <- read_rds(file.path(folder_loc_sa, "model_objects_santa_ana.rds"))
+oc_prior_santa_ana <- read_rds(file.path(folder_loc_sa, "oc_prior_santa_ana.rds"))
 
 lumped_ochca_covid_sa <- model_objects_sa$lumped_ochca_covid
 time_interval_in_days_sa <- model_objects_sa$time_interval_in_days

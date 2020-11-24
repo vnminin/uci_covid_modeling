@@ -560,6 +560,12 @@ param_plot
 R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
   mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
     end_date = ymd(str_sub(file_path, start = -10))) %>% 
+  mutate(fit_number = n():1) %>% 
+  group_by(lubridate::month(end_date)) %>% 
+  mutate(fit_number_month = row_number()) %>% 
+  filter(fit_number %in% 1:4 | fit_number_month == 1) %>% 
+  ungroup() %>% 
+  select(file_path, start_date, end_date) %>% 
   filter(start_date > ymd("2020-06-16")) %>% # comment this out to include models not in archive
   # mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')}\n-\n{format(end_date, format = '%b %e')}"))) %>% 
   mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')} - {format(end_date, format = '%b %e')}"))) %>% 

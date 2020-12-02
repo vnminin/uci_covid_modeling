@@ -48,7 +48,7 @@ theme_set(theme_bw(base_size = 22))
 
 ```
 
-## Orange County, CA COVID-19 Situation Report, November 18, 2020
+## Orange County, CA COVID-19 Situation Report, November 23, 2020
 #### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
 
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 

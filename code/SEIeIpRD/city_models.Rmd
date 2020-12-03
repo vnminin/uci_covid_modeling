@@ -33,7 +33,7 @@ loc_name <- "oc"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-run_analysis <- TRUE
+run_analysis <- FALSE
 if (run_analysis == TRUE) {
 city_data <- read_csv("C:/Users/fiddl/Documents/uci_covid19_dashboard/data/oc_city_data.csv")
   
@@ -283,8 +283,8 @@ oc_post_santa_ana <- read_rds(file.path(folder_loc_sa, "oc_post_santa_ana.rds"))
 model_objects_santa_ana <- read_rds(file.path(folder_loc_sa, "model_objects_santa_ana.rds"))
 oc_prior_santa_ana <- read_rds(file.path(folder_loc_sa, "oc_prior_santa_ana.rds"))
 
-lumped_ochca_covid_sa <- model_objects_sa$lumped_ochca_covid
-time_interval_in_days_sa <- model_objects_sa$time_interval_in_days
+lumped_ochca_covid_sa <- model_objects_santa_ana$lumped_ochca_covid
+time_interval_in_days_sa <- model_objects_santa_ana$time_interval_in_days
 
 lumped_ochca_covid_irvine <- model_objects_irvine$lumped_ochca_covid
 time_interval_in_days_irvine <- model_objects_irvine$time_interval_in_days
@@ -333,9 +333,9 @@ R0_bci_sa = oc_post_santa_ana %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0)
 
 R_eff_bci_sa <- spread_draws(oc_post_santa_ana, log_R0) %>%
   select(.draw, log_R0) %>%
-  left_join(prep_epi_curves(oc_post_santa_ana, model_objects_sa) %>%
+  left_join(prep_epi_curves(oc_post_santa_ana, model_objects_santa_ana) %>%
               filter(g_text == "S",
-                     t == model_objects_sa$actual_last_day) %>%
+                     t == model_objects_santa_ana$actual_last_day) %>%
               ungroup() %>%
               select(S = epi_curves, .draw)) %>%
   transmute(Reff = exp(log_R0) * S) %>% 
@@ -347,7 +347,7 @@ IFR_bci_sa = oc_post_santa_ana %>% spread_draws(IFR) %>% median_qi(IFR) %>% muta
 rho_death_bci_sa = oc_post_santa_ana %>% spread_draws(rho_death) %>% median_qi(rho_death) %>% mutate_if(is.numeric, signif, 2)
 
 ci_width <- 0.95
-prepped_cumulative_inc_sa <- prep_cumulative_inc(model_objects_sa, oc_post_santa_ana)
+prepped_cumulative_inc_sa <- prep_cumulative_inc(model_objects_santa_ana, oc_post_santa_ana)
 
 death_inc_summaries_sa <- prepped_cumulative_inc_sa$posterior %>% 
   filter(usage == "train") %>%
@@ -459,7 +459,7 @@ ggplot() +
 
 prepped_cumulative_inc_sa <- map(prepped_cumulative_inc_sa, ~mutate(., name = str_replace(name,
                                   "(Cumulative.+)",
-                                  str_c("\\1\nSince ", format(model_objects_sa$actual_first_day, "%b %d")))))
+                                  str_c("\\1\nSince ", format(model_objects_santa_ana$actual_first_day, "%b %d")))))
 ggplot() +
   geom_lineribbon(data = prepped_cumulative_inc_sa$posterior %>% 
                     group_by(t, name, usage) %>% 
@@ -519,7 +519,7 @@ IFR_irvine <- oc_prior_irvine %>%
 param_plot_irvine <- R0_irvine + IFR_irvine +
     plot_annotation(title = expression(paste('Irvine Prior and Posterior Summaries for ', R[0], ' and IFR')),theme=theme(plot.title = element_text(hjust = 0.14)))
 
-R0_sa <- oc_prior_sa %>%
+R0_sa <- oc_prior_santa_ana %>%
   spread_draws(log_R0) %>%
   mutate(R0=exp(log_R0))%>%
   dplyr::select(-starts_with(".")) %>%
@@ -535,7 +535,7 @@ R0_sa <- oc_prior_sa %>%
   xlab(expression(R[0])) +
   coord_cartesian(xlim = c(0, 2.5))
 
-IFR_sa <- oc_prior_sa %>%
+IFR_sa <- oc_prior_santa_ana %>%
   spread_draws(IFR) %>% 
   select(-starts_with(".")) %>% 
   mutate(dist = "Prior") %>% 

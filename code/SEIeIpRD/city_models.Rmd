@@ -269,8 +269,8 @@ loc_name <- "cities"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-folder_name_irvine <-"irvine_2020-09-25_2020-10-30"
-folder_name_sa <-"sa_2020-09-25_2020-10-30"
+folder_name_irvine <-"irvine_2020-08-28_2020-10-02"
+folder_name_sa <-"sa_2020-08-28_2020-10-02"
 
 folder_loc_irvine <- here("code", model_name, loc_name, folder_name_irvine)
 folder_loc_sa <- here("code", model_name, loc_name, folder_name_sa)
@@ -293,6 +293,8 @@ time_interval_in_days_irvine <- model_objects_irvine$time_interval_in_days
 theme_set(theme_bw(base_size =22)) 
 
 ```
+
+## Report period: `r str_c(format(model_objects_irvine$actual_first_day, "%b %d"), "-", format(model_objects_irvine$actual_last_day, "%b %d"), sep = " ")`
 
 ```{r executive-summary, warning=FALSE, cache=TRUE}
 R0_bci_irvine = oc_post_irvine %>% spread_draws(log_R0) %>% mutate(R0=exp(log_R0))%>% median_qi(R0) %>% mutate_if(is.numeric, signif, 2)
@@ -557,7 +559,7 @@ param_plot_irvine
 param_plot_sa
 ```
 
-```{r, cache=TRUE}
+```{r pos-plots, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
 prepped_death_irvine <- prep_death(model_objects_irvine, oc_post_irvine, ci_width)
 
@@ -646,6 +648,121 @@ death_pos_sa <- death_plot_sa + positivity_plot_sa +
 
 death_pos_irvine
 death_pos_sa
+
+```
+
+```{r everything-irvine, fig.height=10}
+posterior <- oc_post_irvine %>%
+  tidy_draws() %>% 
+  select(-ends_with("__"), -matches("\\[\\d+\\]")) %>% 
+  pivot_longer(cols = -starts_with(".")) %>% 
+  select(variable = name, value) %>% 
+  mutate(type = "posterior")%>%
+  filter(variable!="prog2rec_rate" & variable!="prog2death_rate" &
+           variable!="log_infec_dur")
+
+#transforming R0  
+posterior$value[posterior$variable=="log_R0"] <- exp(posterior$value[posterior$variable=="log_R0"])
+posterior$variable[posterior$variable=="log_R0"] <- "R[0]"
+
+#Change frac carrs to frac susceptible (don't worry about facotor level, label is correct in final graph)
+posterior$value[posterior$variable=="frac_carrs"] <- 1-posterior$value[posterior$variable=="frac_carrs"]
+
+
+prior <- oc_prior_irvine %>% 
+  tidy_draws() %>% 
+  select(-ends_with("__"), -matches("\\[\\d+\\]")) %>% 
+  pivot_longer(cols = -starts_with(".")) %>% 
+  select(variable = name, value = value) %>% 
+  mutate(type = "prior")%>%
+  filter(variable!="prog2rec_rate" & variable!="prog2death_rate" &
+           variable!="log_infec_dur")
+
+prior$value[prior$variable=="log_R0"] <- exp(prior$value[prior$variable=="log_R0"])
+prior$variable[prior$variable=="log_R0"] <- "R[0]"
+
+#Change frac carrs to frac susceptible (don't worry about facotor level, label is correct in final graph)
+prior$value[prior$variable=="frac_carrs"] <- 1-prior$value[prior$variable=="frac_carrs"]
+
+level_list <- c("frac_carrs", "frac_carrs_infec", "frac_infec_early", "R[0]", "latent_dur", "early_dur", "prog_dur",
+                "IFR", "rho_death", "sqrt_phi_inv_death", "alpha_incid_0", "alpha_incid_1","sqrt_kappa_inv_incid")
+
+label_list <- c("S[0]", "tilde(I[0])", "tilde(I[e,0])", "R[0]", "1/gamma", "1/nu[e]",  "1/nu[p]", "eta", "rho",
+                "1/sqrt(phi)", "alpha[0]", "alpha[1]",   "1/sqrt(kappa)")
+posterior$variable <- factor(posterior$variable, levels=level_list, labels=label_list)
+prior$variable <-factor(prior$variable, levels=level_list, labels=label_list)
+
+eplot <- bind_rows(posterior, prior) %>%
+  group_by(variable, type) %>%
+  median_qi() %>% 
+  ggplot(aes(value, type, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval() +
+  facet_wrap(. ~ variable, scales = "free_x", labeller = label_parsed) +
+  theme(strip.text.x = element_text(size = 25)) +
+  theme_bw() +
+  ggtitle("Irvine Posterior Summaries: Medians & 95% Credible Intervals",
+          subtitle=str_c(format(model_objects_irvine$actual_first_day, "%b %d"), "-", format(model_objects_irvine$actual_last_day, "%b %d"))) +
+  ylab("Prior/Posterior") +
+  xlab("Value")
+
+eplot
+```
+
+```{r everything-sa, fig.height = 10}
+posterior <- oc_post_santa_ana %>%
+  tidy_draws() %>% 
+  select(-ends_with("__"), -matches("\\[\\d+\\]")) %>% 
+  pivot_longer(cols = -starts_with(".")) %>% 
+  select(variable = name, value) %>% 
+  mutate(type = "posterior")%>%
+  filter(variable!="prog2rec_rate" & variable!="prog2death_rate" &
+           variable!="log_infec_dur")
+
+#transforming R0  
+posterior$value[posterior$variable=="log_R0"] <- exp(posterior$value[posterior$variable=="log_R0"])
+posterior$variable[posterior$variable=="log_R0"] <- "R[0]"
+
+#Change frac carrs to frac susceptible (don't worry about facotor level, label is correct in final graph)
+posterior$value[posterior$variable=="frac_carrs"] <- 1-posterior$value[posterior$variable=="frac_carrs"]
+
+
+prior <- oc_prior_santa_ana %>% 
+  tidy_draws() %>% 
+  select(-ends_with("__"), -matches("\\[\\d+\\]")) %>% 
+  pivot_longer(cols = -starts_with(".")) %>% 
+  select(variable = name, value = value) %>% 
+  mutate(type = "prior")%>%
+  filter(variable!="prog2rec_rate" & variable!="prog2death_rate" &
+           variable!="log_infec_dur")
+
+prior$value[prior$variable=="log_R0"] <- exp(prior$value[prior$variable=="log_R0"])
+prior$variable[prior$variable=="log_R0"] <- "R[0]"
+
+#Change frac carrs to frac susceptible (don't worry about facotor level, label is correct in final graph)
+prior$value[prior$variable=="frac_carrs"] <- 1-prior$value[prior$variable=="frac_carrs"]
+
+level_list <- c("frac_carrs", "frac_carrs_infec", "frac_infec_early", "R[0]", "latent_dur", "early_dur", "prog_dur",
+                "IFR", "rho_death", "sqrt_phi_inv_death", "alpha_incid_0", "alpha_incid_1","sqrt_kappa_inv_incid")
+
+label_list <- c("S[0]", "tilde(I[0])", "tilde(I[e,0])", "R[0]", "1/gamma", "1/nu[e]",  "1/nu[p]", "eta", "rho",
+                "1/sqrt(phi)", "alpha[0]", "alpha[1]",   "1/sqrt(kappa)")
+posterior$variable <- factor(posterior$variable, levels=level_list, labels=label_list)
+prior$variable <-factor(prior$variable, levels=level_list, labels=label_list)
+
+eplot <- bind_rows(posterior, prior) %>%
+  group_by(variable, type) %>%
+  median_qi() %>% 
+  ggplot(aes(value, type, xmin = .lower, xmax = .upper)) +
+  geom_pointinterval() +
+  facet_wrap(. ~ variable, scales = "free_x", labeller = label_parsed) +
+  theme(strip.text = element_text(size = 25)) +
+  theme_bw()+
+  ggtitle("Santa Ana Posterior Summaries: Medians & 95% Credible Intervals",
+          subtitle=str_c(format(model_objects_irvine$actual_first_day, "%b %d"), "-", format(model_objects_irvine$actual_last_day, "%b %d")))+
+  ylab("Prior/Posterior")+
+  xlab("Value")
+
+eplot
 
 ```
 

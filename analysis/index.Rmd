@@ -46,15 +46,15 @@ rstan_options(auto_write = TRUE)
 
 oc_data$posted_date <- as.Date(oc_data$posted_date)
 
-old_folder_name = "2020-09-18_2020-10-23"
+old_folder_name = "2020-10-11_2020-11-15"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-09-25")
-end_date <- as.Date("2020-10-30")
+start_date <- as.Date("2020-10-17")
+end_date <- as.Date("2020-11-22")
 
 test <-   oc_data%>%
   lump_ochca_covid(time_interval_in_days = 3,
@@ -335,7 +335,7 @@ oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 
 ```
 
-## Orange County, CA COVID-19 Situation Report, November 09, 2020
+## Orange County, CA COVID-19 Situation Report, December 1st, 2020
 #### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
 
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
@@ -560,6 +560,12 @@ param_plot
 R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
   mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
     end_date = ymd(str_sub(file_path, start = -10))) %>% 
+  mutate(fit_number = n():1) %>% 
+  group_by(lubridate::month(end_date)) %>% 
+  mutate(fit_number_month = row_number()) %>% 
+  filter(fit_number %in% 1:4 | fit_number_month == 1) %>% 
+  ungroup() %>% 
+  select(file_path, start_date, end_date) %>% 
   filter(start_date > ymd("2020-06-16")) %>% # comment this out to include models not in archive
   # mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')}\n-\n{format(end_date, format = '%b %e')}"))) %>% 
   mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')} - {format(end_date, format = '%b %e')}"))) %>% 

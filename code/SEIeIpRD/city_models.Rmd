@@ -33,7 +33,7 @@ loc_name <- "oc"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-run_analysis <- FALSE
+run_analysis <- TRUE
 if (run_analysis == TRUE) {
 city_data <- read_csv("C:/Users/fiddl/Documents/uci_covid19_dashboard/data/oc_city_data.csv")
   
@@ -45,15 +45,15 @@ rstan_options(auto_write = TRUE)
 
 city_data$posted_date <- as.Date(city_data$posted_date)
 
-old_folder_name = "2020-08-17_2020-09-21"
+old_folder_name = "2020-10-11_2020-11-15"
 
 #read in old results, this is used to calculate parameters of initial condition distributions
 oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
 oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
 
 #set start and end date of analysis
-start_date <- as.Date("2020-08-28")
-end_date <- as.Date("2020-10-02")
+start_date <- as.Date("2020-10-17")
+end_date <- as.Date("2020-11-22")
 
 test <- city_data %>%
     filter(city == "Irvine") %>%
@@ -269,8 +269,8 @@ loc_name <- "cities"
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-folder_name_irvine <-"irvine_2020-08-28_2020-10-02"
-folder_name_sa <-"sa_2020-08-28_2020-10-02"
+folder_name_irvine <-"irvine_2020-10-18_2020-11-22"
+folder_name_sa <-"sa_2020-10-18_2020-11-22"
 
 folder_loc_irvine <- here("code", model_name, loc_name, folder_name_irvine)
 folder_loc_sa <- here("code", model_name, loc_name, folder_name_sa)
@@ -764,5 +764,37 @@ eplot <- bind_rows(posterior, prior) %>%
 
 eplot
 
+```
+
+```{r raw counts}
+lumped_ochca_covid_sa %>% 
+  dplyr::select(-start_date) %>% 
+  pivot_longer(-end_date) %>% 
+  mutate(name = str_remove(name, "new_") %>% str_to_title()) %>% 
+  mutate(name = fct_relevel(name, c("Tests", "Cases", "Deaths"))) %>% 
+  ggplot(aes(end_date, value)) +
+  geom_line(size=1) +
+  geom_point(size=3) +
+  facet_wrap(. ~ name, scales = "free_y") +
+  xlab("Date") +
+  ylab("Count") +
+  scale_y_continuous(labels = comma) +
+  ggtitle("Santa Ana, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid_sa$end_date[2] - lumped_ochca_covid_sa$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d", )+
+  theme(strip.text = element_text(size = 20))
+
+lumped_ochca_covid_irvine %>% 
+  dplyr::select(-start_date) %>% 
+  pivot_longer(-end_date) %>% 
+  mutate(name = str_remove(name, "new_") %>% str_to_title()) %>% 
+  mutate(name = fct_relevel(name, c("Tests", "Cases", "Deaths"))) %>% 
+  ggplot(aes(end_date, value)) +
+  geom_line(size=1) +
+  geom_point(size=3) +
+  facet_wrap(. ~ name, scales = "free_y") +
+  xlab("Date") +
+  ylab("Count") +
+  scale_y_continuous(labels = comma) +
+  ggtitle("Irvine, CA data", subtitle = str_c("Counts binned into", as.integer(lumped_ochca_covid_irvine$end_date[2] - lumped_ochca_covid_irvine$end_date[1]), "day periods", sep = " ")) + scale_x_date(breaks=c("10 day"), date_labels = "%b %d", )+
+  theme(strip.text = element_text(size = 20))
 ```
 

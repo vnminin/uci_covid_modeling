@@ -25,6 +25,8 @@ theme_set(theme_bw(base_size =22))
 ```
 
 ```{r reading-model-objects, cache=FALSE}
+full_county_popsize <- 3175692
+
 model_name <- "SEIeIpRD"
 loc_name <- "oc"
 
@@ -314,6 +316,7 @@ write_rds(oc_prior_sensitivity4, file.path(folder_loc, "oc_prior_sensitivity4.rd
 
 #list.dirs(here("code", model_name, loc_name), recursive = F, full.names = F)
 
+full_county_popsize <- 3175692
 # Pick folder to build model from. Defaults to most recent end date with earliest start date
 folder_name <- tibble(dirs = list.dirs(here("code", model_name, loc_name), recursive = F, full.names = F)) %>%
   filter(str_detect(dirs, "^\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}$")) %>% 
@@ -351,7 +354,7 @@ R_eff_bci <- spread_draws(oc_post, log_R0) %>%
                      t == model_objects$actual_last_day) %>%
               ungroup() %>%
               select(S = epi_curves, .draw)) %>%
-  transmute(Reff = exp(log_R0) * S) %>% 
+  transmute(Reff = exp(log_R0) * S * model_objects$popsize / full_county_popsize) %>% 
   median_qi(Reff) %>% 
   mutate_if(is.numeric, signif, 2)
 
@@ -391,7 +394,7 @@ data_for_calcat_re <- spread_draws(oc_post, log_R0) %>%
   filter(t > model_objects$actual_last_day) %>% 
   select(date = t, log_R0, S = epi_curves) %>%
   group_by(date) %>% 
-  transmute(Reff = exp(log_R0) * S) %>% 
+  transmute(Reff = exp(log_R0) * S * model_objects$popsize / full_county_popsize) %>% 
   median_qi() %>% 
   select(date, re_mean = Reff, re_CI95l = .lower, re_CI95u = .upper) %>% 
   right_join(tibble(date = seq(model_objects$actual_last_day, max(model_objects$dates_pp), 1))) %>% 

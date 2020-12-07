@@ -21,6 +21,7 @@ library(patchwork)
 ```
 
 ```{r reading-model-objects, cache=TRUE}
+full_county_popsize <- 3175692
 # Pick folder to build model from. Defaults to most recent end date with earliest start date
 model_name <- "SEIeIpRD"
 loc_name <- "oc"
@@ -59,7 +60,7 @@ R_eff_bci <- spread_draws(oc_post, log_R0) %>%
                      t == model_objects$actual_last_day) %>%
               ungroup() %>%
               select(S = epi_curves, .draw)) %>%
-  transmute(Reff = exp(log_R0) * S) %>% 
+  transmute(Reff = exp(log_R0) * S * model_objects$popsize / full_county_popsize) %>% 
   median_qi(Reff) %>% 
   mutate_if(is.numeric, signif, 2)
 

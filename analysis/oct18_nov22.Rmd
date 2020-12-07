@@ -1,5 +1,5 @@
 ---
-title: "Orange County, CA COVID Situation Report"
+title: "Orange County, CA COVID Situation Report Oct 18 - Nov 22"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -7,7 +7,6 @@ output:
 editor_options:
   chunk_output_type: console
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, fig.align = "center", fig.width=16,  message=F)
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
@@ -20,306 +19,21 @@ library(tidybayes)
 library(scales)
 library(patchwork)
 library(glue)
-library(zoo)
 theme_set(theme_bw(base_size =22)) 
+
 ```
 
-```{r reading-model-objects, cache=FALSE}
-full_county_popsize <- 3175692
 
+```{r reading-model-objects, cache=TRUE}
+full_county_popsize <- 3175692
+# Pick folder to build model from. Defaults to most recent end date with earliest start date
 model_name <- "SEIeIpRD"
 loc_name <- "oc"
 
 source(here("code", model_name, "helper_functions.R"))
 source(here("code", model_name, "plot_functions.R"))
 
-oc_data <- read.csv(here("data", "oc_data.csv"))
-#if you want to run the analysis, change to TRUE. Otherwise the site will display the most recent results
-run_analysis <- TRUE
-
-if (run_analysis==TRUE){
-library(rstan)
-  
-options(mc.cores = parallel::detectCores())
-rstan_options(auto_write = TRUE)
-
-# Read OCHCA Data ---------------------------------------------------------
-# oc_data <- read.csv(here("data", "oc_data.csv"))
-
-oc_data$posted_date <- as.Date(oc_data$posted_date)
-
-old_folder_name = "2020-10-18_2020-11-22"
-
-#read in old results, this is used to calculate parameters of initial condition distributions
-oc_post_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "oc_post.rds"))
-oc_model_objects_old <- read_rds(here("code", model_name, loc_name, old_folder_name, "model_objects.rds"))
-
-#set start and end date of analysis
-start_date <- as.Date("2020-10-25")
-end_date <- as.Date("2020-11-29")
-
-# Setup Model Objects -----------------------------------------------------
-
-#acquire posterior samples for fraction infected, fraction infectious, fraction early infectious 
-#nearest day to when current analysis starts
-oc_post_old_wide <- oc_post_old %>%
-  spread_draws(epi_curves[i]) %>%
-  ungroup() %>%
-  select(i, epi_curves, .draw) %>%
-  mutate(g = (i - 1) %% oc_model_objects_old$n_curves + 1) %>%
-  mutate(g_text = oc_model_objects_old$epi_curve_names[g]) %>%
-  mutate(g_text = fct_reorder(g_text, g)) %>%
-  mutate(t = oc_model_objects_old$dates_pp[ceiling(i / oc_model_objects_old$n_curves)]) %>%
-  select(-i, - g) %>%
-  pivot_wider(names_from = g_text, values_from = epi_curves)
-
-target_date <- unique(oc_post_old_wide$t)[which.min(abs(unique(oc_post_old_wide$t) - start_date))]
-
-for_estimating <- oc_post_old_wide %>%
-  filter(t == target_date) %>%
-  transmute(S=S,
-            frac_carrs = 1 - S,
-            frac_carrs_infec = (IE + IP) / (E + IE + IP),
-            frac_infec_early = IE /(IE + IP))
-
-#purpose: provide method of moments estimators for parameters of a beta distribution
-#param: x: draws from a beta distribution
-#output: method of moment estimates for alpha and beta of a beta distribution
-mom_beta <- function(x) {
-  x_bar <- mean(x)
-  v_bar <- var(x)
-
-  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
-    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
-}
-
-#adjusted method of moments estimator for sensitivity analyses (mean twice as large)
-mom_beta3 <- function(x) {
-  x_bar <- 2*mean(x)
-  v_bar <- var(x)
-  
-  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
-    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
-}
-
-#adjusted method of moments estiamtor for sensitivity analyses (mean 1/2 as large)
-mom_beta4 <- function(x) {
-  x_bar <- .5*mean(x)
-  v_bar <- var(x)
-  
-  c(alpha = x_bar * (x_bar * (1 - x_bar) / v_bar - 1),
-    beta = (1 - x_bar) * (x_bar * (1 - x_bar) / v_bar - 1))
-}
-
-frac_carrs_prior <- mom_beta(for_estimating$frac_carrs)
-frac_carrs_infec_prior <- mom_beta(for_estimating$frac_carrs_infec)
-frac_infec_early_prior <- mom_beta(for_estimating$frac_infec_early)
-
-init_func <- function() list(frac_carrs = frac_carrs_prior[1] / sum(frac_carrs_prior),
-                             frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
-                             frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
-
-control_list <- list(adapt_delta = 0.99,
-                     max_treedepth = 20)
-# control_list <- list()
-
-# update population size with median of the posterior for fraction susceptibles day before analysis start
-new_pop_size <- as.integer(median(for_estimating$S) * 3175692L)
-
-test <-   oc_data%>%
-  lump_ochca_covid(time_interval_in_days = 3,
-                           first_day = start_date,
-                           last_day = end_date)
-
-#create model objects to input into stan, see helper_functions.R for details
-model_objects <- create_model_objects(ochca_covid = oc_data,
-                                      first_day = start_date,
-                                      last_day = end_date,
-                                      time_interval_in_days = 3,
-                                      forecast_in_days = 48,
-                                      future_tests_per_day = 700,
-                                      popsize = new_pop_size,
-                                      frac_carrs_beta = frac_carrs_prior,
-                                      frac_carrs_infec_beta = frac_carrs_infec_prior,
-                                      frac_infec_early_beta = frac_infec_early_prior)
-
-#create a model objects for smapling from the prior distributions, used in figure creation
-model_objects_priors_only <- model_objects
-model_objects_priors_only$priors_only <- T
-model_objects_priors_only$forecast_in_days <- 0
-
-#create new model objects for the 4 sensitivity analyses shown in the report
-model_objects_sensitivity1 <- model_objects
-model_objects_sensitivity1_priors_only <- model_objects_priors_only
-
-model_objects_sensitivity1$log_R0_normal <- c(log(2.5), .5)
-model_objects_sensitivity1_priors_only$log_R0_normal <- c(log(2.5), .5)
-
-model_objects_sensitivity2 <- model_objects
-model_objects_sensitivity2_priors_only <- model_objects_priors_only
-
-model_objects_sensitivity2$log_R0_normal <- c(log(.53), .78)
-model_objects_sensitivity2_priors_only$log_R0_normal <- c(log(.53), .78)
-
-model_objects_sensitivity3 <- model_objects
-model_objects_sensitivity3_priors_only <- model_objects_priors_only
-
-model_objects_sensitivity3$frac_carrs_beta <- mom_beta3(for_estimating$frac_carrs)
-model_objects_sensitivity3_priors_only$frac_carrs_beta <- mom_beta3(for_estimating$frac_carrs)
-
-model_objects_sensitivity4 <- model_objects
-model_objects_sensitivity4_priors_only <- model_objects_priors_only
-
-model_objects_sensitivity4$frac_carrs_beta <- mom_beta4(for_estimating$frac_carrs)
-model_objects_sensitivity4_priors_only$frac_carrs_beta <- mom_beta4(for_estimating$frac_carrs)
-
-
-# Setup Results Folder ----------------------------------------------------
-folder_name <- str_c(model_objects$actual_first_day, model_objects$actual_last_day, sep = "_")
-folder_loc <- here("code", model_name, "oc", folder_name)
-dir_create(folder_loc)
-
-write_rds(model_objects, file.path(folder_loc, "model_objects.rds"))
-write_rds(model_objects_sensitivity1, file.path(folder_loc, "model_objects_sensitivity1.rds"))
-write_rds(model_objects_sensitivity2, file.path(folder_loc, "model_objects_sensitivity2.rds"))
-write_rds(model_objects_sensitivity3, file.path(folder_loc, "model_objects_sensitivity3.rds"))
-write_rds(model_objects_sensitivity4, file.path(folder_loc, "model_objects_sensitivity4.rds"))
-
-# Sample Posterior --------------------------------------------------------
-oc_post <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                data = model_objects,
-                init = init_func,
-                seed = 0,
-                chains = 4,
-                control = control_list)
-
-write_rds(oc_post, file.path(folder_loc, "oc_post.rds"))
-
-
-# Sample Prior ------------------------------------------------------------
-oc_prior <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                 data = model_objects_priors_only,
-                 init = init_func,
-                 seed = 0,
-                 chains = 4,
-                 control = control_list)
-
-write_rds(oc_prior, file.path(folder_loc, "oc_prior.rds"))
-
-
-# Sample Posterior Sensitivity 1 ------------------------------------------
-oc_post_sensitivity1 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                             data = model_objects_sensitivity1,
-                             init = init_func,
-                             seed = 0,
-                             chains = 4,
-                             control = control_list)
-
-write_rds(oc_post_sensitivity1, file.path(folder_loc, "oc_post_sensitivity1.rds"))
-
-
-# Sample Prior Sensitivity 1 ----------------------------------------------
-oc_prior_sensitivity1 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                              data = model_objects_sensitivity1_priors_only,
-                              init = init_func,
-                              seed = 0,
-                              chains = 4,
-                              control = control_list)
-
-write_rds(oc_prior_sensitivity1, file.path(folder_loc, "oc_prior_sensitivity1.rds"))
-
-# Sample Posterior Sensitivity 2 ------------------------------------------
-oc_post_sensitivity2 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                             data = model_objects_sensitivity2,
-                             init = init_func,
-                             seed = 0,
-                             chains = 4,
-                             control = control_list)
-
-write_rds(oc_post_sensitivity2, file.path(folder_loc, "oc_post_sensitivity2.rds"))
-
-
-# Sample Prior Sensitivity 2 ----------------------------------------------
-oc_prior_sensitivity2 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                              data = model_objects_sensitivity2_priors_only,
-                              init = init_func,
-                              seed = 0,
-                              chains = 4,
-                              control = control_list)
-
-write_rds(oc_prior_sensitivity2, file.path(folder_loc, "oc_prior_sensitivity2.rds"))
-# Sample Posterior Sensitivity 3 ------------------------------------------
-frac_carrs_prior3 <- mom_beta3(for_estimating$frac_carrs)
-
-init_func3 <- function() list(frac_carrs = frac_carrs_prior3[1] / sum(frac_carrs_prior3),
-                             frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
-                             frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
-
-oc_post_sensitivity3 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                             data = model_objects_sensitivity3,
-                             init = init_func3,
-                             seed = 0,
-                             chains = 4,
-                             control = control_list)
-
-write_rds(oc_post_sensitivity3, file.path(folder_loc, "oc_post_sensitivity3.rds"))
-
-
-# Sample Prior Sensitivity 3 ----------------------------------------------
-
-oc_prior_sensitivity3 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                              data = model_objects_sensitivity3_priors_only,
-                              init = init_func3,
-                              seed = 0,
-                              chains = 4,
-                              control = control_list)
-
-write_rds(oc_prior_sensitivity3, file.path(folder_loc, "oc_prior_sensitivity3.rds"))
-
-# Sample Posterior Sensitivity 4 ------------------------------------------
-frac_carrs_prior4 <- mom_beta4(for_estimating$frac_carrs)
-
-init_func4 <- function() list(frac_carrs = frac_carrs_prior4[1] / sum(frac_carrs_prior4),
-                              frac_carrs_infec = frac_carrs_infec_prior[1] / sum(frac_carrs_infec_prior),
-                              frac_infec_early = frac_infec_early_prior[1] / sum(frac_infec_early_prior))
-
-oc_post_sensitivity4 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                             data = model_objects_sensitivity4,
-                             init = init_func4,
-                             seed = 0,
-                             chains = 4,
-                             control = control_list)
-
-write_rds(oc_post_sensitivity4, file.path(folder_loc, "oc_post_sensitivity4.rds"))
-
-
-# Sample Prior Sensitivity 4 ----------------------------------------------
-
-oc_prior_sensitivity4 <- stan(file = here("code", model_name, str_c(model_name, ".stan")),
-                              data = model_objects_sensitivity4_priors_only,
-                              init = init_func4,
-                              seed = 0,
-                              chains = 4,
-                              control = control_list)
-
-write_rds(oc_prior_sensitivity4, file.path(folder_loc, "oc_prior_sensitivity4.rds"))
-
-
-
-
-}
-
-#list.dirs(here("code", model_name, loc_name), recursive = F, full.names = F)
-
-full_county_popsize <- 3175692
-# Pick folder to build model from. Defaults to most recent end date with earliest start date
-folder_name <- tibble(dirs = list.dirs(here("code", model_name, loc_name), recursive = F, full.names = F)) %>%
-  filter(str_detect(dirs, "^\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}$")) %>% 
-  separate(dirs, c("start", "end"), "_") %>%
-  filter(end == max(end)) %>%
-  #filter(start == "2020-04-06") %>%
-  unite(col = dir, sep = "_") %>%
-  pull(dir)
+folder_name <-"2020-10-18_2020-11-22"
 
 folder_loc <- here("code", model_name, loc_name, folder_name)
 
@@ -331,9 +45,11 @@ time_interval_in_days <- model_objects$time_interval_in_days
 
 oc_prior <- read_rds(file.path(folder_loc, "oc_prior.rds"))
 
+theme_set(theme_bw(base_size = 22)) 
+
 ```
 
-## Orange County, CA COVID-19 Situation Report, December 1st, 2020
+## Orange County, CA COVID-19 Situation Report, November 23, 2020
 #### Report period: `r str_c(format(model_objects$actual_first_day, "%b %d"), "-", format(model_objects$actual_last_day, "%b %d"), sep = " ")` (we don't use the most recent data due to reporting delays)
 
 The goal of this report is to inform interested parties about dynamics of SARS-CoV-2 spread in Orange County, CA and to predict epidemic trajectories. 
@@ -375,64 +91,6 @@ death_inc_summaries <- prepped_cumulative_inc$posterior %>%
   column_to_rownames(var = "name")
 ```
 
-
-```{r process-calcat, warning=FALSE, cache=FALSE}
-death_offset <- oc_data %>%
-  filter(posted_date <= model_objects$actual_last_day) %>% 
-  pull(new_deaths) %>% 
-  sum()
-
-data_for_calcat_re <- spread_draws(oc_post, log_R0) %>%
-  select(.draw, log_R0) %>%
-  left_join(prep_epi_curves(oc_post, model_objects) %>%
-              filter(g_text == "S")) %>% 
-  filter(t > model_objects$actual_last_day) %>% 
-  select(date = t, log_R0, S = epi_curves) %>%
-  group_by(date) %>% 
-  transmute(Reff = exp(log_R0) * S * model_objects$popsize / full_county_popsize) %>% 
-  median_qi() %>% 
-  select(date, re_mean = Reff, re_CI95l = .lower, re_CI95u = .upper) %>% 
-  right_join(tibble(date = seq(model_objects$actual_last_day, max(model_objects$dates_pp), 1))) %>% 
-  pivot_longer(-date) %>% 
-  arrange(date) %>%
-  group_by(name) %>%
-  mutate(id.value = na.approx(value, maxgap = 2)) %>% # linear interpolation for daily values
-  pivot_wider(id_cols = date, names_from = name, values_from = id.value) %>% 
-  select(date, re_mean, re_CI95l, re_CI95u)
-
-
-data_for_calcat_mort <- oc_post %>%
-  spread_draws(deaths_pp[i]) %>% 
-  group_by(.draw) %>% 
-  arrange(.draw, i) %>%
-  mutate(date = model_objects$dates_pp[i]) %>% 
-  filter(date > model_objects$actual_last_day) %>% 
-  mutate(cummort = cumsum(deaths_pp) + death_offset) %>%
-  ungroup() %>% 
-  select(cummort, date) %>% 
-  group_by(date) %>% 
-  mean_qi() %>% 
-  select(date, cummort_mean = cummort, cummort_CI95l = .lower, cummort_CI95u = .upper) %>% 
-  right_join(tibble(date = seq(model_objects$actual_last_day, max(model_objects$dates_pp), 1))) %>% 
-  pivot_longer(-date) %>% 
-  arrange(date) %>%
-  group_by(name) %>%
-  mutate(id.value = na.approx(value, maxgap = 2)) %>% # linear interpolation for daily values
-  pivot_wider(id_cols = date, names_from = name, values_from = id.value) %>% 
-  select(date, cummort_mean, cummort_CI95l, cummort_CI95u)
-
-data_for_calcat <- full_join(data_for_calcat_re, data_for_calcat_mort) %>% 
-  drop_na() %>% 
-  mutate(county = "Orange County", fips = 6059) %>% 
-  select(date, county, fips, everything())
-
-prev_data_for_calcat <- read_csv("data/data_for_calcat.csv")
-
-write_csv(bind_rows(
-  filter(prev_data_for_calcat, date %in% setdiff(prev_data_for_calcat$date, data_for_calcat$date)),
-         data_for_calcat),
-  path = "data/data_for_calcat.csv")
-```
 
 ```{r latent-vs-observed-incidence, warning=FALSE, cache=TRUE}
 ci_width <- c(0.5, 0.8, 0.95)
@@ -558,12 +216,6 @@ param_plot
 R0_over_time_plot <- tibble(file_path = fs::dir_ls(here("code", model_name, loc_name))) %>% 
   mutate(start_date = ymd(str_sub(file_path, start = -21, end = -12)),
     end_date = ymd(str_sub(file_path, start = -10))) %>% 
-  mutate(fit_number = n():1) %>% 
-  group_by(lubridate::month(end_date)) %>% 
-  mutate(fit_number_month = row_number()) %>% 
-  filter(fit_number %in% 1:4 | fit_number_month == 1) %>% 
-  ungroup() %>% 
-  select(file_path, start_date, end_date) %>% 
   filter(start_date > ymd("2020-06-16")) %>% # comment this out to include models not in archive
   # mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')}\n-\n{format(end_date, format = '%b %e')}"))) %>% 
   mutate(label = fct_inorder(glue("{format(start_date, format = '%b %e')} - {format(end_date, format = '%b %e')}"))) %>% 
@@ -585,7 +237,7 @@ R0_over_time_plot
 ## Summary (statements are made assuming 95% credibility levels)
 - The number of reported cases (`r comma(death_inc_summaries["Cumulative Incidence","observed"])` in this period, shown as black bars in the top-middle plot above) underestimates the actual number of infections by a factor that ranges between `r death_inc_summaries["Cumulative Incidence","ratio_l"]` and `r death_inc_summaries["Cumulative Incidence","ratio_u"]`. 
 This means that we estimate that the total number of infections which occurred between `r format(prepped_cumulative_inc$posterior[[1,"t"]]-2, '%B %d, %Y')` and `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is between `r comma(death_inc_summaries["Cumulative Incidence",".lower"])` and `r comma(death_inc_summaries["Cumulative Incidence",".upper"])`.
-- Prevalence (number of infectious individuals at any time point) is `r ifelse(median(filter(prepped_cumulative_inc$posterior, name == "Prevalence", t == min(t))$value) > median(filter(prepped_cumulative_inc$posterior, name == "Prevalence", t == max(t))$value), "decreasing", "increasing")` and projected to be inside the interval (`r prepped_cumulative_inc$posterior %>% filter(name == "Prevalence", t == max(t)) %>% pull(value) %>% quantile(c(0.025, 0.975)) %>% signif(digits=2) %>% scales::comma() %>% paste(collapse = ", ")`) on `r format(max(prepped_cumulative_inc$posterior$t), "%B %e")`.
+- Prevalence (number of infectious individuals at any time point) is declining, but is projected to be inside the interval (`r prepped_cumulative_inc$posterior %>% filter(name == "Prevalence", t == max(t)) %>% pull(value) %>% quantile(c(0.025, 0.975)) %>% signif(digits=2) %>% scales::comma() %>% paste(collapse = ", ")`) on `r format(max(prepped_cumulative_inc$posterior$t), "%B %e")`.
 - Deaths are also underreported, but not significantly so (black bars are a little below blue bands in the topleft plot above). Somewhere between `r signif(100*IFR_bci[".lower"],1)`% and `r signif(100*IFR_bci[".upper"],1)`% of all infections (not cases!) result in death.
 - Basic reproductive number ($R_0$), defined as the average number of secondary infections one infectious individual produces in a completely susceptible population, is inside the interval (`r R0_bci[".lower"]`, `r R0_bci[".upper"]`). 
 - Effective reproductive number ($R_e$), defined as its basic counterpart above, but allowing for some fraction of the population to be removed (recovered or deceased), as of `r format(death_inc_summaries["Cumulative Incidence","t"], '%B %d, %Y')` is inside the interval (`r R_eff_bci[".lower"]`, `r R_eff_bci[".upper"]`). **We want to keep $R_e < 1$ in order to control virus transmission**.
